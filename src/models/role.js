@@ -1,8 +1,16 @@
 'use strict';
+<<<<<<< HEAD
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
+=======
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Members extends Model {
+>>>>>>> fefe826 (Clean repository backbone)
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
+<<<<<<< HEAD
 
   Role.init({
     id: {
@@ -49,4 +58,20 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'roles'
   });
   return Role;
+=======
+  Members.init({
+    name: DataTypes.STRING,
+    facebookUrl: DataTypes.STRING,
+    instagramUrl: DataTypes.STRING,
+    linkedinUrl: DataTypes.STRING,
+    image: DataTypes.STRING,
+    description: DataTypes.STRING,
+    deletedAt: DataTypes.DATE
+  }, {
+    sequelize,
+    modelName: 'Members',
+    paranoid: true
+  });
+  return Members;
+>>>>>>> fefe826 (Clean repository backbone)
 };

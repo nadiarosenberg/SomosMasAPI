@@ -1,16 +1,20 @@
 var express = require('express');
 var router = express.Router();
+<<<<<<< HEAD
 const { userValidationRules, validate } = require('../utils/userValidation')
 const  { User }  = require('../models/index')
 const bcrypt = require('bcryptjs');
 
 
+=======
+>>>>>>> fefe826 (Clean repository backbone)
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+<<<<<<< HEAD
 router.post('/auth/register',userValidationRules(),validate,async (req, res, next) =>{
   const newUser = req.body
   const data = await User.create({
@@ -26,3 +30,6 @@ router.post('/auth/register',userValidationRules(),validate,async (req, res, nex
 
 module.exports = router;
 
+=======
+module.exports = router;
+>>>>>>> fefe826 (Clean repository backbone)
