@@ -2,7 +2,7 @@
 const db = require("../models");
 const path = require('path');
 
-const Category = db.posts;
+const Category = db.categories;
 const Op = db.Sequelize.Op;
 
 
@@ -59,7 +59,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving posts."
+          err.message || "Some error occurred while retrieving categories."
       });
     });
 };
