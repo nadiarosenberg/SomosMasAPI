@@ -8,7 +8,7 @@
 
 To install dependencies, run
 ``` bash
-npm install
+yarn
 ```
 
 3) Migrations:
