@@ -17,10 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     image: DataTypes.STRING,
-    isDeleted: DataTypes.BOOLEAN,
-    timestamp: DataTypes.STRING
+    timestamps: DataTypes.STRING
   }, {
     sequelize,
+    paranoid: true,
+    timestamps: true,
     modelName: 'Category',
   });
   return Category;

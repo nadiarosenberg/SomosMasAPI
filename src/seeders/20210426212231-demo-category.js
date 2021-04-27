@@ -15,8 +15,7 @@ module.exports = {
       name: 'Musica',
       description: 'Categoria de musica',
       image: 'imagendemusica.jpg',
-      isDeleted: false,
-      timestamp: new Date(),
+      timestamps: Date.now(),
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

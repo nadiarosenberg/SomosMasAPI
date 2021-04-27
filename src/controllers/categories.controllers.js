@@ -8,20 +8,13 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Category
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name can not be empty!"
-    });
-    return;
-  }
   // Create a Category
 
   const category = {
     name: req.body.name,
     description: req.body.description,
     image: req.body.image ? req.body.image : 'randomimage.png',
-    timestamp: new Date(),
+    timestamps: Date.now(),
     isDeleted: false,
   };
   
@@ -52,7 +45,7 @@ exports.create = (req, res) => {
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
 
-  Category.findAll({attributes: ["name", "description", "image", "timestamp", "id", "isDeleted"]})
+  Category.findAll({paranoid: false})
     .then(data => {
       res.send(data);
     })
@@ -68,7 +61,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Category.findByPk(id, {attributes: ["name", "description", "image", "timestamp", "id", "isDeleted"]})
+  Category.findByPk(id, )
     .then(data => {
       if ( data === null ) {
         res.status(404).send({
@@ -89,7 +82,6 @@ exports.findOne = (req, res) => {
 // Update a Category by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-
   Category.update(req.body, {
     where: { id: id }
   })

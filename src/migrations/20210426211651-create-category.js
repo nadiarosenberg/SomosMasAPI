@@ -9,32 +9,38 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'El campo name es requerido'
+          }
+        }
       },
       description: {
         allowNull: true,
         type: Sequelize.STRING
       },
       image: {
+        type: Sequelize.STRING,
         allowNull: true,
-        type: Sequelize.STRING
       },
-      isDeleted: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
-      timestamp: {
+      timestamps: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
