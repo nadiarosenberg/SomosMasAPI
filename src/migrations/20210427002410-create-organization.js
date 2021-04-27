@@ -9,10 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'name is required'
+          }
+        }
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'image is required'
+          }
+        }
       },
       adress: {
         type: Sequelize.STRING
@@ -21,10 +35,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'email is required'
+          },
+          isEmail: true
+        }
       },
       welcomeText: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'welcomeText is required'
+          }
+        }
       },
       aboutUsText: {
         type: Sequelize.TEXT
