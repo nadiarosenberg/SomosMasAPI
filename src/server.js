@@ -8,11 +8,8 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-<<<<<<< HEAD
 const organizationRouter = require('./routes/organization');
-=======
 const testimonialsRouter = require('./routes/testimonials');
->>>>>>> 0a97ef8 (Controller)
 
 const app = express();
 app.use(cors())
