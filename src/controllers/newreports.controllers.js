@@ -2,25 +2,24 @@
 const db = require("../models");
 const path = require('path');
 
-const New = db.news;
+const NewReport = db.newreports;
 const Op = db.Sequelize.Op;
 
 
-// Create and Save a New
+// Create and Save a new NewReport
 exports.create = (req, res) => {
-  // Create a New
+  // Create a NewReport
 
-  const newObj = {
+  const newreport = {
     name: req.body.name,
-    content: req.body.description,
+    content: req.body.content,
     image: req.body.image,
-    categoryId: req.body.categoryId,
     timestamps: Date.now()
   };
   
   // Extensions URL
   const extensionsAvailable = ['png', 'jpg', 'jpeg' ]
-  const ext = path.extname(newObj.image||'').split('.');
+  const ext = path.extname(newreport.image||'').split('.');
   if ( extensionsAvailable.indexOf( ext[ext.length - 1] ) < 0 ) {
     return res.status(400).json({
       ok: false,
@@ -29,15 +28,15 @@ exports.create = (req, res) => {
     })
   }
   
-  // Save New in the database
-  New.create(newObj)
+  // Save NewReport in the database
+  NewReport.create(newreport)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the New."
+          err.message || "Some error occurred while creating the NewReport."
       });
     });
 };
@@ -45,27 +44,27 @@ exports.create = (req, res) => {
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
 
-  New.findAll({paranoid: false})
+  NewReport.findAll({paranoid: false})
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving news."
+          err.message || "Some error occurred while retrieving new reports."
       });
     });
 };
 
-// Find a single New with an id
+// Find a single NewReport with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  New.findByPk(id, )
+  NewReport.findByPk(id, )
     .then(data => {
       if ( data === null ) {
         res.status(404).send({
-          message: `Cannot find New with id = ${id}`
+          message: `Cannot find NewReport with id = ${id}`
         })
         return;
       }
@@ -74,56 +73,56 @@ exports.findOne = (req, res) => {
     .catch(err => {
       console.log(err);
       res.status(500).send({
-        message: "Error retrieving New with id = " + id
+        message: "Error retrieving NewReport with id = " + id
       });
     });
 };
 
-// Update a New by the id in the request
+// Update a NewReport by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  New.update(req.body, {
+  NewReport.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "New was updated successfully."
+          message: "NewReport was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update New with id = ${id}. New was not found or req.body is empty!`
+          message: `Cannot update NewReport with id = ${id}. NewReport was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating New with id = " + id
+        message: "Error updating NewReport with id = " + id
       });
     });
 };
 
-// Delete a New with the specified id in the request
+// Delete a NewReport with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  New.destroy({
+  NewReport.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "New was deleted successfully!"
+          message: "NewReport was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete New with id = ${id}. New was not found!`
+          message: `Cannot delete NewReport with id = ${id}. NewReport was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete New with id = " + id
+        message: "Could not delete NewReport with id = " + id
       });
     });
 };

@@ -7,14 +7,17 @@ const cors = require('cors')
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
+<<<<<<< HEAD
 const usersRouter = require('./routes/users');
 const organizationRouter = require('./routes/organization');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
 const membersRouter = require('./routes/members');
 const rolesRouter = require('./routes/roles');
+=======
+const newsRouter = require('./routes/newreports');
+>>>>>>> 2b2a1d5 (changed new to newreport)
 const categoriesRouter = require('./routes/categories');
-const newsRouter = require('./routes/news');
 
 
 

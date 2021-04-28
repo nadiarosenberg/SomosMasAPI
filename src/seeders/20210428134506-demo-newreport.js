@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-     return queryInterface.bulkInsert('News', [{
+     return queryInterface.bulkInsert('NewReports', [{
       name: 'The Rolling Stones se presentan en en Luna Park',
       content: 'Blablabla los rollings blablabla van al luna park',
       image: 'lengua.jpg',
@@ -12,6 +12,6 @@ module.exports = {
     }]);
   }, 
   down: async (queryInterface, Sequelize) => {
-     return queryInterface.bulkDelete('News', null, {});
+     return queryInterface.bulkDelete('NewReports', null, {});
   }
 };
