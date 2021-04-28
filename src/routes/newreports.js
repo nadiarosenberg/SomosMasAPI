@@ -16,4 +16,5 @@ router.put("/:id", newreports.update);
 
 // Delete a New with id
 router.delete("/:id", newreports.delete);
+
 module.exports = router;

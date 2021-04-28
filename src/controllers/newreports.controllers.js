@@ -14,6 +14,7 @@ exports.create = (req, res) => {
     name: req.body.name,
     content: req.body.content,
     image: req.body.image,
+    categoryId: req.body.categoryId,
     timestamps: Date.now()
   };
   
