@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Testimonial extends Model {
     /**
@@ -16,10 +15,16 @@ module.exports = (sequelize, DataTypes) => {
   Testimonial.init({
     name: DataTypes.STRING, 
     image: DataTypes.STRING,
-    content: DataTypes.TEXT
+    content: DataTypes.TEXT,
+    //timestamps: DataTypes.INTEGER
+    //deletedAt: DataTypes.DATE,
+    //updatedAt: DataTypes.DATE,
+    //createdAt: DataTypes.DATE
     },{
     sequelize,
     modelName: 'Testimonial',
+    tableName: 'Testimonials',
+    timestamps: true,
     paranoid: true
   });
   return Testimonial;
