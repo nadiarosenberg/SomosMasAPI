@@ -1,5 +1,6 @@
 const { body, check } = require("express-validator");
 const db = require("../models");
+var bcrypt = require('bcryptjs');
 
 module.exports = [
   body("email").isEmail().withMessage("Must be valide E-mail format").bail(),
@@ -16,7 +17,7 @@ module.exports = [
         if (!userEmail) {
           throw new Error("E-mail not found");
         } else {
-          if (userEmail.password == req.body.password) {
+          if(bcrypt.compareSync(req.body.password, userEmail.password)) {
             return true;
           } else {
             throw new Error("Password does not match");
