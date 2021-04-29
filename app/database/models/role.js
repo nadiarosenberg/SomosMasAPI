@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       validate: {
         notNull: {
           args: true,
@@ -45,7 +45,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Role',
-    timestamps: true
+    timestamps: true,
+    tableName: 'roles'
   });
   return Role;
 };
