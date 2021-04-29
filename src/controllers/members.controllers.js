@@ -74,7 +74,25 @@ const findAll = async (req, res) => {
     }
 }
 
+// get one member by id
+const findOne = async (req, res) => {
+    const id = req.params.id;
+    try{
+        let member = await Member.findByPk(id)
+        res.json({
+            ok: true,
+            member
+        })
+    }catch(e){
+        res.status(400).json({
+            ok: false,
+            msj: `failed to get member with id ${id}`
+        })
+    }
+}
+
 module.exports = {
     create,
-    findAll
+    findAll,
+    findOne
 }
