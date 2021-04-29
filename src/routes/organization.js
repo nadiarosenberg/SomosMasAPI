@@ -6,5 +6,6 @@ router.get('/', organizationCtrl.findAll)
 router.get('/public/:id', organizationCtrl.findOne)
 router.post('/', organizationCtrl.create)
 router.patch('/:id', organizationCtrl.update)
+router.delete('/:id', organizationCtrl.destroy)
 
 module.exports = router;

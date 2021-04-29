@@ -82,9 +82,34 @@ const update = async (req, res, next) => {
   }
 }
 
+const destroy = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    let organization = await Organization.findOne({
+      where: { id }
+    })
+
+    if(organization){
+
+      await Organization.destroy({
+        where: { id }
+      })
+
+      res.status(200).json({message: 'Organization deleted successfully'})
+    } else {
+      res.status(404).json({ message: 'Organization not found' })
+    }
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({ message: error.message })
+  }
+}
+
 module.exports = {
   findAll,
   findOne,
   create,
-  update
+  update,
+  destroy
 }
