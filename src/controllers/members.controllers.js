@@ -2,6 +2,7 @@ const db = require('../models')
 const Axios = require('axios')
 const Member = db.Members;
 
+// create and save a new Member
 const create = async (req, res) => {
     // image validation
     if(req.body.image===undefined){
@@ -51,13 +52,29 @@ const create = async (req, res) => {
         }catch(e){
             res.status(400).json({
                 ok: false,
-                error: 'failed to create member'
+                error: 'failed to create member.'
             })
         }
     }  
 }
 
+// get all members
+const findAll = async (req, res) => {
+    try{
+        const members = await Member.findAll();
+        res.json({
+            ok: true,
+            members
+        })
+    }catch(e){
+        res.status(400).json({
+            ok: false,
+            msj: 'failed to get all members.'
+        })
+    }
+}
 
 module.exports = {
-    create
+    create,
+    findAll
 }
