@@ -1,7 +1,7 @@
 // Requires
 const db = require("../models");
 const path = require('path');
-
+const errorHandler = require('./../utils/errorHandler');
 const NewReport = db.newreports;
 const Op = db.Sequelize.Op;
 
@@ -35,10 +35,11 @@ exports.create = (req, res) => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the NewReport."
-      });
+      console.log(err);
+      // return res.status(500).send(err) // this code is for testing method
+      const friendlyError = errorHandler(err);
+      res.status(friendlyError.statusCode)
+          .send(friendlyError.message);
     });
 };
 
