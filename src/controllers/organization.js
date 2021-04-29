@@ -30,7 +30,34 @@ const findOne = async (req, res, next) => {
   }
 }
 
+const create = async (req, res, next) => {
+  try{
+    const { name, image, address, phone, email, welcomeText, aboutUsText } = req.body
+
+    let organization = new Organization()
+    organization.name = name
+    organization.image = image
+    organization.address = address
+    organization.phone = phone
+    organization.email = email
+    organization.welcomeText = welcomeText
+    organization.aboutUsText = aboutUsText
+
+    let newOrganization = await Organization.create(organization.dataValues)
+
+    res.status(201).json({
+      id: newOrganization.id,
+      message: 'Organization created successfully'
+    })
+
+  } catch(error){
+    console.log(error.message)
+    res.status(500).json({ message: error.message})
+  }
+}
+
 module.exports = {
   findAll,
   findOne,
+  create,
 }
