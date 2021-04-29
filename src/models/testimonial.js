@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING, 
     image: DataTypes.STRING,
     content: DataTypes.TEXT,
-    //timestamps: DataTypes.INTEGER
-    //deletedAt: DataTypes.DATE,
-    //updatedAt: DataTypes.DATE,
-    //createdAt: DataTypes.DATE
     },{
     sequelize,
     modelName: 'Testimonial',

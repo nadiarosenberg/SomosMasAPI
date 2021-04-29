@@ -10,7 +10,10 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        //allowNull: false
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        }
       },
       image: {
         type: Sequelize.STRING,
@@ -27,9 +30,6 @@ module.exports = {
       deletedAt:{
         type: Sequelize.DATE,
       }
-      /*timestamps:{
-        type: Sequelize.INTEGER
-      }*/
     });
   },
   down: async (queryInterface, Sequelize) => {
