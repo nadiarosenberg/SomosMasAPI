@@ -71,6 +71,13 @@ const findOne = async (req, res) => {
 // update a member by id
 const update = async (req, res) => {
     const id = req.params.id;
+    if(isNaN(id)){
+        res.status(400).json({
+            ok: false,
+            msj: 'invalid id'
+        })
+        return false
+    }
     const isValidName = await memberMiddleware.checkName(req, res)
     let isValidImage = false
     if(req.body.image!==undefined){
@@ -78,7 +85,7 @@ const update = async (req, res) => {
     }else{
         isValidImage = true
     }
-    if(isValidImage && isValidName && !(isNaN(id))){
+    if(isValidImage && isValidName){
         try{
             await Member.update(req.body, {
                 where: {

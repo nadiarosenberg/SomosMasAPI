@@ -8,7 +8,6 @@ const checkImage = async (req, res) => {
         })
         return false
     }
-    console.log("pasa por aca")
     // fileExtension validation
     const url = req.body.image;
     try{
