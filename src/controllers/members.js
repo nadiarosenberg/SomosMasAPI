@@ -68,8 +68,39 @@ const findOne = async (req, res) => {
     }
 }
 
+// update a member by id
+const update = async (req, res) => {
+    const id = req.params.id;
+    const isValidName = await memberMiddleware.checkName(req, res)
+    let isValidImage = false
+    if(req.body.image!==undefined){
+        isValidImage = await memberMiddleware.checkImage(req, res)
+    }else{
+        isValidImage = true
+    }
+    if(isValidImage && isValidName && !(isNaN(id))){
+        try{
+            await Member.update(req.body, {
+                where: {
+                  id
+                }
+            });
+            res.json({
+                ok: true,
+                msj: 'member updated successfully'
+            })
+        }catch(e){
+            res.status(400).json({
+                ok: false,
+                msj: 'failed to update member'
+            })
+        }
+    }
+}
+
 module.exports = {
     create,
     findAll,
-    findOne
+    findOne,
+    update
 }

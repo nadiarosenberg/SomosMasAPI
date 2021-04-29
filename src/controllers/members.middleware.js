@@ -2,23 +2,33 @@ const Axios = require('axios')
 const checkImage = async (req, res) => {
     // image validation
     if(req.body.image===undefined){
-        return res.status(400).json({
+        res.status(400).json({
             ok: false,
             msj: 'image is required'
         })
+        return false
     }
-
+    console.log("pasa por aca")
     // fileExtension validation
     const url = req.body.image;
-    const response = await Axios({
-        method: 'GET',
-        url: url,
-        responseType: 'stream'
-    })
-    const fileExtension = await response.headers['content-type'].split('/')[0] || null
-
-    if(fileExtension==='image'){
-        return true
+    try{
+        const response = await Axios({
+            method: 'GET',
+            url: url,
+            responseType: 'stream'
+        })
+        const fileExtension = await response.headers['content-type'].split('/')[0] || null
+        if(fileExtension==='image'){
+            return true
+        }else{
+            return false
+        }
+    }catch(e){
+        res.status(400).json({
+            ok: false,
+            msj: 'invalid image'
+        })
+        return false
     }
 }
 
