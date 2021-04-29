@@ -13,8 +13,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Testimonial.init({
-    name: DataTypes.STRING, 
-    image: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+          notNull: {
+            args: true,
+            msg: 'Name is required'
+        } 
+      }
+    }, 
+    image: {
+      type: DataTypes.STRING,
+      validate:{
+          is:{
+            args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
+            msg: "You must enter an image url"
+          }
+      }
+    },
     content: DataTypes.TEXT
     },{
     sequelize,

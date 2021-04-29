@@ -4,8 +4,13 @@ const {Testimonial} = require('../models');
 
 /*---------------------- POST -------------------------------*/
 router.post('/', async(req, res, next) => {
+  const body_data = req.body;
   try{
-      const testimonial = await Testimonial.create(req.body);
+      const testimonial = await Testimonial.create({
+        name: body_data.name,
+        image: body_data.image,
+        content: body_data.content
+      })
       res.json(testimonial);
   }catch (err){
       console.log(err);

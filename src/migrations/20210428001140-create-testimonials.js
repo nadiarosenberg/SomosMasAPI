@@ -10,23 +10,22 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
-        /*validate: {
+        allowNull: false,
+        validate: {
           notNull: {
             args: true,
             msg: 'Name is required'
           }
-        }*/
+        }
       },
       image: {
-        type: Sequelize.STRING
-        /*isUrl: {msg : 'You must enter a valid url'}
+        type: Sequelize.STRING,
         validate:{
           is:{
-            args: ["/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i"],
+            args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
             msg: "You must enter an image url"
           }
-        }*/
+        }
       },
       content: {
         type: Sequelize.STRING
