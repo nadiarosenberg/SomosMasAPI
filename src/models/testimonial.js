@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   Testimonial.init({
     name: DataTypes.STRING, 
     image: DataTypes.STRING,
-    content: DataTypes.TEXT,
+    content: DataTypes.TEXT
     },{
     sequelize,
     modelName: 'Testimonial',

@@ -7,7 +7,7 @@ router.post('/', async(req, res, next) => {
   try{
       const testimonial = await Testimonial.create(req.body);
       res.json(testimonial);
-  } catch (err){
+  }catch (err){
       console.log(err);
       res.send('Error posting testimonial')
   }
