@@ -6,5 +6,6 @@ router.post('/', members.create);
 router.get('/', members.findAll);
 router.get('/:id', members.findOne);
 router.put('/:id', members.update)
+router.delete('/:id', members.destroy)
 
 module.exports = router;

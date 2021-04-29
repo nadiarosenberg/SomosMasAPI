@@ -105,9 +105,37 @@ const update = async (req, res) => {
     }
 }
 
+// delete a member by id
+const destroy = async (req, res) => {
+    const id = req.params.id
+    if(isNaN(id)){
+        return res.status(400).json({
+            ok: false,
+            msj: 'invalid id'
+        })
+    }
+    try{
+        await Member.destroy({
+            where: {
+              id
+            }
+        });
+        return res.json({
+            ok: true,
+            msj: 'member deleted successfully'
+        })
+    }catch(e){
+        return res.status(400).json({
+            ok: false,
+            msj: 'failed to delete member'
+        })
+    }
+}
+
 module.exports = {
     create,
     findAll,
     findOne,
-    update
+    update,
+    destroy
 }
