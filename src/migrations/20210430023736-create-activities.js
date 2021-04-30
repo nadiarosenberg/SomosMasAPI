@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
+      name: {
         type: Sequelize.STRING
       },
       content: {
@@ -16,6 +16,14 @@ module.exports = {
       },
       image: {
         type: Sequelize.STRING
+      },
+	  deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      timestamps: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
