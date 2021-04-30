@@ -5,6 +5,12 @@ const Role = db.Role;
 const User = db.User;
 
 const authUser = async (req, res, next) => {
+    // check if path is public all user
+    const hasPublicPath = req.originalUrl.split('/').includes('public')
+    if(hasPublicPath){
+        next()
+    }
+    // check if has token
     const token = req.get('token')
     let userId;
     let error;
