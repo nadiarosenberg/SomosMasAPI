@@ -35,7 +35,6 @@ const authUser = async (req, res, next) => {
         });
         const role = userJoinRole.dataValues.role.name
         if(role==='Admin'){
-            console.log("PASA POR ACA")
             next()
         }else{
             return res.status(403).json({
