@@ -1,16 +1,14 @@
 // Requires
 const db = require("../models");
 const path = require('path');
-const errorHandler = require('./../utils/errorHandler');
-const sendEmail = require('./../utils/emailSender');
-const userData = require('./../utils/fakeData');
+const errorHandler = require('../utils/errorHandler');
+const sendEmail = require('../utils/emailSender');
+const userData = require('../utils/fakeData');
 const NewReport = db.newreports;
 const Op = db.Sequelize.Op;
 
 
-// Create and Save a new NewReport
 exports.create = (req, res) => {
-  // Create a NewReport
 
   const newreport = {
     name: req.body.name,
@@ -20,7 +18,6 @@ exports.create = (req, res) => {
     timestamps: Date.now()
   };
   
-  // Extensions URL
   const extensionsAvailable = ['png', 'jpg', 'jpeg' ]
   const ext = path.extname(newreport.image||'').split('.');
   if ( extensionsAvailable.indexOf( ext[ext.length - 1] ) < 0 ) {
@@ -31,10 +28,8 @@ exports.create = (req, res) => {
     })
   }
   
-  // Save NewReport in the database
   NewReport.create(newreport)
     .then(data => {
-      // method test
       const message = {
         from: 'alkemyprueba@gmail.com2', 
         to: userData.email,
@@ -53,7 +48,6 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
 
   NewReport.findAll({paranoid: false})
@@ -68,7 +62,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single NewReport with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -90,7 +83,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a NewReport by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   NewReport.update(req.body, {
@@ -114,7 +106,6 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a NewReport with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 

@@ -6,19 +6,16 @@ const Category = db.categories;
 const Op = db.Sequelize.Op;
 
 
-// Create and Save a new Category
 exports.create = (req, res) => {
-  // Create a Category
 
   const category = {
     name: req.body.name,
     description: req.body.description,
-    image: req.body.image ? req.body.image : 'randomimage.png',
+    image: req.body.image ? req.body.image : 'default-image.png',
     timestamps: Date.now(),
     isDeleted: false,
   };
   
-  // Extensions URL
   const extensionsAvailable = ['png', 'jpg', 'jpeg' ]
   const ext = path.extname(category.image||'').split('.');
   if ( extensionsAvailable.indexOf( ext[ext.length - 1] ) < 0 ) {
@@ -29,7 +26,6 @@ exports.create = (req, res) => {
     })
   }
   
-  // Save Category in the database
   Category.create(category)
     .then(data => {
       res.send(data);
@@ -42,7 +38,6 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
 
   Category.findAll({paranoid: false})
@@ -57,7 +52,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Category with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -79,7 +73,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Category by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   Category.update(req.body, {
@@ -103,7 +96,6 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a Category with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
