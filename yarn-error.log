@@ -1,0 +1,64 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\tools\Cmder\vendor\git-for-windows\cmd;C:\tools\Cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\tools\Cmder\vendor\conemu-maximus5;C:\tools\Cmder\vendor\conemu-maximus5\ConEmu;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;E:\Programs\PuTTY\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\alejo\AppData\Local\Microsoft\WindowsApps;C:\Users\alejo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Azure Data Studio\bin;C:\tools\Cmder;C:\Users\alejo\AppData\Local\Yarn\bin;C:\Users\alejo\.dotnet\tools;C:\tools\Cmder\vendor\git-for-windows\mingw64\bin;C:\tools\Cmder\vendor\git-for-windows\usr\bin;C:\tools\Cmder\vendor\bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  14.16.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: E:\dev\alkemy\group30\webapi\package.json: Unexpected token < in JSON at position 479
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "ong-server",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "node ./bin/www",
+      "dev": "nodemon ./bin/www"
+    },
+    "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "cookie-parser": "~1.4.4",
+      "cors": "^2.8.5",
+      "debug": "~2.6.9",
+      "dotenv": "^8.2.0",
+      "ejs": "~2.6.1",
+      "express": "^4.16.4",
+      "express-validator": "^6.10.1",
+      "http-errors": "~1.6.3",
+      "morgan": "~1.9.1",
+      "mysql": "^2.18.1",
+      "mysql2": "^2.2.3",
+  <<<<<<< HEAD
+      "sequelize": "^6.6.2"
+  =======
+      "pino": "^6.11.3",
+      "sequelize": "^6.3.5"
+  >>>>>>> 33380db (add pino and pino-pretty dependecies)
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.7",
+      "pino-pretty": "^4.7.1",
+      "sequelize-cli": "^6.2.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
