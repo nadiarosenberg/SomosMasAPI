@@ -5,7 +5,6 @@ const Role = db.Role;
 const User = db.User;
 
 const authUser = async (req, res, next) => {
-    // check if has token
     const token = req.get('token')
     let userId;
     let error;
@@ -19,7 +18,6 @@ const authUser = async (req, res, next) => {
     if(error){
         res.status(403).json({ error })
     }else{
-        // check if the user is valid
         const userJoinRole = await User.findOne({ 
             where:{
                 id: userId
