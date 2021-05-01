@@ -1,4 +1,5 @@
 const { Organization } = require('../models/index');
+const logger = require('../utils/pinoLogger')
 
 const findAll = async (req, res, next) => {
   try {
@@ -7,7 +8,7 @@ const findAll = async (req, res, next) => {
     });
     res.status(200).json(organizations)
   } catch (error) {
-    console.log(error.message);
+    logger.error(error.message);
     res.status(500).json({message: 'Something goes wrong'})
   }
 };
@@ -20,12 +21,15 @@ const findOne = async (req, res, next) => {
       attributes: ['name', 'image', 'phone', 'address']
     });
     
-    (organization)
-      ? res.status(200).json(organization)
-      : res.status(404).json({ message: 'Organization not found'})
+    if(organization){
+      res.status(200).json(organization)
+    } else {
+      logger.warn('Organization not found')
+      res.status(404).json({ message: 'Organization not found'})
+    }
 
   } catch (error) {
-    console.log(error.message);
+    logger.error(error.message);
     res.status(500).json({message: error.message})
   }
 }
@@ -45,13 +49,14 @@ const create = async (req, res, next) => {
 
     let newOrganization = await Organization.create(organization.dataValues)
 
+    logger.info({ id: newOrganization.id }, 'Organization created successfully')
     res.status(201).json({
       id: newOrganization.id,
       message: 'Organization created successfully'
     })
 
   } catch(error){
-    console.log(error.message)
+    logger.error(error.message);
     res.status(500).json({ message: error.message})
   }
 }
@@ -72,12 +77,14 @@ const update = async (req, res, next) => {
           where: { id }
         }
       )
+      logger.info('Organization updated successfully')
       res.status(200).json({ message: 'Organization updated successfully' })
     } else {
+      logger.warn('Organization not found')
       res.status(404).json({ message: 'Organization not found' })
     }
   } catch (error) {
-    console.log(error.message)
+    logger.error(error.message);
     res.status(500).json({ message: error.message})
   }
 }
@@ -95,13 +102,14 @@ const destroy = async (req, res, next) => {
       await Organization.destroy({
         where: { id }
       })
-
+      logger.info('Organization updated successfully')
       res.status(200).json({message: 'Organization deleted successfully'})
     } else {
+      logger.warn('Organization not found')
       res.status(404).json({ message: 'Organization not found' })
     }
   } catch (error) {
-    console.log(error.message)
+    logger.error(error.message);
     res.status(500).json({ message: error.message })
   }
 }
@@ -115,12 +123,14 @@ const restore = async (req, res, next) => {
     })
 
     if (organization) {
+      logger.info('Organization restored successfully')
       res.status(200).json({ message: 'Organization restored successfully'})
     } else {
+      logger.warn('Organization not found')
       res.status(404).json({ message: 'Organization not found' })
     }
   } catch (error) {
-    console.log(error.message)
+    logger.error(error.message);
     res.status(500).json({ message: error.message })
   }
 }
