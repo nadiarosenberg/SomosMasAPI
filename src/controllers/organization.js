@@ -1,5 +1,5 @@
 const { Organization } = require('../models/index');
-const logger = require('../middlewares/pinoLogger')
+const logger = require('../utils/pinoLogger')
 
 const findAll = async (req, res, next) => {
   try {
