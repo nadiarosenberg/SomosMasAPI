@@ -13,16 +13,17 @@ yarn
 
 3) Migrations:
 ``` bash
-npx sequelize-cli db:migrate
+yarn sequelize-cli db:migrate
 ```
 
 4) Seeders:
 ``` bash
-npx sequelize-cli db:seed:all
+yarn sequelize-cli db:seed:all
 ```
 
 ## Start local server
 
 ``` bash
-npm start
+yarn start
+yarn run dev
 ```
