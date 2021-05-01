@@ -5,8 +5,6 @@
  */
 const { sequelize } = require('../src/models');
 
-const { sequelize } = require('../src/models');
-
 var app = require('../src/server');
 var debug = require('debug')('server:server');
 var http = require('http');
