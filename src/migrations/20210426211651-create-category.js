@@ -14,7 +14,7 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'El campo name es requerido'
+            msg: 'name is required'
           }
         }
       },
