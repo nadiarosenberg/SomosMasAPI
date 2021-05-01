@@ -5,11 +5,6 @@ const Role = db.Role;
 const User = db.User;
 
 const authUser = async (req, res, next) => {
-    // check if path is public all user
-    const hasPublicPath = req.originalUrl.split('/').includes('public')
-    if(hasPublicPath){
-        next()
-    }
     // check if has token
     const token = req.get('token')
     let userId;
@@ -24,6 +19,7 @@ const authUser = async (req, res, next) => {
     if(error){
         res.status(403).json({ error })
     }else{
+        // check if the user is valid
         const userJoinRole = await User.findOne({ 
             where:{
                 id: userId
@@ -33,14 +29,13 @@ const authUser = async (req, res, next) => {
             as: 'role'
             }
         });
-        const role = userJoinRole.dataValues.role.name
-        if(role==='Admin'){
-            next()
-        }else{
+        if(userJoinRole===null){
             return res.status(403).json({
                 ok: false,
-                error: `${role} does not have permission to access this content`
+                error: `invalid credentials`
             })
+        }else{
+            next()
         }
     }
 }
