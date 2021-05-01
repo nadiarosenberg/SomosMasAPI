@@ -1,4 +1,4 @@
-const  {Role}  = require('../../app/database/models/index')
+const  {Role}  = require('../models/index')
 const Controller = {}
 
 Controller.get = async (req, res) => {
