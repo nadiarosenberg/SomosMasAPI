@@ -4,8 +4,14 @@ const path = require('path');
 const errorHandler = require('../utils/errorHandler');
 const sendEmail = require('../utils/emailSender');
 const userData = require('../utils/fakeData');
+
+const emailsSource = require('../utils/fakeEmailSource');
+
 const NewReport = db.newreports;
 const Op = db.Sequelize.Op;
+
+// Var
+const emailSource = emailsSource('newReport');
 
 module.exports = {
   create: (req, res) => {
@@ -31,13 +37,15 @@ module.exports = {
     NewReport.create(newreport)
       .then(data => {
         const message = {
-          from: 'alkemyprueba@gmail.com2', 
+          from: emailSource.email, 
           to: userData.email,
           subject: 'Your new report was created successfully',
           text: `${userData.firstName} your new report called ${data.name} was created without a problem.`
         };
-        sendEmail(message);
+
+        sendEmail(emailSource, message);
         res.send(data);
+        
       })
       .catch(err => {
         console.log(err);

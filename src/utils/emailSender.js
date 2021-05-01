@@ -1,29 +1,50 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
 
-const payload = {
-    email: 'alkemyprueba@gmail.com',
-    pass: '123123123asdasd'
-}
 
-const transport = nodemailer.createTransport(smtpTransport({
-    service: 'gmail',
-    auth: {
-        user: payload.email,
-        pass: payload.pass
+
+const emailSender = (emailAccount, data) => {
+
+    const sendEmailTo = (message) => {
+        return transport.sendMail(message, (err, info) => {
+            if (err) {
+              console.log(err)
+              
+            } else {
+              console.log(info);
+            }
+        });
     }
-}));
+        const transport = nodemailer.createTransport(smtpTransport({
+            service: emailAccount.service,
+            auth: {
+                user: emailAccount.email,
+                pass: emailAccount.password
+            }
+        }));
 
-
-const sendEmailTo = (message, data) => {
-    return transport.sendMail(message, (err, info) => {
-        if (err) {
-          console.log(err)
-          
-        } else {
-          console.log(info);
+        const message = {
+            from: data.from,
+            to: data.to,
+            subject: data.subject,
+            text: data.text
         }
-    });
-}
 
-module.exports = sendEmailTo;
+        sendEmailTo(message); 
+
+}
+// // requierd
+// const emailsSource = require('../utils/fakeEmailSource');
+// // var
+// const emailSource = emailsSource('newReport');
+// // message
+// const message = {
+//     from: emailSource.email, 
+//     to: userData.email,
+//     subject: 'Your new report was created successfully',
+//     text: `${userData.firstName} your new report called ${data.name} was created without a problem.`
+//   };
+// // how to send function
+//   sendEmail(emailSource, message);
+
+module.exports = emailSender;
