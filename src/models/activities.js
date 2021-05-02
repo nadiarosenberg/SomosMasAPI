@@ -15,22 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   };
   Activities.init({
     name: {
-		   type: DataTypes.STRING,
-		   allowNull: false,
-		    validate: {
-                       notNull: 
-					   {
-                         args: true,
-                         msg: 'name is required'
-                       }
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull:
+        {
+          args: true,
+          msg: 'name is required'
+        }
       }
-	},
+    },
     content: DataTypes.STRING,
     image: DataTypes.STRING,
-	timestamps: DataTypes.STRING
+    timestamps: DataTypes.STRING
   }, {
     sequelize,
-	paranoid: true,
+    paranoid: true,
     timestamps: true,
     modelName: 'Activities',
   });

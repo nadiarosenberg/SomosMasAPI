@@ -4,28 +4,26 @@ const path = require('path');
 
 const Activity = db.activities;
 const Op = db.Sequelize.Op;
-console.log(db.activities);
 
-// Create and Save a new activity
 exports.create = (req, res) => {
   // Create a activity
 
   const activity = {
-    name: req.body.name ? req.body.name:'pepe',
-    content: req.body.description ? req.body.content:'Loren',
+    name: req.body.name ? req.body.name : 'pepe',
+    content: req.body.description ? req.body.content : 'Loren',
     image: req.body.image ? req.body.image : 'randomimage.png',
     timestamps: Date.now(),
     isDeleted: false,
   };
-  
+
   // Extensions URL
-  const extensionsAvailable = ['png', 'jpg', 'jpeg' ]
-  const ext = path.extname(activity.image||'').split('.');
-  if ( extensionsAvailable.indexOf( ext[ext.length - 1] ) < 0 ) {
+  const extensionsAvailable = ['png', 'jpg', 'jpeg']
+  const ext = path.extname(activity.image || '').split('.');
+  if (extensionsAvailable.indexOf(ext[ext.length - 1]) < 0) {
     return res.status(400).json({
       ok: false,
       message: 'Invalid url',
-      errors: { message: 'You must select a url with extension: ' + extensionsAvailable.join(', ' ) }
+      errors: { message: 'You must select a url with extension: ' + extensionsAvailable.join(', ') }
     })
   }
   /*--------POST-------------------------------*/
@@ -42,11 +40,9 @@ exports.create = (req, res) => {
     });
 };
 
-
-/*-----------------GET ALL---------------------------*/
 exports.findAll = (req, res) => {
 
-  Activity.findAll({paranoid: false})
+  Activity.findAll({ paranoid: false })
     .then(data => {
       res.send(data);
     })
@@ -58,13 +54,12 @@ exports.findAll = (req, res) => {
     });
 };
 
-// *-------------GET Activity by id---------*
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Activity.findByPk(id, )
+  Activity.findByPk(id,)
     .then(data => {
-      if ( data === null ) {
+      if (data === null) {
         res.status(404).send({
           message: `Cannot find Activity with id = ${id}`
         })
@@ -80,7 +75,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-// *-------------UPDATE Activity by id---------*
 exports.update = (req, res) => {
   const id = req.params.id;
   Activity.update(req.body, {
@@ -104,7 +98,6 @@ exports.update = (req, res) => {
     });
 };
 
-// *-------------DELETE Activity by id---------*
 exports.delete = (req, res) => {
   const id = req.params.id;
 
