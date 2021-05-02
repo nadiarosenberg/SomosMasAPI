@@ -5,19 +5,19 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 const key = require("./utils/key");
-const exphbs  = require('express-handlebars')
+const exphbs = require('express-handlebars')
 
 require('dotenv').config();
 
 //Middlewares
 //To verify that the user is admin
-function isAdmin(req, res, next){
+/*function isAdmin(req, res, next){
   if(req.body.isAdmin){
     next();
   }else{
     res.status(403).send(`Sorry, you don't have access to ${req.url}`);
   }
-}
+}*/
 
 const indexRouter = require('./routes/index');
 const organizationsController = require('./controllers/organization');
@@ -37,8 +37,8 @@ const app = express();
 app.use(cors())
 
 app.engine('hbs', exphbs({
-    defaultLayout: 'main',
-    extname: '.hbs'
+  defaultLayout: 'main',
+  extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
 

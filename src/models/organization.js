@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    aboutUsText: DataTypes.TEXT,
+    aboutUsText: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Organization',

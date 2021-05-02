@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Slide.belongsTo(models.Organization, 
+      {
+        as: 'organization',
+        foreignKey: 'organizationId'
+      }
+    );
     }
   };
   Slide.init({
@@ -24,13 +29,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     text: DataTypes.STRING,
-    order: DataTypes.INTEGER,
+    order: {
+      type: DataTypes.INTEGER,
+      unique: true
+    },
     organizationId: DataTypes.INTEGER
-  }, {
+    }, {
     sequelize,
     modelName: 'Slide',
     tableName: 'Slides',
-    timestamps: true
+    timestamps: true,
+    paranoid: true
   });
   return Slide;
 };
