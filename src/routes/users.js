@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { userValidationRules, validate } = require('../middlewares/userValidation')
+const { userValidationRules, validate } = require('../utils/userValidation')
 const  { User }  = require('../models/index')
 const bcrypt = require('bcryptjs');
 
