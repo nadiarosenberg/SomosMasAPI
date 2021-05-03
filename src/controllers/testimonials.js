@@ -46,12 +46,19 @@ const findOne = async (req, res) => {
 }
 
 const update = async (req, res) => {
-  const testimonial_id = req.params.id;
+  const id_body = req.params.id;
   try{
-      const testimonial = await Testimonial.update(req.body, {
-        where: {id: testimonial_id}
+      const testimonial = await Testimonial.findOne({
+          where: {id: id_body}
+      });
+      if(testimonial){
+          const testimonial = await Testimonial.update(req.body,{
+            where: {id: req.params.id}
       })
-      res.status(200).json('Testimonial updated successfully')
+          res.status(200).json('Testimonial updated successfully')
+      }else{
+          res.status(404).json('Testimonial does not exist')
+      }
   }catch(err){
       console.log(err);
       res.send('Error updating testimonial')
@@ -59,15 +66,22 @@ const update = async (req, res) => {
 }
 
 const destroy = async (req, res) => {
-  const testimonial_id = req.params.id;
+  const id_body = req.params.id;
   try{
-      const testimonial = await Testimonial.destroy({
-        where: {id: testimonial_id}
-      })
-      res.status(200).json('Testimonial deleted successfully')
+      const testimonial = await Testimonial.findOne({
+          where: {id: id_body}
+      });
+      if(testimonial){
+          const testimonial = await Testimonial.destroy({
+            where: {id: id_body}
+          })
+          res.status(200).json('Testimonial deleted successfully')
+      }else{
+          res.status(404).json('Testimonial does not exist')
+      }
   }catch(err){
-    console.log(err);
-    res.send('Error deleting testimonial')
+      console.log(err);
+      res.send('Error deleting testimonial')
   }
 }
 
