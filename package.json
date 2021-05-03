@@ -22,7 +22,9 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.3",
     "pino": "^6.11.3",
-    "sequelize": "^6.6.2"
+    "nodemailer": "^6.6.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "sequelize": "^6.3.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",

@@ -4,13 +4,6 @@ const { userValidationRules, validate } = require('../utils/userValidation')
 const  { User }  = require('../models/index')
 const bcrypt = require('bcryptjs');
 
-
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.post('/auth/register',userValidationRules(),validate,async (req, res, next) =>{
   const newUser = req.body
   const data = await User.create({
@@ -25,4 +18,3 @@ router.post('/auth/register',userValidationRules(),validate,async (req, res, nex
 })
 
 module.exports = router;
-

@@ -28,5 +28,7 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.testimonials= require("./testimonial.js")(sequelize, Sequelize);
+db.categories = require("./category.js")(sequelize, Sequelize);
+db.newreports = require("./newreport.js")(sequelize, Sequelize);
 
 module.exports = db;
