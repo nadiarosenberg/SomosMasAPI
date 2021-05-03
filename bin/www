@@ -95,4 +95,17 @@ function onListening() {
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
+
+  // Setup run
+  var env = process.argv[2] || 'dev';
+  switch (env) {
+    case 'dev':
+      // Setup development config
+      // log endpoints
+      require('../src/utils/pinoLogger');
+      break;
+    case 'prod':
+      // Setup production config
+      break;
+  }
 }
