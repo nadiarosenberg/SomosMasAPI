@@ -100,12 +100,9 @@ function onListening() {
   var env = process.argv[2] || 'dev';
   switch (env) {
     case 'dev':
-      // Setup development config
-      // log endpoints
       require('../src/utils/pinoLogger');
       break;
     case 'prod':
-      // Setup production config
       break;
   }
 }
