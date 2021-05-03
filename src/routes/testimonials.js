@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const {Testimonial} = require('../models');
 
-/*---------------------- POST -------------------------------*/
 router.post('/', async(req, res, next) => {
   const body_data = req.body;
   try{
@@ -18,7 +17,6 @@ router.post('/', async(req, res, next) => {
   }
 });
 
-/* ----------------- GET list -----------------------*/
 router.get('/', async(req, res, next) => {
   try{
       const testimonial = await Testimonial.findAll();
@@ -29,11 +27,11 @@ router.get('/', async(req, res, next) => {
   }
 });
 
-/* ------------------GET by ID ---------------------*/
 router.get('/:id', async(req, res, next) => {
+  const id_body = req.params.id;
   try{
-      const testimonial = await Testimonial.findOne(req.body, {
-        where: {id: req.params.id}
+      const testimonial = await Testimonial.findOne({
+        where: {id: id_body}
       })
       res.json(testimonial);
   }catch (err){
@@ -42,11 +40,11 @@ router.get('/:id', async(req, res, next) => {
   }
 });
 
-/* -------------------- UPDATE -------------------------- */
 router.put('/:id', async(req, res, next) => {
+  const testimonial_id = req.params.id;
   try{
       const testimonial = await Testimonial.update(req.body, {
-        where: {id: req.params.id}
+        where: {id: testimonial_id}
       })
       res.json(testimonial);
   }catch(err){
@@ -55,11 +53,11 @@ router.put('/:id', async(req, res, next) => {
   }
 });
 
-/* ---------------- DELETE -------------------- */
 router.delete('/:id', async(req, res, next) => {
+  const testimonial_id = req.params.id;
   try{
       const testimonial = await Testimonial.destroy({
-        where: {id: req.params.id}
+        where: {id: testimonial_id}
       })
       res.json(testimonial);
   }catch(err){
