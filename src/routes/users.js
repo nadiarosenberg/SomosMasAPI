@@ -5,6 +5,7 @@ const  { User }  = require('../models/index')
 const bcrypt = require('bcryptjs');
 
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');

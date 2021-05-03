@@ -1,5 +1,6 @@
 'use strict';
-const {  Model} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
     /**
@@ -11,14 +12,41 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
+
   Role.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    deletedAt: DataTypes.DATE
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'name is required'
+        },
+        notEmpty: true,
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'description is required'
+        },
+        notEmpty: true,
+      }
+    }
   }, {
     sequelize,
     modelName: 'Role',
-    paranoid: true
+    timestamps: true,
+    tableName: 'roles'
   });
   return Role;
 };
