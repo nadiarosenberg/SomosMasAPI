@@ -6,14 +6,14 @@ const persist = async (organizationToPersist) => {
   return result;
 };
 
-const update = async (organizationId, propertiesToUpdate) => {
-  const result = await Organization.update(organizationId, properties, { deleteMissingProperties: true });
+const update = async (id, properties) => {
+  const result = await Organization.update(id, properties, { deleteMissingProperties: true });
   return result;
 };
 
 const getAll = async () => {
   try {
-    let result = await Organization.findAll({
+    const result = await Organization.findAll({
       attributes: ['name', 'image', 'phone', 'address']
     });
     return result;
@@ -23,7 +23,19 @@ const getAll = async () => {
   }
 };
 
-const getOne = async () => {};
+const getOne = async (id) => {
+  try {
+    const result = await Organization.findOne({
+      where: { id },
+      attributes: ['name', 'image', 'phone', 'address']
+    });
+
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({message: error.message})
+  }
+};
 
 const destroy = async () => {};
 
