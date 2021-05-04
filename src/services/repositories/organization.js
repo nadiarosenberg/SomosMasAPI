@@ -2,13 +2,12 @@ const { Organization } = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
 const persist = async (organizationToPersist) => {
-  const result = await Organization.create(organizationToPersist);
-  return result;
-};
-
-const update = async (id, properties) => {
-  const result = await Organization.update(id, properties, { deleteMissingProperties: true });
-  return result;
+  try {
+    const result = await Organization.create(organizationToPersist);
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 const getAll = async () => {
@@ -19,7 +18,6 @@ const getAll = async () => {
     return result;
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message });
   }
 };
 
@@ -33,7 +31,15 @@ const getOne = async (id) => {
     return result;
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({message: error.message})
+  }
+};
+
+const update = async (id, properties) => {
+  try {
+    const result = await Organization.update(properties, { where: { id } });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
   }
 };
 
