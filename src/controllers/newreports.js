@@ -8,7 +8,6 @@ const errorHandler = require("../utils/errorHandler");
 const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
-
 const emailsSource = require("../utils/fakeEmailSource");
 
 const NewReport = db.newreports;
