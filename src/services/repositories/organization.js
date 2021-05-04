@@ -56,10 +56,22 @@ const destroy = async (id) => {
   }
 };
 
+const restore = async (id) => {
+  try {
+    const result = await Organization.restore({
+      where: { id }
+    })
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
+
 module.exports = {
     persist,
     update,
     getAll,
     getOne,
-    destroy
+    destroy,
+    restore
 };
