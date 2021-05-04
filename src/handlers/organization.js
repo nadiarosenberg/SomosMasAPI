@@ -7,7 +7,7 @@ const createOrganization = async (organization) => {
 };
 
 const getAllOrganizations = async () => {
-  const organizations = repository.getAll();
+  const organizations = await repository.getAll();
   return organizations;
 }
 
