@@ -19,7 +19,6 @@ roleId.use((req, res, next) => {
         if (decoded.roleId === ROLE_ID) {
 
           req.decoded = decoded;
-          
           next();
         }
         else {
