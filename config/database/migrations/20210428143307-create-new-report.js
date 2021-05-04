@@ -49,7 +49,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       categoryId: {
-        type: Sequelize.INTEGER,
+        // allowNull: false,
         validate: {
           notNull: {
             args: true,
