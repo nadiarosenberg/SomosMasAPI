@@ -38,7 +38,7 @@ expressRouter.get('/public/:id', async (req, res, next) => {
       return;
     }
 
-    res.status(200).json(result);
+    res.status(200).json(organization);
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
@@ -86,6 +86,20 @@ expressRouter.delete('/:id', async (req, res, next) => {
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
+  }
+})
+
+expressRouter.post('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const organizationDeleted = await handler.retoreOrganization(id);
+    console.log(organizationDeleted);
+    logger.info('Organization restored successfully')
+    res.status(200).json({ message: 'Organization restored successfully'})
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message });
   }
 })
 
