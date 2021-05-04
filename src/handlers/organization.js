@@ -1,5 +1,5 @@
 const repository = require('./../services/repositories/organization');
-
+const logger = require('../utils/pinoLogger');
 
 const createOrganization = async (organization) => {
   const createdOrganization = await repository.persist(organization);
@@ -11,8 +11,8 @@ const getAllOrganizations = async () => {
   return organizations;
 }
 
-const getOrganizationById = async (organizationId) => {
-  const organization = repository.get(organizationId);
+const getOrganizationById = async (id) => {
+  const organization = await repository.getOne(id);
   return organization;
 }
 
