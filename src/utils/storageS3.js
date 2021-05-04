@@ -1,6 +1,4 @@
 "use strict";
-const path = require("path");
-const fs = require("fs");
 require("dotenv").config();
 
 const AWS = require("aws-sdk");
@@ -10,57 +8,46 @@ AWS.config.update({
   AWS_REGION: process.env.AWS_DEFAULT_REGION,
 });
 
-// Import the Amazon S3 service client
 const S3 = require("aws-sdk/clients/s3");
 
-// Set credentials and Region
 const s3 = new S3({
   apiVersion: "2006-03-01",
   maxRetries: 15,
 });
 
-function uploadToBucket(buffer, key , callback) {
-  // call S3 to retrieve upload file to specified bucket
-  var uploadParams = { Bucket: process.env.BUCKET_NAME, Key: "", Body: "" };
+const uploadToBucket = (buffer, key, callback) => {
+  var uploadParams = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key,
+    Body: buffer,
+  };
 
-
-  // Configure the file stream and obtain the upload parameters
-  uploadParams.Body = buffer
-  uploadParams.Key = key
-
-  // call S3 to retrieve upload file to specified bucket
-  // Example Use: node storageS3.uploadToBucket('C:/Users/Gastón/Desktop/images3.jpg') 
   s3.upload(uploadParams, (err, data) => {
-    callback(err, data)
+    callback(err, data);
   });
-}
+};
 
-function deleteObjectOnBucket(fileNameToDelete) {
-  // call S3 to delete file to specified bucket
-  var deleteParams = { Bucket: process.env.BUCKET_NAME, Key: "" };
-  var file = fileNameToDelete
-  deleteParams.Key = path.basename(file);
+const deleteObjectOnBucket = (key) => {
+  var deleteParams = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key,
+  };
 
-  // call S3 to delete file to specified bucket
-  // Example Use: node storageS3.deleteObjectOnBucket('images3.jpg') 
   s3.deleteObject(deleteParams, (err, data) => {
     if (err) {
       console.log(err, err.stack);
     } else {
-      console.log('Object Deleted', data);
+      console.log("Object Deleted", data);
     }
   });
-}
+};
 
-function objectListOnBucket(objectFileName) {
-  // Create the parameters for calling listObjects
+const objectListOnBucket = (objectFileName = "") => {
   var bucketParams = {
     Bucket: process.env.BUCKET_NAME,
     Prefix: objectFileName,
   };
 
-  // Call S3 to obtain a list of the objects in the bucket
-  // Example Use: node storageS3.objectListOnBucket('images')
   s3.listObjects(bucketParams, (err, data) => {
     if (err) {
       console.log("Error", err);
@@ -68,7 +55,7 @@ function objectListOnBucket(objectFileName) {
       console.log(data.Contents);
     }
   });
-}
+};
 
 module.exports = {
   uploadToBucket,
