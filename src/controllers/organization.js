@@ -1,8 +1,9 @@
 const expressRouter = require('express').Router();
 const handler = require('./../handlers/organization');
 const logger = require('../utils/pinoLogger');
+const roleIdMiddleware = require("../controllers/middlewares/roleId.js");
 
-expressRouter.post('/', async (req, res, next) => {
+expressRouter.post('/', roleIdMiddleware, async (req, res, next) => {
   try {
       const organizationToCreate = req.body;
       const result = await handler.createOrganization(organizationToCreate);
@@ -27,7 +28,7 @@ expressRouter.get('/', async (req, res, next) => {
   }
 });
 
-expressRouter.get('/public/:id', async (req, res, next) => {
+expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const organization = await handler.getOrganizationById(id);
@@ -45,7 +46,7 @@ expressRouter.get('/public/:id', async (req, res, next) => {
   }
 });
 
-expressRouter.put('/public/:id', async (req, res, next) => {
+expressRouter.put('/public/:id', roleIdMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -67,7 +68,7 @@ expressRouter.put('/public/:id', async (req, res, next) => {
   }
 });
 
-expressRouter.delete('/:id', async (req, res, next) => {
+expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -89,7 +90,7 @@ expressRouter.delete('/:id', async (req, res, next) => {
   }
 })
 
-expressRouter.post('/:id', async (req, res, next) => {
+expressRouter.post('/:id', roleIdMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
 
