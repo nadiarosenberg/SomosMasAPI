@@ -27,4 +27,15 @@ expressRouter.get('/', async (req, res, next) => {
   }
 })
 
+expressRouter.get('/public/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await handler.getOrganizationById(id);
+    res.status(200).json(result);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+})
+
 module.exports = expressRouter;
