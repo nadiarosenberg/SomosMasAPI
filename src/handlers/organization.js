@@ -20,9 +20,15 @@ const updateOrganization = async (id,properties) => {
   return organization;
 }
 
+const deleteOrganization = async (id) => {
+  const organization = await repository.destroy(id);
+  return organization;
+}
+
 module.exports = {
   createOrganization,
   getAllOrganizations,
   getOrganizationById,
-  updateOrganization
+  updateOrganization,
+  deleteOrganization
 };
