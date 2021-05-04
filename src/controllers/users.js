@@ -11,7 +11,7 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
     try {
         const user = req.body;
         const result = await handler.createUser(user);
-        res.status(204).json(result);
+        res.status(200).json(result);
     } catch (e) {
         res.status(400).json({
             ok: false,
@@ -22,10 +22,16 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
 
 router.put('/:id', userValidationPutRules(), validate, async (req, res, next) => {
     try {
-        const newUser = req.body;
-        if (newUser.password) {
-            newUser.password = bcrypt.hashSync(newUser.password, 8);
-        }
+        const user = req.body;
+        const id = req.params.id
+        const result = await handler.updateUser(id, user);
+        result[0] === 1 ? res.json({
+            ok: true,
+            msj: 'user updated successfully'
+          }) : res.status(400).json({
+            ok: false,
+            msj: 'failed to update user'
+          });
     } catch (e) {
         res.status(400).json({
             ok: false,

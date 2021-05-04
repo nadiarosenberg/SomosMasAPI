@@ -5,7 +5,13 @@ const createUser = async (user) => {
     return createdUser;
 };
 
+const updateUser = async (userId, user) => {
+    const updatedUser = await repository.update(userId, user);
+    return updatedUser;
+};
+
 
 module.exports = {
-    createUser
+    createUser,
+    updateUser
 };
