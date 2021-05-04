@@ -21,9 +21,7 @@ const categoriesRouter = require('./controllers/category');
 const app = express();
 
 app.use(cors())
-
 app.set('key', key.key);
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
