@@ -8,7 +8,7 @@ const key = require("./utils/key");
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./controllers/users');
 const organizationRouter = require('./routes/organization');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
