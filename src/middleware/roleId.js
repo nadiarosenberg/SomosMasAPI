@@ -17,8 +17,7 @@ roleId.use((req, res, next) => {
         if (decoded.roleId === "1") {
 
           req.decoded = decoded;
-          return res.json({ mensaje: 'access granted' });
-
+          // return res.json({ mensaje: 'access granted' });
           next();
         }
         else {
