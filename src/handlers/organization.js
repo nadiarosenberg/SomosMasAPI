@@ -1,5 +1,4 @@
 const repository = require('./../services/repositories/organization');
-const logger = require('../utils/pinoLogger');
 
 const createOrganization = async (organization) => {
   const createdOrganization = await repository.persist(organization);
@@ -16,8 +15,14 @@ const getOrganizationById = async (id) => {
   return organization;
 }
 
+const updateOrganization = async (id,properties) => {
+  const organization = await repository.update(id, properties);
+  return organization;
+}
+
 module.exports = {
   createOrganization,
   getAllOrganizations,
-  getOrganizationById
+  getOrganizationById,
+  updateOrganization
 };
