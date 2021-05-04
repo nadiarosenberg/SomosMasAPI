@@ -36,14 +36,25 @@ const getOne = async (id) => {
 
 const update = async (id, properties) => {
   try {
-    const result = await Organization.update(properties, { where: { id } });
+    const result = await Organization.update(properties, { 
+      where: { id } 
+    });
     return result;
   } catch (error) {
     logger.error(error.message);
   }
 };
 
-const destroy = async () => {};
+const destroy = async (id) => {
+  try {
+    const result = await Organization.destroy({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 
 module.exports = {
     persist,
