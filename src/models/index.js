@@ -31,5 +31,7 @@ db.testimonials= require("./testimonial.js")(sequelize, Sequelize);
 db.categories = require("./category.js")(sequelize, Sequelize);
 db.newreports = require("./newreport.js")(sequelize, Sequelize);
 db.users = require("./user.js")(sequelize, Sequelize);
+db.activities= require("./activity.js")(sequelize, Sequelize);
+db.activities = require("./activities.js")(sequelize, Sequelize);
 
 module.exports = db;
