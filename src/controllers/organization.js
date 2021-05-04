@@ -2,8 +2,9 @@ const expressRouter = require('express').Router();
 const handler = require('./../handlers/organization');
 const logger = require('../utils/pinoLogger');
 const roleIdMiddleware = require("../controllers/middlewares/roleId.js");
+const { orgValidationRules, validate } = require('../controllers/middlewares/organizationValidation');
 
-expressRouter.post('/', roleIdMiddleware, async (req, res, next) => {
+expressRouter.post('/', roleIdMiddleware, orgValidationRules(), validate, async (req, res, next) => {
   try {
       const organizationToCreate = req.body;
       const result = await handler.createOrganization(organizationToCreate);
