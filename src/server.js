@@ -8,8 +8,8 @@ const key = require("./utils/key");
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./controllers/users');
-const organizationRouter = require('./routes/organization');
+const usersRouter = require('./routes/users');
+const organizationsController = require('./controllers/organization');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
 const membersRouter = require('./routes/members');
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/organizations', organizationRouter);
+// app.use('/organizations', organizationRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/auth', authRouter);
 app.use('/members', membersRouter);
@@ -42,6 +42,8 @@ app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
 app.use('/news', newsRouter);
 app.use('/activities', activitiesRouter);
+app.use('/users', usersRouter);
+app.use('/organizations', organizationsController)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
