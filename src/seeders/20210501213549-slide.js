@@ -4,20 +4,19 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Slides', [{
       imageUrl: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
-      text: 'text',
+      text: 'text1',
       order: 1,
-      //organizationId: 1,
+      organizationId: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     },{
       imageUrl: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
-      text: 'text',
+      text: 'text2',
       order: 2,
-      //organizationId: 2,
+      organizationId: 2,
       createdAt: new Date(),
       updatedAt: new Date()
-    }
-    ], {});
+    }], {});
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -26,6 +25,6 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-     */
+    */
   }
 };
