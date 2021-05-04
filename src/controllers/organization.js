@@ -18,7 +18,7 @@ expressRouter.post('/', roleIdMiddleware, async (req, res, next) => {
   }
 });
 
-expressRouter.get('/', async (req, res, next) => {
+expressRouter.get('/', roleIdMiddleware,async (req, res, next) => {
   try {
     const results = await handler.getAllOrganizations();
     res.status(200).json(results);
