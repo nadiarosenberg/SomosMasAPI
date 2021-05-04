@@ -15,7 +15,6 @@ module.exports = {
       description: req.body.description,
       image: req.body.image ? req.body.image : 'default-image.png',
       timestamps: Date.now(),
-      isDeleted: false,
     };
     
     const extensionsAvailable = ['png', 'jpg', 'jpeg' ]
