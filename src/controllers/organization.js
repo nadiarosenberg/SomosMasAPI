@@ -25,7 +25,7 @@ expressRouter.get('/', async (req, res, next) => {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
   }
-})
+});
 
 expressRouter.get('/public/:id', async (req, res, next) => {
   try {
@@ -36,6 +36,28 @@ expressRouter.get('/public/:id', async (req, res, next) => {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
   }
-})
+});
+
+expressRouter.put('/public/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let organization = await handler.getOrganizationById(id);
+
+    if (!organization) {
+      logger.warn('Organization not found');
+      res.status(404).json({ message: 'Organization not found' });
+      return;
+    }
+
+    await handler.updateOrganization(id, updateValues);
+    logger.info('Organization updated successfully');
+    res.status(200).json({ message: 'Organization updated successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
 
 module.exports = expressRouter;
