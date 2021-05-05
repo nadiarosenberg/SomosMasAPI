@@ -1,95 +1,72 @@
-const db = require("../models");
-const Slide = db.Slide;
+'use strict'
+var express = require('express');
+var Router = express.Router();
 
-const create = async (req, res) => {
-  const body_data = req.body;
+Router.post('/', async (req, res, next)=>{
   try {
-    const slide = await Slide.create({
-      imageUrl: body_data.imageUrl,
-      text: body_data.text,
-      order: body_data.order,
-      organizationId: body_data.organizationId,
-    });
-    res.json(slide);
-  } catch (err) {
+    const slide = req.body;
+    const result = await handler.createSlide(slide);
+    res.status(200).json(result);
+  }catch (err) {
     console.log(err);
     res.send("Error posting slide");
   }
-};
+});
 
-const findAll = async (req, res) => {
-  try {
-    const slide = await Slide.findAll({
-      order: [["order", "ASC"]],
-    });
-    res.json(slide);
-  } catch (err) {
-    console.log(err);
-    res.send("Error getting slides");
-  }
-};
+Router.get('/', async(req, res, next)=>{
+    try {
+      const result = await handler.getSlides(slide);
+      res.json(slide);
+    } catch (err) {
+      console.log(err);
+      res.send("Error getting slides");
+    }
+});
 
-const findOne = async (req, res) => {
-  const id_body = req.params.id;
+Router.get('/:id', async (req, res, next) => {
   try {
-    const slide = await Slide.findOne({
-      where: { id: id_body },
-    });
+    const slideId = req.params.id;
+    const slide = await handler.getSlide(slideId);
     if (slide) {
       res.json(slide);
     } else {
       res.status(404).json("Slide not found");
     }
-  } catch (err) {
+  }catch (err) {
     console.log(err);
     res.send("Error getting slide");
   }
-};
+});
 
-const update = async (req, res) => {
-  const id_body = req.params.id;
-  try {
-    const slide = await Slide.findOne({
-      where: { id: id_body },
-    });
-    if (slide) {
-      const slide = await Slide.update(req.body, {
-        where: { id: req.params.id },
-      });
-      res.status(200).json("Slide updated successfully");
-    } else {
-      res.status(404).json("Slide does not exist");
+Router.put('/:id', async (req, res) => {
+    const slideId = req.params.id;
+    const slide = req.body;
+    try {
+      const result = await handler.updateSlide(slideId, slide);
+      if (slide) {
+        res.status(200).json("Slide updated successfully");
+      } else {
+        res.status(404).json("Slide does not exist");
+      }
+    } catch (err) {
+      console.log(err);
+      res.send("Error updating slide");
     }
-  } catch (err) {
-    console.log(err);
-    res.send("Error updating slide");
-  }
-};
+});
 
-const destroy = async (req, res) => {
-  const id_body = req.params.id;
-  try {
-    const slide = await Slide.findOne({
-      where: { id: id_body },
-    });
-    if (slide) {
-      const slide = await Slide.destroy({
-        where: { id: id_body },
-      });
-      res.status(200).json("Slide deleted successfully");
-    } else {
-      res.status(404).json("Slide does not exist");
+Router.delete('/:id', async (req, res) => {
+    const slideId = req.params.id;
+    try {
+      const slide = await hadler.deleteSlide(slideId);
+      if (slide) {
+        res.status(200).json("Slide deleted successfully");
+      } else {
+        res.status(404).json("Slide does not exist");
+      }
+    } catch (err) {
+      console.log(err);
+      res.send("Error deleting slide");
     }
-  } catch (err) {
-    console.log(err);
-    res.send("Error deleting slide");
-  }
-};
+});
 
-module.exports = {
-  create,
-  findAll,
-  findOne,
-  update,
-  destroy,
-};
+module.exports = Router;

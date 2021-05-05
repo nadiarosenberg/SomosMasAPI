@@ -20,8 +20,8 @@ const getSlide = async (slideId) => {
     return getOneSlide;
 };
 
-const getSlides = async (slideId) => {
-    const getAllSlides = await repository.findAll(slideId);
+const getSlides = async () => {
+    const getAllSlides = await repository.findAll();
     return getAllSlides;
 };
 
