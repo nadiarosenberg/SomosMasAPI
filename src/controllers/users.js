@@ -4,8 +4,9 @@ const {
   userValidationRules,
   validate,
   userValidationPutRules
-} = require('./middlewares/userValidation')
+} = require('./middlewares/userValidation');
 const handler = require('./../handlers/users');
+const isAdmin = require('../middleware/roleId');
 
 const wasUpdated = (result, req, res) => {
   result[0] === 1 ? res.json({
@@ -44,7 +45,7 @@ router.put('/:id', userValidationPutRules(), validate, async (req, res, next) =>
   }
 });
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const results = await handler.getAllUsers();
     res.status(200).json(results);

@@ -10,7 +10,7 @@ const updateUser = async (userId, user) => {
     return updatedUser;
 };
 
-const getAllUsers = async (user) => {
+const getAllUsers = async () => {
     const users = await repository.getAll();
     return users;
 };

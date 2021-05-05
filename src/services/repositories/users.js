@@ -21,17 +21,16 @@ const update = async (userId, user) => {
         }
     });
     return result;
-}
+};
 
 const getAll = async () => {
     try {
         const result = await User.findAll({
-            attributes: ['firstName', 'lastName', 'email', 'content', 'image']
+            attributes: ["firstName", "lastName", "email", "photo"],
         });
         return result;
     } catch (error) {
-        console.log(err);
-        res.send("Error getting users");
+        console.log(error);
     }
 };
 
