@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 const key = require("./utils/key");
-require('dotenv').config()
+const exphbs  = require('express-handlebars')
+
+require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const organizationsController = require('./controllers/organization');
@@ -22,6 +24,10 @@ const activitiesRouter = require('./controllers/activities');
 const app = express();
 
 app.use(cors())
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
 app.set('key', key.key);
 app.use(logger('dev'));
 app.use(express.json());
