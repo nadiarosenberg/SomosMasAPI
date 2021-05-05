@@ -19,7 +19,20 @@ const getAll = async () => {
   }
 }
 
+const getOne = async (id) => {
+  try {
+    const result = await Activities.fondOne({
+      where: { id }
+    });
+
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 module.exports = {
   persist,
-  getAll
+  getAll,
+  getOne
 }
