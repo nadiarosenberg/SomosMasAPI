@@ -10,6 +10,16 @@ const persist = async (activityToPersist) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const result = await Organization.findAll({});
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
+
 module.exports = {
-  persist
+  persist,
+  getAll
 }
