@@ -1,65 +1,62 @@
-const {Slide} = require("../models/index");
+const { Slide } = require("../../models/index");
 
 const persist = async (slide) => {
-    try {
-        const result = await Slide.create(slide);
-        return result;
-    }catch (error) {
-        console.log(error);
-        res.send("Error posting slides");
-    }
-};
-    
-const findAll = async () => {
   try {
-    const result = await Slide.findAll();
+    const result = await Slide.create(slide);
     return result;
   } catch (error) {
     console.log(error);
-    res.send("Error getting slides");
   }
 };
 
-const findOne = async (slideId) => {
+const findAll = async () => {
+  try {
+    const result = await Slide.findAll({
+      order: [['order', 'ASC']]
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const findOne = async (id) => {
   try {
     const result = await Slide.findOne({
-        where: {slideId}
+      where: {id},
     });
-    return result
+    return result;
   } catch (error) {
     console.log(error);
-    res.send("Error getting slide");
   }
 };
 
-const update = async (slideId, slide) => {
+const update = async (id, slide) => {
   try {
-      const result = await Slide.update({
-          where: {slideId}
-      })
-      return result
+    const result = await Slide.update({
+      where: {id},
+    });
+    return result;
   } catch (error) {
     console.log(error);
-    res.send("Error updating slide");
   }
 };
 
-const destroy = async (slideId) => {
+const destroy = async (id) => {
   try {
     const result = await Slide.destroy({
-      where: {slideId},
-    })
-    return result
+      where: {id},
+    });
+    return result;
   } catch (error) {
     console.log(error);
-    res.send("Error deleting slide");
   }
 };
 
 module.exports = {
-    persist,
-    findAll,
-    findOne,
-    update,
-    destroy
+  persist,
+  findAll,
+  findOne,
+  update,
+  destroy,
 };

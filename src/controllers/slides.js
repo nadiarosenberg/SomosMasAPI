@@ -1,6 +1,7 @@
 'use strict'
 var express = require('express');
 var Router = express.Router();
+var handler = require('../handlers/slides')
 
 Router.post('/', async (req, res, next)=>{
   try {
@@ -15,8 +16,8 @@ Router.post('/', async (req, res, next)=>{
 
 Router.get('/', async(req, res, next)=>{
     try {
-      const result = await handler.getSlides(slide);
-      res.json(slide);
+      const result = await handler.getSlides();
+      res.status(200).json(result);
     } catch (err) {
       console.log(err);
       res.send("Error getting slides");
@@ -25,8 +26,8 @@ Router.get('/', async(req, res, next)=>{
 
 Router.get('/:id', async (req, res, next) => {
   try {
-    const slideId = req.params.id;
-    const slide = await handler.getSlide(slideId);
+    const {id} = req.params;
+    const slide = await handler.getSlide(id);
     if (slide) {
       res.json(slide);
     } else {
@@ -39,10 +40,10 @@ Router.get('/:id', async (req, res, next) => {
 });
 
 Router.put('/:id', async (req, res) => {
-    const slideId = req.params.id;
+     const {id} = req.params;
     const slide = req.body;
     try {
-      const result = await handler.updateSlide(slideId, slide);
+      const result = await handler.updateSlide(id, slide);
       if (slide) {
         res.status(200).json("Slide updated successfully");
       } else {
@@ -55,9 +56,9 @@ Router.put('/:id', async (req, res) => {
 });
 
 Router.delete('/:id', async (req, res) => {
-    const slideId = req.params.id;
+     const {id} = req.params;
     try {
-      const slide = await hadler.deleteSlide(slideId);
+      const slide = await handler.deleteSlide(id);
       if (slide) {
         res.status(200).json("Slide deleted successfully");
       } else {

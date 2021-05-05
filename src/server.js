@@ -9,16 +9,6 @@ const exphbs = require('express-handlebars')
 
 require('dotenv').config();
 
-//Middlewares
-//To verify that the user is admin
-/*function isAdmin(req, res, next){
-  if(req.body.isAdmin){
-    next();
-  }else{
-    res.status(403).send(`Sorry, you don't have access to ${req.url}`);
-  }
-}*/
-
 const indexRouter = require('./routes/index');
 const organizationsController = require('./controllers/organization');
 const usersRouter = require('./controllers/users')
@@ -30,7 +20,7 @@ const newsRouter = require('./routes/newreports');
 const newReportRouter = require('./controllers/newreports').newReportRouter;
 const categoriesRouter = require('./controllers/category');
 const activitiesRouter = require('./controllers/activities');
-const slidesRouter = require('./routes/slides');
+const slidesRouter = require('./controllers/slides');
 
 const app = express();
 

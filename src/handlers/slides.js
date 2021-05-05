@@ -5,18 +5,18 @@ const createSlide = async (slide) => {
     return createdSlide;
 };
 
-const updateSlide = async (slideId, slide) => {
-    const updatedSlide = await repository.update(slideId, slide);
+const updateSlide = async (id, slide) => {
+    const updatedSlide = await repository.update(id, slide);
     return updatedSlide;
 };
 
-const deleteSlide = async (slideId) => {
-    const deletedSlide = await repository.destroy(slideId);
+const deleteSlide = async (id) => {
+    const deletedSlide = await repository.destroy(id);
     return deletedSlide;
 };
 
-const getSlide = async (slideId) => {
-    const getOneSlide = await repository.findOne(slideId);
+const getSlide = async (id) => {
+    const getOneSlide = await repository.findOne(id);
     return getOneSlide;
 };
 
