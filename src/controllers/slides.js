@@ -1,9 +1,11 @@
 'use strict'
-var express = require('express');
-var Router = express.Router();
-var handler = require('../handlers/slides')
+const express = require('express');
+const Router = express.Router();
+const handler = require('../handlers/slides');
+const isAdmin = require('../middleware/roleId');
 
-Router.post('/', async (req, res, next)=>{
+
+Router.post('/', isAdmin, async (req, res, next)=>{
   try {
     const slide = req.body;
     const result = await handler.createSlide(slide);
@@ -14,7 +16,7 @@ Router.post('/', async (req, res, next)=>{
   }
 });
 
-Router.get('/', async(req, res, next)=>{
+Router.get('/', isAdmin, async(req, res, next)=>{
     try {
       const result = await handler.getSlides();
       res.status(200).json(result);
@@ -24,7 +26,7 @@ Router.get('/', async(req, res, next)=>{
     }
 });
 
-Router.get('/:id', async (req, res, next) => {
+Router.get('/:id', isAdmin, async (req, res, next) => {
   try {
     const {id} = req.params;
     const slide = await handler.getSlide(id);
@@ -39,7 +41,7 @@ Router.get('/:id', async (req, res, next) => {
   }
 });
 
-Router.put('/:id', async (req, res) => {
+Router.put('/:id', isAdmin, async (req, res) => {
      const {id} = req.params;
     const slide = req.body;
     try {
@@ -55,7 +57,7 @@ Router.put('/:id', async (req, res) => {
     }
 });
 
-Router.delete('/:id', async (req, res) => {
+Router.delete('/:id', isAdmin, async (req, res) => {
      const {id} = req.params;
     try {
       const slide = await handler.deleteSlide(id);
