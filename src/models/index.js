@@ -27,10 +27,10 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.testimonials= require("./testimonial.js")(sequelize, Sequelize);
-db.categories = require("./category.js")(sequelize, Sequelize);
-db.newreports = require("./newreport.js")(sequelize, Sequelize);
-db.users = require("./user.js")(sequelize, Sequelize);
-db.activities = require("./activities.js")(sequelize, Sequelize);
+db.testimonials= require("./testimonial")(sequelize, Sequelize);
+db.categories = require("./category")(sequelize, Sequelize);
+db.newreports = require("./newreport")(sequelize, Sequelize);
+db.users = require("./user")(sequelize, Sequelize);
+db.activities = require("./activities")(sequelize, Sequelize);
 
 module.exports = db;
