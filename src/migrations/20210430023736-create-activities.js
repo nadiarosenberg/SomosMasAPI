@@ -11,19 +11,11 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      content: {
-        type: Sequelize.STRING
-      },
       image: {
         type: Sequelize.STRING
       },
-      deletedAt: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
-      timestamps: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      content: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +24,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
       }
     });
   },
