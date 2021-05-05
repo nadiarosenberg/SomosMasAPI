@@ -33,6 +33,16 @@ expressRouter.post('/',  roleIdMiddleware, activityValidationRules(), validate, 
     logger.error(error.message);
     res.status(500).json({ message: error.message});
   }
-})
+});
+
+expressRouter.get('/', async (req, res) => {
+  try {
+    const results = await handler.getAllActivities();
+    res.status(200).json(results);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
 
 module.exports = expressRouter;

@@ -12,7 +12,7 @@ const persist = async (activityToPersist) => {
 
 const getAll = async () => {
   try {
-    const result = await Organization.findAll({});
+    const result = await Activities.findAll({});
     return result;
   } catch (error) {
     logger.error(error.message);
