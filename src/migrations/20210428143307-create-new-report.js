@@ -39,7 +39,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       categoryId: {
-        allowNull: false,
         validate: {
           notNull: {
             args: true,

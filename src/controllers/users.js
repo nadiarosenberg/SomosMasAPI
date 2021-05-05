@@ -14,8 +14,8 @@ const wasUpdated = (result, req , res) => {
     }) : res.status(400).json({
         ok: false,
         msj: 'failed to update user'
-    });
-}
+      });
+    }
 
 router.post('/auth/register', userValidationRules(), validate, async (req, res, next) => {
     try {

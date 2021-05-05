@@ -7,8 +7,8 @@
     "dev": "nodemon ./bin/www | pino-pretty"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -21,10 +21,10 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.3",
-    "pino": "^6.11.3",
     "nodemailer": "^6.6.0",
     "nodemailer-smtp-transport": "^2.7.4",
-    "sequelize": "^6.3.5"
+    "pino": "^6.11.3",
+    "sequelize": "^6.6.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",

@@ -23,9 +23,21 @@ const update = async (userId, user) => {
     return result;
 }
 
-
+const getAll = async () => {
+    try {
+        const result = await User.findAll({
+            attributes: ['firstName', 'lastName', 'email', 'content', 'image']
+        });
+        return result;
+    } catch (error) {
+        console.log(err);
+        res.send("Error getting users");
+    }
+};
 
 module.exports = {
     persist,
-    update
+    update,
+    getAll
 };
+
