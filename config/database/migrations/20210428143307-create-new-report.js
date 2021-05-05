@@ -49,6 +49,7 @@ module.exports = {
       },
       categoryId: {
         // allowNull: false,
+        type: Sequelize.INTEGER,
         validate: {
           notNull: {
             args: true,
