@@ -41,7 +41,6 @@ app.use('/members', membersRouter);
 app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
 app.use('/news', newsRouter);
-app.use('/users', usersRouter);
 app.use('/activities', activitiesRouter);
 
 // catch 404 and forward to error handler
