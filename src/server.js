@@ -17,10 +17,8 @@ const rolesRouter = require('./routes/roles');
 const newsRouter = require('./routes/newreports');
 const activitiesRouter = require('./routes/activities');
 const categoriesRouter = require('./controllers/category');
-
-
-
 const app = express();
+
 app.use(cors())
 
 app.set('key', key.key);
