@@ -7,6 +7,12 @@ const createActivity = async (activity) => {
   }
 };
 
+const getAllActivities = async (req, res) => {
+  const activities = await repository.getAll();
+  return activities;
+};
+
 module.exports = {
-  createActivity
+  createActivity,
+  getAllActivities
 }
