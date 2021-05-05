@@ -1,11 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const slides = require('../controllers/slides');
+const slidesCtrl = require("../controllers/slides");
+const isAdmin = require("../middleware/roleId.js");
 
-router.post('/', slides.create);
-router.get('/', slides.findAll);
-router.get('/:id', slides.findOne);
-router.put('/:id', slides.update);
-router.delete('/:id', slides.destroy);
+router.post("/", isAdmin, slidesCtrl.create);
+router.get("/", isAdmin, slidesCtrl.findAll);
+router.get("/:id", isAdmin, slidesCtrl.findOne);
+router.put("/:id", isAdmin, slidesCtrl.update);
+router.delete("/:id", isAdmin, slidesCtrl.destroy);
 
 module.exports = router;
