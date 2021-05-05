@@ -10,10 +10,7 @@ const updateUser = async (userId, user) => {
     return updatedUser;
 };
 
-const getAllUsers = async () => {
-    const users = await repository.getAll();
-    return users;
-};
+const getAllUsers = async () => await repository.getAll();
 
 module.exports = {
     createUser,

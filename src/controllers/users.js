@@ -7,6 +7,9 @@ const {
 } = require('./middlewares/userValidation');
 const handler = require('./../handlers/users');
 const isAdmin = require('../middleware/roleId');
+const app = express();
+const roleIdMid=require("../middleware/roleId.js");
+app.set('key', key.key);
 
 const wasUpdated = (result, req, res) => {
   result[0] === 1 ? res.json({
