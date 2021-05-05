@@ -7,7 +7,7 @@ const createActivity = async (activity) => {
   }
 };
 
-const getAllActivities = async (req, res) => {
+const getAllActivities = async () => {
   const activities = await repository.getAll();
   return activities;
 };
