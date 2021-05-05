@@ -12,7 +12,13 @@ const getAllActivities = async () => {
   return activities;
 };
 
+const getActivityById = async (activityId) => {
+  const anActivity = await repository.getOne(activityId);
+  return anActivity;
+}
+
 module.exports = {
   createActivity,
-  getAllActivities
+  getAllActivities,
+  getActivityById
 }
