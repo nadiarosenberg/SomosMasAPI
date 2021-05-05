@@ -2,12 +2,14 @@ const expressRouter = require('express').Router();
 const path = require('path');
 const handler = require('../handlers/activity');
 const logger = require('../utils/pinoLogger');
+const roleIdMiddleware = require("../controllers/middlewares/roleId.js");
+const { activityValidationRules, validate } = require('../controllers/middlewares/activityValidation');
 
 // borrar
 // const Activity = db.activity;
 // const Op = db.Sequelize.Op;
 
-expressRouter.post('/', async (req, res) => {
+expressRouter.post('/',  roleIdMiddleware, activityValidationRules(), validate, async (req, res) => {
   try {
     const activity = {
       name: req.body.name ? req.body.name : 'pepe',
