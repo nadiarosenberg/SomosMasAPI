@@ -1,4 +1,4 @@
-const repository = require('./../services/repositories/activity');
+const repository = require('../services/repositories/activity');
 
 const createActivity = async (activity) => {
   {
