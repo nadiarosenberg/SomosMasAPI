@@ -39,13 +39,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       categoryId: {
+        type: Sequelize.INTEGER,
         validate: {
           notNull: {
             args: true,
             msg: 'image is required'
           }
         },
-        type: Sequelize.INTEGER,
         references: {
           model: 'Categories',
           key: 'id',
