@@ -10,7 +10,10 @@ const emailSource = emailsSource("newReport");
 const getOne = async (id) => {
   try {
     const result = await NewReport.findOne({
-      where: { id }
+      where: { id },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'deletedAt', 'timestamps']
+      }
     });
     return result;
   } catch (error) {
