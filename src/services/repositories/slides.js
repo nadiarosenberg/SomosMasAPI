@@ -1,3 +1,5 @@
+
+'use strict'
 const { Slide } = require("../../models/index");
 
 const persist = async (slide) => {
@@ -31,10 +33,11 @@ const findOne = async (id) => {
   }
 };
 
-const update = async (id, slide) => {
+const update = async (slide, id) => {
+  console.log(slide);
   try {
-    const result = await Slide.update({
-      where: {id},
+    const result = await Slide.update(slide, {
+      where: {id}
     });
     return result;
   } catch (error) {
@@ -58,5 +61,5 @@ module.exports = {
   findAll,
   findOne,
   update,
-  destroy,
-};
+  destroy
+}

@@ -1,29 +1,14 @@
 const repository = require('../services/repositories/slides');
 
-const createSlide = async (slide) => {
-    const createdSlide = await repository.persist(slide);
-    return createdSlide;
-};
+const createSlide = async (slide) => await repository.persist(slide);
 
-const updateSlide = async (id, slide) => {
-    const updatedSlide = await repository.update(id, slide);
-    return updatedSlide;
-};
+const updateSlide = async (slide, id) => await repository.update(slide, id);
 
-const deleteSlide = async (id) => {
-    const deletedSlide = await repository.destroy(id);
-    return deletedSlide;
-};
+const deleteSlide = async (id) => await repository.destroy(id);
 
-const getSlide = async (id) => {
-    const getOneSlide = await repository.findOne(id);
-    return getOneSlide;
-};
+const getSlide = async (id) => await repository.findOne(id);
 
-const getSlides = async () => {
-    const getAllSlides = await repository.findAll();
-    return getAllSlides;
-};
+const getSlides = async () => await repository.findAll();
 
 module.exports = {
     createSlide,
