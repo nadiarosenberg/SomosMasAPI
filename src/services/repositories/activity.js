@@ -21,7 +21,7 @@ const getAll = async () => {
 
 const getOne = async (id) => {
   try {
-    const result = await Activities.fondOne({
+    const result = await Activities.findOne({
       where: { id }
     });
 

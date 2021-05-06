@@ -45,4 +45,22 @@ expressRouter.get('/', async (req, res) => {
   }
 });
 
+expressRouter.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const activity = await handler.getActivityById(id);
+
+    if (!activity) {
+      logger.warn('Activity not found');
+      res.status(404).json({ message: 'activity not found' });
+      return;
+    }
+
+    res.status(200).json(activity);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
 module.exports = expressRouter;
