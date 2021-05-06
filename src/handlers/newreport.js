@@ -1,8 +1,8 @@
 const repository = require("../services/repositories/newreport");
 const path = require('path')
 
-const getNewReportById = async (id) => {
-  const result = await repository.getOne(id);
+const getNewReportById = async (newReportId) => {
+  const result = await repository.getOne(newReportId);
   return result;
 };
 
