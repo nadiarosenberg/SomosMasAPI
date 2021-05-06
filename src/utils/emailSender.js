@@ -22,7 +22,6 @@ const emailSender = (emailAccount, data) => {
             }
         }));
 
-        //Express-handlebars configuration
         transport.use('compile', hbs({    
             viewEngine : {
                 extname: '.hbs', 

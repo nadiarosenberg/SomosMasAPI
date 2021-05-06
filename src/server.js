@@ -32,6 +32,7 @@ app.engine('hbs', exphbs({
 }));
 app.set('view engine', 'hbs');
 
+
 app.set('key', key.key);
 app.use(logger('dev'));
 app.use(express.json());
