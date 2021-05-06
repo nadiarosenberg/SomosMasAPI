@@ -21,11 +21,22 @@ const update = async (userId, user) => {
         }
     });
     return result;
-}
+};
 
-
+const getAll = async () => {
+    try {
+        const result = await User.findAll({
+            attributes: ["firstName", "lastName", "email", "photo"],
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 module.exports = {
     persist,
-    update
+    update,
+    getAll
 };
+
