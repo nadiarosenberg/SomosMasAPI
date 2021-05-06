@@ -42,6 +42,17 @@ const update = async(id, properties) => {
   }
 };
 
+const getOne = async (id) => {
+  try {
+    const result = await NewReport.findOne({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 const destroy = async (id) => {
   try {
     const result = await NewReport.destroy({
