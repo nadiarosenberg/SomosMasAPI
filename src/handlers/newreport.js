@@ -1,6 +1,11 @@
 const repository = require("../services/repositories/newreport");
 const path = require('path')
 
+const getNewReportById = async (id) => {
+  const result = await repository.getOne(id);
+  return result;
+};
+
 const deleteNewReport = async (id) => {
   const result = await repository.destroy(id);
   return result;
@@ -27,6 +32,7 @@ const createNewReport = async (newreport) => {
 
 
 module.exports = {
+  getNewReportById,
   deleteNewReport,
   createNewReport
 };
