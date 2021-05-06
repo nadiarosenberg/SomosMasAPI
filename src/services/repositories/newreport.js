@@ -53,6 +53,17 @@ const getOne = async (id) => {
   }
 };
 
+const update = async (id, properties) => {
+  try {
+    const result = await NewReport.update(properties, { 
+      where: { id } 
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 const destroy = async (id) => {
   try {
     const result = await NewReport.destroy({
