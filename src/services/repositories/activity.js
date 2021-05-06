@@ -53,10 +53,22 @@ const destroy = async (id) => {
   }
 };
 
+const restore = async (id) => {
+  try {
+    const result = await Activities.restore({
+      where: { id }
+    })
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
+
 module.exports = {
   persist,
   getAll,
   getOne,
   update,
-  destroy
+  destroy,
+  restore
 }
