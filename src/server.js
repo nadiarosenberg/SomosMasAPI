@@ -25,8 +25,12 @@ const app = express();
 
 app.use(cors())
 
-app.set('views', path.join(__dirname, 'views'));
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+}));
 app.set('view engine', 'hbs');
+
 
 app.set('key', key.key);
 app.use(logger('dev'));

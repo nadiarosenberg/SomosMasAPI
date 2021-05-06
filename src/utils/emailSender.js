@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const smtpTransport = require('nodemailer-smtp-transport');
-
-
+const hbs = require('nodemailer-express-handlebars'); 
 
 const emailSender = (emailAccount, data) => {
 
@@ -23,15 +22,28 @@ const emailSender = (emailAccount, data) => {
             }
         }));
 
+        //Configuration to be able to use express-handlebars
+        transport.use('compile', hbs({    
+            viewEngine : {
+                extname: '.hbs', 
+                layoutsDir: './src/views/layouts/',
+                defaultLayout: 'templateEmail', 
+                partialsDir: './src/views/', 
+            },
+            viewPath: './src/views/layouts/',
+            extName: '.hbs'
+            }));
+
         const message = {
             from: data.from,
             to: data.to,
             subject: data.subject,
-            text: data.text
+            text: data.text,
+            template: data.template, 
+            context: data.context
         }
 
         sendEmailTo(message); 
-
 }
 
 module.exports = emailSender;

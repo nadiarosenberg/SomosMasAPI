@@ -24,6 +24,8 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.3",
     "nodemailer": "^6.6.0",
+    "nodemailer-express-handlebars": "^4.0.0",
+    "nodemailer-handlebars": "^1.0.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "pino": "^6.11.3",
     "sequelize": "^6.6.2"
