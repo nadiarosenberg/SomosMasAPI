@@ -18,20 +18,23 @@ module.exports = {
     seederStorage: 'sequelize',
     seederStorageTableName: 'seeds',
     migrationStorage: 'sequelize',
-    migrationStorageTableName: 'migrations'
+    migrationStorageTableName: 'migrations',
+    environment: 'DEV'
   },
   test: {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    environment: 'TEST'
   },
   production: {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    environment: 'PROD'
   }
 }

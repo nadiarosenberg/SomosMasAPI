@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 const { sequelize } = require('../src/models');
+var config = require('../config/config');
+var pinoLogger = require('../src/utils/pinoLogger');
 
 var app = require('../src/server');
 var debug = require('debug')('server:server');
@@ -94,5 +96,17 @@ function onListening() {
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
+  }
+
+  /**
+   * Setup Run
+   */
+  var env = config.development.environment;
+  switch (env) {
+    case 'DEV':
+      pinoLogger(app);
+      break;
+    case 'PROD':
+      break;
   }
 }
