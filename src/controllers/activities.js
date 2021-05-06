@@ -63,4 +63,26 @@ expressRouter.get('/:id', async (req, res) => {
   }
 });
 
+expressRouter.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let anActivity = await handler.getActivityById(id);
+
+    if (!anActivity) {
+      logger.warn('Activity not found');
+      res.status(404).json({ message: 'Activity not found' });
+      return;
+    }
+
+    await handler.updateActivity(id, updateValues);
+    logger.info('Activity updated successfully');
+    res.status(200).json({ message: 'Activity updated successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
 module.exports = expressRouter;
