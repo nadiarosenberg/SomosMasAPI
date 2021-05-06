@@ -31,8 +31,20 @@ const getOne = async (id) => {
   }
 };
 
+const update = async (id, properties) => {
+  try {
+    const result = await Activities.update(properties, {
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
+
 module.exports = {
   persist,
   getAll,
-  getOne
+  getOne,
+  update
 }
