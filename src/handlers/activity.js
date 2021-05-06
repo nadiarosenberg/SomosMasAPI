@@ -15,7 +15,12 @@ const getAllActivities = async () => {
 const getActivityById = async (activityId) => {
   const anActivity = await repository.getOne(activityId);
   return anActivity;
-}
+};
+
+const updateActivity = async (id, properties) => {
+  const activity = await repository.update(id, properties);
+  return activity;
+};
 
 module.exports = {
   createActivity,
