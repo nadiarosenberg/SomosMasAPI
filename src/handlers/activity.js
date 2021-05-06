@@ -25,5 +25,6 @@ const updateActivity = async (id, properties) => {
 module.exports = {
   createActivity,
   getAllActivities,
-  getActivityById
+  getActivityById,
+  updateActivity
 }
