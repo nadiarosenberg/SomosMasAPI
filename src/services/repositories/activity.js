@@ -42,9 +42,21 @@ const update = async (id, properties) => {
   }
 }
 
+const destroy = async (id) => {
+  try {
+    const result = await Activities.destroy({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 module.exports = {
   persist,
   getAll,
   getOne,
-  update
+  update,
+  destroy
 }
