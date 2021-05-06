@@ -63,7 +63,7 @@ expressRouter.get('/:id', async (req, res) => {
   }
 });
 
-expressRouter.put('/:id', async (req, res) => {
+expressRouter.put('/:id', roleIdMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
