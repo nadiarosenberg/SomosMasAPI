@@ -13,8 +13,8 @@ const getAllActivities = async () => {
 };
 
 const getActivityById = async (activityId) => {
-  const anActivity = await repository.getOne(activityId);
-  return anActivity;
+  const activity = await repository.getOne(activityId);
+  return activity;
 };
 
 const updateActivity = async (id, properties) => {
@@ -22,9 +22,15 @@ const updateActivity = async (id, properties) => {
   return activity;
 };
 
+const deleteActivity = async (id) => {
+  const activity = await repository.destroy(id);
+  return activity;
+};
+
 module.exports = {
   createActivity,
   getAllActivities,
   getActivityById,
-  updateActivity
+  updateActivity,
+  deleteActivity
 }
