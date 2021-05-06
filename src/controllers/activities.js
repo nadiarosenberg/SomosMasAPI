@@ -85,4 +85,26 @@ expressRouter.put('/:id', async (req, res) => {
   }
 });
 
+expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    let activity = await handler.getActivityById(id);
+
+    if (!activity) {
+      logger.warn('Activity not found');
+      res.status(404).json({ message: 'Activity not found' });
+      return;
+    }
+
+    await handler.deleteActivity(id);
+
+    logger.info('Activity deleted successfully');
+    res.status(200).json({ message: 'Activity deleted successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
 module.exports = expressRouter;
