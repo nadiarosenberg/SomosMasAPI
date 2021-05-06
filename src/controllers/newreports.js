@@ -16,6 +16,28 @@ const Op = db.Sequelize.Op;
 // Var
 const emailSource = emailsSource("newReport");
 
+newReportRouter.get('/:id', async (req, res) => {
+  const { id }= req.params;
+  try {
+
+    let newReport = await handler.getNewReportById(id);
+
+    if(!newReport){
+      logger.warn('newReport not found');
+      res.status(404).json({
+        message: `Cannot find NewReport with id = ${id}`,
+      });
+    }
+
+    res.status(200).json(newReport);
+      
+    } catch (error) {
+      res.status(500).json({
+        message:   `Error retrieving NewReport with id = ${id}`
+      });
+  }
+},);
+
 newReportRouter.delete(
   "/:id",
   checkIdInPath,
@@ -58,26 +80,6 @@ module.exports = {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving new reports.",
-        });
-      });
-  },
-  findOne: (req, res) => {
-    const id = req.params.id;
-
-    NewReport.findByPk(id)
-      .then((data) => {
-        if (data === null) {
-          res.status(404).send({
-            message: `Cannot find NewReport with id = ${id}`,
-          });
-          return;
-        }
-        res.send(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-          message: "Error retrieving NewReport with id = " + id,
         });
       });
   },
