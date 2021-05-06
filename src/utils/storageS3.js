@@ -1,116 +1,86 @@
 "use strict";
-var path = require('path');
-var fs = require('fs');
-require('dotenv').config()
+const path = require("path");
+const fs = require("fs");
+require("dotenv").config();
+
+const AWS = require("aws-sdk");
+AWS.config.update({
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  AWS_REGION: process.env.AWS_DEFAULT_REGION,
+});
 
 // Import the Amazon S3 service client
-var S3 = require("aws-sdk/clients/s3");
+const S3 = require("aws-sdk/clients/s3");
 
 // Set credentials and Region
-var s3 = new S3({
+const s3 = new S3({
   apiVersion: "2006-03-01",
-  region: process.env.AWS_REGION,
-  credentials: {
-    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-  },
   maxRetries: 15,
 });
 
-//console.log(s3);
+function uploadToBucket(pathFileName) {
+  // call S3 to retrieve upload file to specified bucket
+  var uploadParams = { Bucket: process.env.BUCKET_NAME, Key: "", Body: "" };
+  var file = pathFileName;
 
+  // Configure the file stream and obtain the upload parameters
+  var fileStream = fs.createReadStream(file);
+  fileStream.on("error", (err) => {
+    console.log("File Error", err);
+  });
+  uploadParams.Body = fileStream;
+  uploadParams.Key = path.basename(file);
 
-function listBuckets() {
+  // call S3 to retrieve upload file to specified bucket
+  // Example Use: node storageS3.uploadToBucket('C:/Users/Gastón/Desktop/images3.jpg') 
+  s3.upload(uploadParams, (err, data) => {
+    if (err) {
+      console.log("Error", err);
+    }
+    if (data) {
+      console.log("Upload Success", data);
+    }
+  });
+}
 
-    // Call S3 to list the buckets
-    // Example Use: node storageS3.listbuckets()
-    s3.listBuckets((err, data) => {
-        if (err) {
-        console.log("Error", err);
-        } else {
-        console.log("Success", data.Buckets);
-        }
-    });
+function deleteObjectOnBucket(fileNameToDelete) {
+  // call S3 to delete file to specified bucket
+  var deleteParams = { Bucket: process.env.BUCKET_NAME, Key: "" };
+  var file = fileNameToDelete
+  deleteParams.Key = path.basename(file);
 
-};
+  // call S3 to delete file to specified bucket
+  // Example Use: node storageS3.deleteObjectOnBucket('images3.jpg') 
+  s3.deleteObject(deleteParams, (err, data) => {
+    if (err) {
+      console.log(err, err.stack);
+    } else {
+      console.log(data);
+    }
+  });
+}
 
-function createBucket() {
+function objectListOnBucket(objectFileName) {
+  // Create the parameters for calling listObjects
+  var bucketParams = {
+    Bucket: process.env.BUCKET_NAME,
+    Prefix: objectFileName,
+  };
 
-    // Create the parameters for calling createBucket
-    var bucketParams = {
-        Bucket : process.argv[2]
-    };
-
-    // call S3 to create the bucket
-    // Example Use: node storageS3.createbucket() BUCKET_NAME
-    s3.createBucket(bucketParams, (err, data) => {
-        if (err) {
-        console.log("Error", err);
-        } else {
-        console.log("Success", data.Location);
-        }
-    });
-
-};
-
-function uploadToBucket() {
-
-    // call S3 to retrieve upload file to specified bucket
-    var uploadParams = {Bucket: process.argv[2], Key: '', Body: ''};
-    var file = process.argv[3];
-
-    // Configure the file stream and obtain the upload parameters
-    var fileStream = fs.createReadStream(file);
-    fileStream.on('error', (err) => {
-    console.log('File Error', err);
-    });
-    uploadParams.Body = fileStream;
-    uploadParams.Key = path.basename(file);
-
-     // call S3 to retrieve upload file to specified bucket
-    // Example Use: node storageS3.uploadToBucket() BUCKET_NAME FILE_NAME
-    s3.upload (uploadParams, (err, data) => {
-        if (err) {
-        console.log("Error", err);
-        } if (data) {
-        console.log("Upload Success", data.Location);
-        }
-    });
-
-};
-
-function objectListOnBucket() {
-
-     // Call S3 to obtain a list of the objects in the bucket
-    // Example Use: node storageS3.objectListOnBucket()
-    s3.listObjects(bucketParams, (err, data) => {
-        if (err) {
-        console.log("Error", err);
-        } else {
-        console.log("Success", data);
-        }
-    });
-
-};
-
-function deleteBucket() {
-
-    // Call S3 to delete the bucket (Note: Bucket must be empty before deletion)
-    // Example Use: node storageS3.deleteBucket()
-    s3.deleteBucket(bucketParams, (err, data) => {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data);
-        }
-      });
-
-};
+  // Call S3 to obtain a list of the objects in the bucket
+  // Example Use: node storageS3.objectListOnBucket('images')
+  s3.listObjects(bucketParams, (err, data) => {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log(data.Contents);
+    }
+  });
+}
 
 module.exports = {
-    listBuckets,
-    createBucket,
-    uploadToBucket,
-    objectListOnBucket,
-    deleteBucket
-}
+  uploadToBucket,
+  deleteObjectOnBucket,
+  objectListOnBucket,
+};
