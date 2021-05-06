@@ -27,10 +27,16 @@ const deleteActivity = async (id) => {
   return activity;
 };
 
+const retoreActivity = async (id) => {
+  const organization = await repository.restore(id);
+  return organization;
+};
+
 module.exports = {
   createActivity,
   getAllActivities,
   getActivityById,
   updateActivity,
-  deleteActivity
+  deleteActivity,
+  retoreActivity
 }
