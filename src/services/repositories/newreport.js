@@ -7,6 +7,17 @@ const userData = require("../../utils/fakeData");
 
 const emailSource = emailsSource("newReport");
 
+const getOne = async (id) => {
+  try {
+    const result = await NewReport.findOne({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 const destroy = async (id) => {
   const result = await NewReport.destroy({
     where: {
@@ -30,6 +41,7 @@ const persist = async (newreport) => {
 };
 
 module.exports = {
+  getOne,
   destroy,
   persist
 };
