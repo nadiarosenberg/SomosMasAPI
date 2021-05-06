@@ -15,14 +15,13 @@ const authRouter = require('./routes/auth');
 const membersRouter = require('./routes/members');
 const rolesRouter = require('./routes/roles');
 const newsRouter = require('./routes/newreports');
+const newReportRouter = require('./controllers/newreports').newReportRouter;
 const activitiesRouter = require('./routes/activities');
 const categoriesRouter = require('./controllers/category');
 const app = express();
 
 app.use(cors())
-
 app.set('key', key.key);
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -37,6 +36,7 @@ app.use('/members', membersRouter);
 app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
 app.use('/news', newsRouter);
+app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
 app.use('/users', usersRouter);
 app.use('/organizations', organizationsController)
