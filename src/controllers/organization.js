@@ -1,145 +1,108 @@
-const { Organization } = require('../models/index');
-const logger = require('../utils/pinoLogger')
+const expressRouter = require('express').Router();
+const handler = require('./../handlers/organization');
+const logger = require('../utils/pinoLogger');
+const roleIdMiddleware = require("../controllers/middlewares/roleId.js");
+const { orgValidationRules, validate } = require('../controllers/middlewares/organizationValidation');
 
-const findAll = async (req, res, next) => {
+expressRouter.post('/', roleIdMiddleware, orgValidationRules(), validate, async (req, res, next) => {
   try {
-    let organizations = await Organization.findAll({
-      attributes: ['name', 'image', 'phone', 'address']
-    });
-    res.status(200).json(organizations)
-  } catch (error) {
-    logger.error(error.message);
-    res.status(500).json({message: 'Something goes wrong'})
-  }
-};
-
-const findOne = async (req, res, next) => {
-  try {
-    let { id } = req.params;
-    let organization = await Organization.findOne({
-      where: { id },
-      attributes: ['name', 'image', 'phone', 'address']
-    });
-    
-    if(organization){
-      res.status(200).json(organization)
-    } else {
-      logger.warn('Organization not found')
-      res.status(404).json({ message: 'Organization not found'})
-    }
-
-  } catch (error) {
-    logger.error(error.message);
-    res.status(500).json({message: error.message})
-  }
-}
-
-const create = async (req, res, next) => {
-  try{
-    const { name, image, address, phone, email, welcomeText, aboutUsText } = req.body
-
-    let organization = new Organization()
-    organization.name = name
-    organization.image = image
-    organization.address = address
-    organization.phone = phone
-    organization.email = email
-    organization.welcomeText = welcomeText
-    organization.aboutUsText = aboutUsText
-
-    let newOrganization = await Organization.create(organization.dataValues)
-
-    logger.info({ id: newOrganization.id }, 'Organization created successfully')
-    res.status(201).json({
-      id: newOrganization.id,
-      message: 'Organization created successfully'
-    })
-
-  } catch(error){
-    logger.error(error.message);
-    res.status(500).json({ message: error.message})
-  }
-}
-
-const update = async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const updateValues = req.body
-
-    let organization = await Organization.findOne({
-      where: { id }
-    })
-
-    if (organization) {
-      await Organization.update(
-        updateValues,
-        {
-          where: { id }
-        }
-      )
-      logger.info('Organization updated successfully')
-      res.status(200).json({ message: 'Organization updated successfully' })
-    } else {
-      logger.warn('Organization not found')
-      res.status(404).json({ message: 'Organization not found' })
-    }
-  } catch (error) {
-    logger.error(error.message);
-    res.status(500).json({ message: error.message})
-  }
-}
-
-const destroy = async (req, res, next) => {
-  try {
-    const { id } = req.params
-
-    let organization = await Organization.findOne({
-      where: { id }
-    })
-
-    if(organization){
-
-      await Organization.destroy({
-        where: { id }
+      const organizationToCreate = req.body;
+      const result = await handler.createOrganization(organizationToCreate);
+      logger.info({ id: result.id }, 'Organization created successfully')
+      res.status(201).json({
+        id: result.id,
+        message: 'Organization created successfully'
       })
-      logger.info('Organization updated successfully')
-      res.status(200).json({message: 'Organization deleted successfully'})
-    } else {
-      logger.warn('Organization not found')
-      res.status(404).json({ message: 'Organization not found' })
-    }
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message})
   }
-}
+});
 
-const restore = async (req, res, next) => {
+expressRouter.get('/', roleIdMiddleware,async (req, res, next) => {
   try {
-    const { id } = req.params
-
-    const organization = await Organization.restore({
-      where: { id }
-    })
-
-    if (organization) {
-      logger.info('Organization restored successfully')
-      res.status(200).json({ message: 'Organization restored successfully'})
-    } else {
-      logger.warn('Organization not found')
-      res.status(404).json({ message: 'Organization not found' })
-    }
+    const results = await handler.getAllOrganizations();
+    res.status(200).json(results);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message});
   }
-}
+});
 
-module.exports = {
-  findAll,
-  findOne,
-  create,
-  update,
-  destroy,
-  restore
-}
+expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const organization = await handler.getOrganizationById(id);
+
+    if (!organization) {
+      logger.warn('Organization not found');
+      res.status(404).json({ message: 'Organization not found' });
+      return;
+    }
+
+    res.status(200).json(organization);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
+expressRouter.put('/public/:id', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let organization = await handler.getOrganizationById(id);
+
+    if (!organization) {
+      logger.warn('Organization not found');
+      res.status(404).json({ message: 'Organization not found' });
+      return;
+    }
+
+    await handler.updateOrganization(id, updateValues);
+    logger.info('Organization updated successfully');
+    res.status(200).json({ message: 'Organization updated successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
+expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    let organization = await handler.getOrganizationById(id);
+
+    if (!organization) {
+      logger.warn('Organization not found');
+      res.status(404).json({ message: 'Organization not found' });
+      return;
+    }
+
+    await handler.deleteOrganization(id);
+
+    logger.info('Organization deleted successfully');
+    res.status(200).json({ message: 'Organization deleted successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+})
+
+expressRouter.post('/:id', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const organizationDeleted = await handler.retoreOrganization(id);
+    console.log(organizationDeleted);
+    logger.info('Organization restored successfully')
+    res.status(200).json({ message: 'Organization restored successfully'})
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+})
+
+module.exports = expressRouter;
