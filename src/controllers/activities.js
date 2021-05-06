@@ -31,7 +31,7 @@ expressRouter.post('/',  roleIdMiddleware, activityValidationRules(), validate, 
     })
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message || "Some error occurred while creating the Activity." });
   }
 });
 
@@ -41,7 +41,7 @@ expressRouter.get('/', async (req, res) => {
     res.status(200).json(results);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message || "Some error occurred while retrieving Activity."});
   }
 });
 
@@ -59,7 +59,7 @@ expressRouter.get('/:id', async (req, res) => {
     res.status(200).json(activity);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message || "Error retrieving Activity with id = " + id });
   }
 });
 
@@ -81,7 +81,7 @@ expressRouter.put('/:id', async (req, res) => {
     res.status(200).json({ message: 'Activity updated successfully' });
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message || `Cannot update Activity with id = ${id}.`});
   }
 });
 
@@ -103,7 +103,7 @@ expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
     res.status(200).json({ message: 'Activity deleted successfully' });
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message});
+    res.status(500).json({ message: error.message || `Could not delete Activity with id = ${id}`});
   }
 });
 
