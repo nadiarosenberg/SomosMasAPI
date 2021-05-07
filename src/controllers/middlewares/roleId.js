@@ -15,7 +15,7 @@ roleId.use((req, res, next) => {
       if (err) {
         return res.json({ mensaje: 'invalid Token ' });
       } else {
-        console.log(decoded);
+        
         if (decoded.roleId === ROLE_ID) {
 
           req.decoded = decoded;
