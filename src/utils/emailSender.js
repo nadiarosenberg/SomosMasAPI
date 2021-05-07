@@ -22,7 +22,7 @@ const emailSender = (emailAccount, data) => {
             }
         }));
 
-        //Configuration to be able to use express-handlebars
+        //Express-handlebars configuration
         transport.use('compile', hbs({    
             viewEngine : {
                 extname: '.hbs', 
