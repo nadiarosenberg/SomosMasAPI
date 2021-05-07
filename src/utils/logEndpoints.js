@@ -1,12 +1,5 @@
-const pino = require("pino");
 const listEndpoints = require("express-list-endpoints");
-
-const pinoLogger = pino ({
-  prettyPrint: {
-    colorize: true,
-    ignore: "pid,hostname,level,time",
-  }
-});
+const pinoLogger = require('./pinoLogger');
 
 const logWithPino = (app) => {
   listEndpoints(app).forEach((endpoint) => {
