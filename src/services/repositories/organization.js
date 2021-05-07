@@ -1,5 +1,5 @@
 const { Organization } = require('../../models');
-const logger = require('../../utils/pinoLogger');
+const logger = require('../../utils/pinoLoggerEndpoints');
 
 const persist = async (organizationToPersist) => {
   try {
