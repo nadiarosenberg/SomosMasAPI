@@ -5,7 +5,7 @@
  */
 const { sequelize } = require('../src/models');
 var config = require('../config/config');
-var pinoLogger = require('../src/utils/pinoLogger');
+var pinoLogger = require('../src/utils/pinoLoggerEndpoints');
 
 var app = require('../src/server');
 var debug = require('debug')('server:server');
