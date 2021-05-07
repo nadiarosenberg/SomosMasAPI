@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const handler = require('./../handlers/category');
+const handler = require('./../handlers/categories');
 const errorHandler = require('./../utils/errorHandler');
-const { validate } = require('../controllers/middlewares/categoryValidation');
+const { validate } = require('../controllers/middlewares/categories');
 
 router.get('/', async (req, res, next) => {
     try {
