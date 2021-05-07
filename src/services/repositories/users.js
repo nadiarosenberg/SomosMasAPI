@@ -4,10 +4,14 @@ const {
 const bcrypt = require('bcryptjs');
 
 const persist = async (user) => {
-    var aux = user
-    aux.password = bcrypt.hashSync(aux.password, 8);
-    const result = await User.create(aux);
-    return result;
+    try {
+        var aux = user
+        aux.password = bcrypt.hashSync(aux.password, 8);
+        const result = await User.create(aux);
+        return result;
+    } catch (error) {
+        console.log(error.message)
+    }
 };
 
 const update = async (userId, user) => {
@@ -34,9 +38,33 @@ const getAll = async () => {
     }
 };
 
+const getOne = async (id) => {
+  try {
+    const result = await Organization.findOne({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const destroy = async (id) => {
+  try {
+    const result = await User.destroy({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
     persist,
     update,
-    getAll
+    getAll,
+    getOne,
+    destroy
 };
 

@@ -12,8 +12,20 @@ const updateUser = async (userId, user) => {
 
 const getAllUsers = async () => await repository.getAll();
 
+const getUserById = async (id) => {
+  const user = await repository.getOne(id);
+  return user;
+};
+
+const deleteUser = async (id) => {
+  const user = await repository.destroy(id);
+  return user;
+};
+
 module.exports = {
     createUser,
     updateUser,
-    getAllUsers
+    getAllUsers,
+    getUserById,
+    deleteUser
 };
