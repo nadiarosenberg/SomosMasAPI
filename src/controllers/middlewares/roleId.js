@@ -8,7 +8,7 @@ roleId.use((req, res, next) => {
 
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgwLCJyb2xlSWQiOjEsImlhdCI6MTYxOTk1NjgzMSwiZXhwIjoxLjQ0ZSsyOX0.Oht8VcnFbVPqWajVdKlXrj_fWP3De3o6ullPwbZ9_kw";
 
-  const ROLE_ID = '1';
+  const ROLE_ID = '1' || 1;
 
   if (token) {
     jwt.verify(token, app.get('key'), (err, decoded) => {
