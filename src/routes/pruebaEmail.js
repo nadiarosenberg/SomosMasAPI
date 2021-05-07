@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const errorHandler = require('../utils/errorHandler');
 const sendEmail = require('../utils/emailSender');
-const userData = require('../utils/fakeData');
 const templateEmail = require('../views/layouts/templateEmail')
 const emailsSource = require('../utils/fakeEmailSource');
 const infoEmail = require('../utils/infoEmailTemplate')
