@@ -1,34 +1,15 @@
 const db = require("./../../models");
 const Category = db.categories;
 
-const getAll = async () => {
-    const result = await Category.findAll({attributes: ["name"]});
-    return result;
-}
+const getAll = async () =>  await Category.findAll({attributes: ["name"]})
 
-const getOne = async (id) => {
-    const result = await Category.findByPk(id, {paranoid: false});
-    return result;
-}
+const getOne = async (id) => await Category.findByPk(id, {paranoid: false})
 
-const create = async (category) => {
-    const result = await Category.create(category);
-    return result;
-}
+const create = async (category) => await Category.create(category);
 
-const update = async (category, id) => {
-    const result = await Category.update(category, {
-        where: { id: id }
-      });
-    return result;
-}
+const update = async (category, id) => await Category.update(category, {where: { id: id }});
 
-const deleteOne = async (id) => {
-    const result = await Category.destroy({
-        where: { id: id }
-      });
-    return result;
-}
+const deleteOne = async (id) => await Category.destroy({where: { id: id }});
 
 module.exports = {
     getAll,
