@@ -19,28 +19,19 @@ const s3 = new S3({
   maxRetries: 15,
 });
 
-function uploadToBucket(pathFileName) {
+function uploadToBucket(buffer, key , callback) {
   // call S3 to retrieve upload file to specified bucket
   var uploadParams = { Bucket: process.env.BUCKET_NAME, Key: "", Body: "" };
-  var file = pathFileName;
+
 
   // Configure the file stream and obtain the upload parameters
-  var fileStream = fs.createReadStream(file);
-  fileStream.on("error", (err) => {
-    console.log("File Error", err);
-  });
-  uploadParams.Body = fileStream;
-  uploadParams.Key = path.basename(file);
+  uploadParams.Body = buffer
+  uploadParams.Key = key
 
   // call S3 to retrieve upload file to specified bucket
   // Example Use: node storageS3.uploadToBucket('C:/Users/Gastón/Desktop/images3.jpg') 
   s3.upload(uploadParams, (err, data) => {
-    if (err) {
-      console.log("Error", err);
-    }
-    if (data) {
-      console.log("Upload Success", data);
-    }
+    callback(err, data)
   });
 }
 
@@ -56,7 +47,7 @@ function deleteObjectOnBucket(fileNameToDelete) {
     if (err) {
       console.log(err, err.stack);
     } else {
-      console.log(data);
+      console.log('Object Deleted', data);
     }
   });
 }
