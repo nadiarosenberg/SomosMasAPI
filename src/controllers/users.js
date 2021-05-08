@@ -8,8 +8,8 @@ const {
 const handler = require('./../handlers/users');
 const isAdmin = require('../controllers/middlewares/roleId');
 const app = express();
-const roleIdMid=require("../controllers/middlewares/roleId");
 const key = require('../utils/key')
+const sendWelcomEmail = require('../utils/welcomEmail')
 app.set('key', key.key);
 
 const wasUpdated = (result, req, res) => {
@@ -26,6 +26,7 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
   try {
     const user = req.body;
     const result = await handler.createUser(user);
+    sendWelcomEmail(data.email, data.firstName)
     res.status(200).json(result);
   } catch (e) {
     res.status(400).json({
