@@ -6,8 +6,6 @@ router.get("/", newreports.findAll);
 
 router.get("/:id", newreports.findOne);
 
-router.post("/", newreports.create);
-
 router.put("/:id", newreports.update);
 
 module.exports = router;
