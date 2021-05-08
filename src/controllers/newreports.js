@@ -34,6 +34,19 @@ newReportRouter.delete(
   }
 );
 
+newReportRouter.post("/",async (req, res) => {
+  try {
+    const newreport = req.body;
+    const result = await handler.createNewReport(newreport)
+    res.status(200).json(result)
+  } catch (e) {
+    res.status(400).json({
+      ok: false,
+      msj: 'failed to create news'
+    });
+  }
+})
+
 module.exports = {
   newReportRouter,
   create: (req, res) => {

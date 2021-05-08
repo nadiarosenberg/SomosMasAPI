@@ -5,6 +5,13 @@ const deleteNewReport = async (id) => {
   return result;
 };
 
+const createNewReport = async (newreport) => {
+  const result = await repository.persist(newreport);
+  return result;
+};
+
+
 module.exports = {
   deleteNewReport,
+  createNewReport
 };
