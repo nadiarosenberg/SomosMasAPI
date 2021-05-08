@@ -7,6 +7,7 @@ module.exports = {
       content: 'Blablabla los rollings blablabla van al luna park',
       image: 'lengua.jpg',
       timestamps: Date.now(),
+      type: 'news',
       categoryId: 1,
       createdAt: new Date(),
       updatedAt: new Date()

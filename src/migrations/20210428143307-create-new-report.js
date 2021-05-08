@@ -38,6 +38,16 @@ module.exports = {
         },
         type: Sequelize.STRING
       },
+      type: {
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'image is required'
+          }
+        },
+        type: Sequelize.STRING
+      },
       categoryId: {
         type: Sequelize.INTEGER,
         validate: {
