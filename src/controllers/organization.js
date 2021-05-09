@@ -42,7 +42,7 @@ expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
 
     res.status(200).json(organization);
   } catch (error) {
-    pinoLogger.error(error.message);
+    logger.error(error.message);
     res.status(500).json({ message: error.message});
   }
 });
