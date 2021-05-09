@@ -6,9 +6,10 @@ const {
   userValidationPutRules
 } = require('./middlewares/userValidation');
 const handler = require('./../handlers/users');
-const isAdmin = require('../middleware/roleId');
+const isAdmin = require('../controllers/middlewares/roleId');
 const app = express();
-const roleIdMid=require("../middleware/roleId.js");
+const roleIdMid=require("../controllers/middlewares/roleId");
+const key = require('../utils/key')
 app.set('key', key.key);
 
 const wasUpdated = (result, req, res) => {
