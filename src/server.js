@@ -49,7 +49,6 @@ app.use('/categories', categoriesRouter);
 app.use('/news', newsRouter);
 app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
-app.use('/users', usersRouter);
 app.use('/organizations', organizationsController)
 
 // catch 404 and forward to error handler
