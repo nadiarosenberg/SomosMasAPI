@@ -1,16 +1,15 @@
 const emailsSource = require('./fakeEmailSource');
 const infoEmail = require('./infoEmailTemplate')
 const sendEmail = require('./emailSender');
-const { firstName } = require('./fakeData');
 const emailSource = emailsSource('newReport');
 
-function welcomEmail(userEmail, userName) { 
+const welcomEmail = (userEmail, userName, surName) => { 
     const message = {
       from: emailSource.email,
       to: userEmail,
       subject: 'Registro existoso',
       template: 'templateEmail',
-      context: infoEmail(userName)
+      context: infoEmail(userName, surName)
     };
     sendEmail(emailSource, message);
     console.log(message);
