@@ -9,15 +9,16 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const organizationsController = require('./controllers/organization');
+const organizationsRouter = require('./controllers/organization');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
 const membersRouter = require('./routes/members');
 const rolesRouter = require('./routes/roles');
 const newsRouter = require('./routes/newreports');
 const newReportRouter = require('./controllers/newreports').newReportRouter;
-const activitiesRouter = require('./routes/activities');
 const categoriesRouter = require('./controllers/category');
+const activitiesRouter = require('./controllers/activities');
+
 const app = express();
 
 app.use(cors())
