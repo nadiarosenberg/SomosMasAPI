@@ -6,7 +6,7 @@ app.set('key', key.key);
 const roleId = express.Router();
 roleId.use((req, res, next) => {
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgwLCJyb2xlSWQiOiIxIiwiaWF0IjoxNjE5OTU2ODMxLCJleHAiOjEuNDRlKzI5fQ.Gh5xa30ZfWFjXgnalyB0ffBAdKiisAAtPwD-qaw7q3A";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgwLCJyb2xlSWQiOjEsImlhdCI6MTYxOTk1NjgzMSwiZXhwIjoxLjQ0ZSsyOX0.Oht8VcnFbVPqWajVdKlXrj_fWP3De3o6ullPwbZ9_kw";
 
   const ROLE_ID = 1;
 
