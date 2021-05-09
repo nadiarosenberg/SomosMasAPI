@@ -15,7 +15,7 @@ const emailSource = emailsSource("newReport");
 
 newReportRouter.get('/', isAdmin, async (req, res) => {
   try {
-    const results = await handler.getAllNewReport();
+    const results = await handler.getAllNewReports();
     res.status(200).json(results);
   } catch (error) {
     console.error(error.message);

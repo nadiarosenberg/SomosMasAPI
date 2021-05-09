@@ -1,9 +1,9 @@
 const repository = require("../services/repositories/newreport");
-const path = require('path')
+const path = require('path');
 
-const getAllNewReport = async () => {
-  const results = await repository.getAll();
-  return results;
+const getAllNewReports = async () => {
+  const newReports = await repository.getAll();
+  return newReports;
 };
 
 const getNewReportById = async (newReportId) => {
@@ -42,7 +42,7 @@ const createNewReport = async (newreport) => {
 
 
 module.exports = {
-  getAllNewReport,
+  getAllNewReports,
   getNewReportById,
   updateNewReport,
   deleteNewReport,
