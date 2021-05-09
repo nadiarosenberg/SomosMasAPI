@@ -3,6 +3,7 @@ const infoEmail = require('./infoEmailTemplate')
 const sendEmail = require('./emailSender');
 const emailSource = emailsSource('newReport');
 
+
 const welcomEmail = (userEmail, userName, surName) => { 
     const message = {
       from: emailSource.email,
