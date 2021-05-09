@@ -7,7 +7,7 @@ const path = require("path");
 const errorHandler = require("../utils/errorHandler");
 const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
-const isAdmin = require('../middleware/roleId');
+const isAdmin = require('./middlewares/roleId');
 
 const emailsSource = require("../utils/fakeEmailSource");
 

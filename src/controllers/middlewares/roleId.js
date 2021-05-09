@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const express = require("express");
 const app = express();
-const key = require("../utils/key");
+const key = require("../../utils/key");
 app.set('key', key.key);
 const roleId = express.Router();
 roleId.use((req, res, next) => {
