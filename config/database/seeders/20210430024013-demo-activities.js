@@ -4,7 +4,9 @@ module.exports = {
       name: 'John',
       content: 'Doe',
       image: 'example@example.com',
+
       createdAt: new Date(),
+
       updatedAt: new Date()
     }]);
   },

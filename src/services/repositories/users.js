@@ -38,6 +38,7 @@ const getAll = async () => {
     }
 };
 
+
 const getOne = async (id) => {
   try {
     const result = await Organization.findOne({
@@ -60,11 +61,36 @@ const destroy = async (id) => {
   }
 };
 
+const FindMe=async (id)=>
+{
+	try{
+		 const data = await User.findByPk(id,{ raw : true });
+		 if (data === null) 
+							{
+                                res.status(404).send({
+                                                       message: `Cannot find User with id = ${id}`
+                                                      })
+                                   return;
+                            }
+      
+	                        delete data.password;
+							
+        return data;
+	   }
+	   
+	catch (error) {
+        console.log(error);
+    }	
+	};
+
+
 module.exports = {
     persist,
     update,
     getAll,
     getOne,
-    destroy
+    destroy,
+	FindMe
+
 };
 

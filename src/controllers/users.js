@@ -6,7 +6,9 @@ const {
   userValidationPutRules
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
+
 const isAdmin = require('./middlewares/auth');
+
 const app = express();
 const key = require('../utils/key')
 
@@ -25,9 +27,11 @@ const wasUpdated = (result, req, res) => {
 router.post('/auth/register', async (req, res, next) => {
   try {
     const user = req.body;
+	
     const result = await handler.createUser(user);
     
     res.status(200).json(result);
+
   } catch (e) {
     res.status(400).json({
       ok: false,
@@ -50,7 +54,7 @@ router.put('/:id', userValidationPutRules(), validate, async (req, res, next) =>
   }
 });
 
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/',  async (req, res, next) => {
   try {
     const results = await handler.getAllUsers();
     res.status(200).json(results);
@@ -59,6 +63,7 @@ router.get('/', isAdmin, async (req, res, next) => {
     res.status(500).json('Error getting users');
   }
 });
+
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -99,5 +104,38 @@ router.delete('/:id', async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
+router.get('/auth/me',async(req,res,next)=>
+{
+	try{
+		
+		 if (!req.headers.authorization)
+		 {
+			res.send({message:"widthout headers authorization"});
+		 }
+		 
+		 var token=req.headers.authorization.split(" ")[1];
+		 jwt.verify(token, app.get('key'), async (err, decoded) =>
+		 {
+         if (err) {
+             return res.json({ mensaje: 'invalid Token  or without token' });
+                  }
+				  
+			const id= decoded.sub;
+			//llamo al handler
+		    const results = await handler.getFindMe(id); 	  
+			res.status(200).json(results);	  
+		 });
+		
+	   }
+	
+	catch (error) {
+    console.log(error);
+    res.status(500).json('Error getting auht me');
+              }
+});
+
+
 
 module.exports = router;
