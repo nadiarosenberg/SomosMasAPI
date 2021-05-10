@@ -6,6 +6,7 @@ const {
   userValidationPutRules
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
+
 const isAdmin = require('./middlewares/auth');
 const jwt = require('jsonwebtoken');
 const app = express();
@@ -26,9 +27,11 @@ const wasUpdated = (result, req, res) => {
 router.post('/auth/register', userValidationRules(), validate, async (req, res, next) => {
   try {
     const user = req.body;
+	
     const result = await handler.createUser(user);
     
     res.status(200).json(result);
+
   } catch (e) {
     res.status(400).json({
       ok: false,
@@ -51,7 +54,7 @@ router.put('/:id', userValidationPutRules(), validate, async (req, res, next) =>
   }
 });
 
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/',  async (req, res, next) => {
   try {
     const results = await handler.getAllUsers();
     res.status(200).json(results);
@@ -60,6 +63,7 @@ router.get('/', isAdmin, async (req, res, next) => {
     res.status(500).json('Error getting users');
   }
 });
+
 
 router.get('/:id', async (req, res, next) => {
   try {

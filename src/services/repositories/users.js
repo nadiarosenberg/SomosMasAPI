@@ -64,6 +64,7 @@ const getAll = async () => {
     }
 };
 
+
 const getOne = async (id) => {
   try {
     const result = await Organization.findOne({
@@ -94,7 +95,7 @@ const getById=async (id)=>
 		 if (data === null) 
 			{
                                
-                let message= `Cannot find User with id = ${id}`;
+           let message= `Cannot find User with id = ${id}`;
 			     return message;
             }
          delete data.password;
@@ -112,6 +113,6 @@ module.exports = {
     getAll,
     getOne,
     destroy,
-	getById
+	  getById
 };
 
