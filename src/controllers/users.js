@@ -10,6 +10,8 @@ const handler = require('./../handlers/users');
 const isAdmin = require('./middlewares/auth');
 const app = express();
 const key = require('../utils/key')
+const jwt = require('jsonwebtoken');
+
 app.set('key', key.key);
 
 const wasUpdated = (result, req, res) => {
@@ -63,6 +65,7 @@ router.get('/',  async (req, res, next) => {
 });
 
 
+
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -104,6 +107,7 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 
+
 router.get('/auth/me',async(req,res,next)=>
 {
 	try{
@@ -136,7 +140,6 @@ router.get('/auth/me',async(req,res,next)=>
 	 res.status(500).json({ message: error.message });
               }
 });
-
 
 
 module.exports = router;

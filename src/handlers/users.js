@@ -30,7 +30,6 @@ const getFindMe = async (id) => {
 };
 
 
-
 module.exports = {
     createUser,
     updateUser,

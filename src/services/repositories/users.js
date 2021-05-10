@@ -84,7 +84,6 @@ const FindMe=async (id)=>
     }	
 	};
 
-
 module.exports = {
     persist,
     update,
