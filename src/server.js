@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 const key = require("./utils/key");
-require('dotenv').config()
+const exphbs  = require('express-handlebars')
+
+require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const organizationsController = require('./controllers/organization');
@@ -22,6 +24,14 @@ const activitiesRouter = require('./controllers/activities');
 const app = express();
 
 app.use(cors())
+
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+}));
+app.set('view engine', 'hbs');
+
+
 app.set('key', key.key);
 app.use(logger('dev'));
 app.use(express.json());
@@ -39,7 +49,6 @@ app.use('/categories', categoriesRouter);
 app.use('/news', newsRouter);
 app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
-app.use('/users', usersRouter);
 app.use('/organizations', organizationsController)
 
 // catch 404 and forward to error handler
