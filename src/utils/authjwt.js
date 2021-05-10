@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const key = require("../utils/key");
 const createToken = require('./createToken')
-
 app.set('key', key.key);
 
 const authenticateToken = (req, res, next) => {
