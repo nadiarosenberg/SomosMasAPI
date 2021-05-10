@@ -53,14 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'categoryId is required'
-        }
-      }
+      type: DataTypes.INTEGER
     },
     timestamps: DataTypes.STRING
   }, {
