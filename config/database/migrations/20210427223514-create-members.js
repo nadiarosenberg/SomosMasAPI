@@ -10,23 +10,23 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      facebookUrl: {
-        type: Sequelize.STRING
-      },
-      instagramUrl: {
-        type: Sequelize.STRING
-      },
-      linkedinUrl: {
-        type: Sequelize.STRING
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'name is required'
+          }
+        }
       },
       image: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
-        type: Sequelize.STRING
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'image is required'
+          }
+        }
       },
       deletedAt: {
         type: Sequelize.DATE
