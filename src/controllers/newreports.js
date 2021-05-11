@@ -16,7 +16,7 @@ const Op = db.Sequelize.Op;
 // Var
 const emailSource = emailsSource("newReport");
 
-newReportRouter.get('/', async (req, res) => {
+newReportRouter.get('/', isAdmin, async (req, res) => {
   try {
     const results = await handler.getAllNewReport();
     res.status(200).json(results);
@@ -26,7 +26,7 @@ newReportRouter.get('/', async (req, res) => {
   }
 });
 
-newReportRouter.get('/:id', async (req, res) => {
+newReportRouter.get('/:id', isAdmin, async (req, res) => {
   const { id }= req.params;
   try {
 
@@ -66,7 +66,7 @@ newReportRouter.delete(
   }
 );
 
-newReportRouter.post("/",/*isAdmin,*/async (req, res) => {
+newReportRouter.post("/", isAdmin, async (req, res) => {
   try {
     const newreport = req.body;
     const result = await handler.createNewReport(newreport);
