@@ -4,7 +4,6 @@ module.exports = {
       name: 'John',
       content: 'Doe',
       image: 'example@example.com',
-	  timestamps: Date.now(),
       createdAt: new Date(),
       updatedAt: new Date()
     }]);
