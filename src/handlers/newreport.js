@@ -5,9 +5,14 @@ const getAllNewReport = async () => {
   const results = await repository.getAll();
   return results;
 };
-getAllNewReport
+
 const getNewReportById = async (newReportId) => {
   const result = await repository.getOne(newReportId);
+  return result;
+};
+
+const updateNewReport = async (id, properties) => {
+  const result = await repository.update(id, properties);
   return result;
 };
 
