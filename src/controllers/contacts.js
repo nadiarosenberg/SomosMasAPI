@@ -16,4 +16,16 @@ expressRouter.post('/', isAdmin, contactValidationRules(), validate, async (req,
   }
 });
 
+
+expressRouter.get('/',isAdmin, async (req, res) => {
+  try {
+    const results = await handler.getAllContacts();
+    res.status(200).json(results);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message || "Some error occurred while retrieving Contacts."});
+  }
+});
+
+
 module.exports = expressRouter;
