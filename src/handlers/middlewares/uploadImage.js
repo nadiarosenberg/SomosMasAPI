@@ -3,12 +3,12 @@ const axios = require("axios");
 
 // download the image
 const downloadImage = async (linkUrl) => {
-  const imageToDownload = await axios({
+  const downloadedImage = await axios({
     method: 'GET',
     url: linkUrl,
     responseType: 'stream',
   });
-  return imageToDownload;
+  return downloadedImage;
 };
 
 // gets the url of an image and returns the link of that image uploaded to aws
