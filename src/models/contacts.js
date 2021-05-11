@@ -32,13 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     message: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'message is required'
-        }
-      }
     }
   }, {
     sequelize,
