@@ -46,7 +46,7 @@ app.use('/auth', authRouter);
 app.use('/members', membersRouter);
 app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
-app.use('/news', newReportRouter);
+app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
