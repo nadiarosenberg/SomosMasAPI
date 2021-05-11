@@ -69,17 +69,17 @@ Router.put('/:id', isAdmin, async (req, res) => {
 Router.delete('/:id', isAdmin, async (req, res) => {
     const {id} = req.params;
     try {
-      const slide = await handler.deleteSlide(id);
-      if (slide) {
+      const slide = await handler.getSlide(id);
+      if (!slide) {
+        res.status(404).json('Slide not found');
+      }else{
+        const slideDeleted = await handler.deleteSlide(id);
         res.status(200).json('Slide deleted successfully');
-      } else {
-        res.status(404).json('Slide does not exist');
       }
-    } catch (err) {
+    }catch (err) {
       console.log(err);
       res.send('Error deleting slide');
     }
-  }
-);
+});
 
 module.exports = Router;
