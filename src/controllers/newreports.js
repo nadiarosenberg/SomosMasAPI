@@ -9,6 +9,7 @@ const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
+const { is } = require("sequelize/types/lib/operators");
 
 // Var
 const emailSource = emailsSource("newReport");
