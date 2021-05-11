@@ -33,6 +33,17 @@ const getOne = async (id) => {
   }
 };
 
+const update = async(id, properties) => {
+  try {
+    const result = await NewReport.update(properties, { 
+      where: { id } 
+    });
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 const destroy = async (id) => {
   try {
     const result = await NewReport.destroy({
@@ -65,6 +76,7 @@ const persist = async (newreport) => {
 module.exports = {
   getAll,
   getOne,
+  update,
   destroy,
   persist
 };
