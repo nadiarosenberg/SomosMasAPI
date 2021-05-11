@@ -1,13 +1,13 @@
 // Requires
 const newReportRouter = require("express").Router();
 const handler = require("../handlers/newreport");
-const { genericMiddlewares } = require("./middlewares/customMiddlewares");
+const { checkIdInPath } = require("./middlewares/common");
 const db = require("../models");
 const path = require("path");
 const errorHandler = require("../utils/errorHandler");
 const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
-const isAdmin = require('./middlewares/roleId');
+const isAdmin = require('./middlewares/auth');
 
 const emailsSource = require("../utils/fakeEmailSource");
 
@@ -19,7 +19,7 @@ const emailSource = emailsSource("newReport");
 
 newReportRouter.delete(
   "/:id",
-  genericMiddlewares.checkIdInPath,
+  checkIdInPath,
   async (req, res) => {
     try {
       const id = req.params.id;

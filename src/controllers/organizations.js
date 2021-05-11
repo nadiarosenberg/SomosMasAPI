@@ -1,8 +1,8 @@
 const expressRouter = require('express').Router();
-const handler = require('./../handlers/organization');
+const handler = require('../handlers/organization');
 const logger = require('../utils/pinoLogger');
-const roleIdMiddleware = require("../controllers/middlewares/roleId");
-const { orgValidationRules, validate } = require('../controllers/middlewares/organizationValidation');
+const roleIdMiddleware = require('./middlewares/auth');
+const { orgValidationRules, validate } = require('./middlewares/organizations');
 
 expressRouter.post('/', roleIdMiddleware, orgValidationRules(), validate, async (req, res, next) => {
   try {
@@ -19,7 +19,7 @@ expressRouter.post('/', roleIdMiddleware, orgValidationRules(), validate, async 
   }
 });
 
-expressRouter.get('/', roleIdMiddleware,async (req, res, next) => {
+expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
   try {
     const results = await handler.getAllOrganizations();
     res.status(200).json(results);

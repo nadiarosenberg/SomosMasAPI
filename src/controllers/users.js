@@ -4,9 +4,9 @@ const {
   userValidationRules,
   validate,
   userValidationPutRules
-} = require('./middlewares/userValidation');
+} = require('./middlewares/users');
 const handler = require('./../handlers/users');
-const isAdmin = require('../controllers/middlewares/roleId');
+const isAdmin = require('./middlewares/auth');
 const app = express();
 const key = require('../utils/key')
 const sendWelcomEmail = require('../utils/welcomEmail')

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const Controller = require('../controllers/rolecontroller')
+const Controller = require('../controllers/roles')
 
 router.get('/', Controller.get);
 router.get('/:id', Controller.getOne);

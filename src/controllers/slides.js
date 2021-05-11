@@ -2,7 +2,7 @@
 const express = require('express');
 const Router = express.Router();
 const handler = require('../handlers/slides');
-const isAdmin = require('../middleware/roleId');
+const isAdmin = require('./middlewares/auth');
 
 Router.post('/', isAdmin, async (req, res, next) => {
     try {
