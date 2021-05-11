@@ -13,11 +13,7 @@ const emailsSource = require("../utils/fakeEmailSource");
 // Var
 const emailSource = emailsSource("newReport");
 
-<<<<<<< HEAD
 newReportRouter.get('/', isAdmin, async (req, res) => {
-=======
-newReportRouter.get('/',async (req, res, next) => {
->>>>>>> a1e8250 (add GET /news - Get all newreports)
   try {
     const results = await handler.getAllNewReports();
     res.status(200).json(results);
