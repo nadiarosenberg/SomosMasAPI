@@ -3,7 +3,7 @@ const { body, validationResult } = require('express-validator');
 const contactValidationRules = () => {
   return [
     body('name').not().isEmpty().withMessage("name can't be empty"),
-    body('email').not().isEmpty().withMessage("email can't be empty").isEmail().withMessage("invalid email"),
+    body('email').not().isEmpty().withMessage("email can't be empty").isEmail().withMessage("invalid email")
   ]
 }
 
