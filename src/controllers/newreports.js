@@ -30,7 +30,6 @@ newReportRouter.get('/:id', isAdmin, async (req, res) => {
     let newReport = await handler.getNewReportById(id);
 
     if(!newReport){
-      logger.warn('newReport not found');
       res.status(404).json({
         message: `Cannot find NewReport with id = ${id}`,
       });

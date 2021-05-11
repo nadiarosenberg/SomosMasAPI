@@ -11,7 +11,7 @@ const emailSource = emailsSource("newReport");
 const getAll = async () => {
   try {
     const result = await NewReport.findAll({
-      attributes: ['name', 'content', 'image', 'categoryId']
+      attributes: ['id', 'name', 'content', 'image', 'categoryId']
     })
     return result;
   } catch (error) {
@@ -23,9 +23,7 @@ const getOne = async (id) => {
   try {
     const result = await NewReport.findOne({
       where: { id },
-      attributes: {
-        exclude: ['name', 'content', 'image', 'categoryId']
-      }
+      attributes: ['id', 'name', 'content', 'image', 'categoryId']
     });
     return result;
   } catch (error) {
