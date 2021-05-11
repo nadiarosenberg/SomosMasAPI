@@ -39,7 +39,6 @@ const persist = async (newreport) => {
     text: `${userData.firstName} your new report called ${result.name} was created without a problem.`,
   };
   sendEmail(emailSource, message);
-  console.log(result)
   return result;
 };
 
