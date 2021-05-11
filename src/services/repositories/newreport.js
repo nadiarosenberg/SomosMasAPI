@@ -4,6 +4,7 @@ const errorHandler = require("../../utils/errorHandler");
 const sendEmail = require("../../utils/emailSender");
 const emailsSource = require("../../utils/fakeEmailSource");
 const userData = require("../../utils/fakeData");
+const { logger } = require("handlebars");
 
 const emailSource = emailsSource("newReport");
 
@@ -17,7 +18,7 @@ const getOne = async (id) => {
     });
     return result;
   } catch (error) {
-    logger.error(error.message);
+    console.error(error.message);
   }
 };
 
@@ -31,15 +32,19 @@ const destroy = async (id) => {
 };
 
 const persist = async (newreport) => {
-  const result = await NewReport.create(newreport)
-  const message = {
-    from: emailSource.email,
-    to: userData.email,
-    subject: "Your new report was created successfully",
-    text: `${userData.firstName} your new report called ${result.name} was created without a problem.`,
-  };
-  sendEmail(emailSource, message);
-  return result;
+  try {
+    const result = await NewReport.create(newreport);
+    const message = {
+      from: emailSource.email,
+      to: userData.email,
+      subject: "Your new report was created successfully",
+      text: `${userData.firstName} your new report called ${result.name} was created without a problem.`,
+    };
+    sendEmail(emailSource, message);
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 module.exports = {
