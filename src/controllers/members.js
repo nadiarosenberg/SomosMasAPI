@@ -1,17 +1,15 @@
 const db = require('../models')
-const Axios = require('axios')
+const { checkImage, checkName } = require('./middlewares/common')
 const Member = db.Members;
-const memberMiddleware = require('./members.middleware')
 
 // create and save a new Member
 const create = async (req, res) => {
+    const isValidImage = await checkImage(req, res)
+    const isValidName = await checkName(req, res)
 
-    const isValidImage = await memberMiddleware.checkImage(req, res)
-    const isValidName = await memberMiddleware.checkName(req, res)
-    
-    if(isValidImage && isValidName){
+    if (isValidImage && isValidName) {
         // create a member
-        try{
+        try {
             const member = await Member.create({
                 name: req.body.name.trim(),
                 facebookUrl: req.body.facebookUrl || null,
@@ -24,26 +22,26 @@ const create = async (req, res) => {
                 ok: true,
                 member
             })
-        }catch(e){
+        } catch (e) {
             res.status(400).json({
                 ok: false,
                 error: 'failed to create member.'
             })
         }
     }
-        
-      
+
+
 }
 
 // get all members
 const findAll = async (req, res) => {
-    try{
+    try {
         const members = await Member.findAll();
         res.json({
             ok: true,
             members
         })
-    }catch(e){
+    } catch (e) {
         res.status(400).json({
             ok: false,
             msj: 'failed to get all members.'
@@ -54,13 +52,13 @@ const findAll = async (req, res) => {
 // get one member by id
 const findOne = async (req, res) => {
     const id = req.params.id;
-    try{
+    try {
         let member = await Member.findByPk(id)
         res.json({
             ok: true,
             member
         })
-    }catch(e){
+    } catch (e) {
         res.status(400).json({
             ok: false,
             msj: `failed to get member with id ${id}`
@@ -71,7 +69,7 @@ const findOne = async (req, res) => {
 // update a member by id
 const update = async (req, res) => {
     const id = req.params.id;
-    if(isNaN(id)){
+    if (isNaN(id)) {
         res.status(400).json({
             ok: false,
             msj: 'invalid id'
@@ -80,23 +78,23 @@ const update = async (req, res) => {
     }
     const isValidName = await memberMiddleware.checkName(req, res)
     let isValidImage = false
-    if(req.body.image!==undefined){
+    if (req.body.image !== undefined) {
         isValidImage = await memberMiddleware.checkImage(req, res)
-    }else{
+    } else {
         isValidImage = true
     }
-    if(isValidImage && isValidName){
-        try{
+    if (isValidImage && isValidName) {
+        try {
             await Member.update(req.body, {
                 where: {
-                  id
+                    id
                 }
             });
             res.json({
                 ok: true,
                 msj: 'member updated successfully'
             })
-        }catch(e){
+        } catch (e) {
             res.status(400).json({
                 ok: false,
                 msj: 'failed to update member'
@@ -108,23 +106,23 @@ const update = async (req, res) => {
 // delete a member by id
 const destroy = async (req, res) => {
     const id = req.params.id
-    if(isNaN(id)){
+    if (isNaN(id)) {
         return res.status(400).json({
             ok: false,
             msj: 'invalid id'
         })
     }
-    try{
+    try {
         await Member.destroy({
             where: {
-              id
+                id
             }
         });
         return res.json({
             ok: true,
             msj: 'member deleted successfully'
         })
-    }catch(e){
+    } catch (e) {
         return res.status(400).json({
             ok: false,
             msj: 'failed to delete member'

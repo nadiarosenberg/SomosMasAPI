@@ -1,8 +1,8 @@
 const expressRouter = require('express').Router();
-const handler = require('./../handlers/organization');
+const handler = require('../handlers/organization');
 const logger = require('../utils/pinoLogger');
-const roleIdMiddleware = require('./middlewares/roleId');
-const { orgValidationRules, validate } = require('./middlewares/organizationValidation');
+const roleIdMiddleware = require('./middlewares/auth');
+const { orgValidationRules, validate } = require('./middlewares/organizations');
 
 expressRouter.post('/', roleIdMiddleware, orgValidationRules(), validate, async (req, res, next) => {
   try {

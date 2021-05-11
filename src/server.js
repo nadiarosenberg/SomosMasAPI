@@ -11,14 +11,14 @@ require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./controllers/users');
-const organizationsController = require('./controllers/organization');
+const organizationsController = require('./controllers/organizations');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
 const membersRouter = require('./routes/members');
 const rolesRouter = require('./routes/roles');
 const newsRouter = require('./routes/newreports');
 const newReportRouter = require('./controllers/newreports').newReportRouter;
-const categoriesRouter = require('./controllers/category');
+const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
 
@@ -33,7 +33,7 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 
-app.set('key', key.key);
+app.set(key.secretName, key.key);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

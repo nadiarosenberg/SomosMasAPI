@@ -2,17 +2,16 @@ const expressRouter = require('express').Router();
 const path = require('path');
 const handler = require('../handlers/activity');
 const logger = require('../utils/pinoLogger');
-const roleIdMiddleware = require("./middlewares/roleId.js");
-const { activityValidationRules, validate } = require('./middlewares/activityValidation');
+const { activityValidationRules, validate } = require('./middlewares/activities');
 
-expressRouter.post('/',  roleIdMiddleware, activityValidationRules(), validate, async (req, res) => {
+expressRouter.post('/', activityValidationRules(), validate, async (req, res) => {
   try {
     const activity = {
       name: req.body.name ? req.body.name : 'pepe',
       content: req.body.content ? req.body.content : 'Loren',
       image: req.body.image ? req.body.image : 'randomimage.png'
     };
-  
+
     const extensionsAvailable = ['png', 'jpg', 'jpeg'];
     const ext = path.extname(activity.image || '').split('.');
     if (extensionsAvailable.indexOf(ext[ext.length - 1]) < 0) {
@@ -41,7 +40,7 @@ expressRouter.get('/', async (req, res) => {
     res.status(200).json(results);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message || "Some error occurred while retrieving Activity."});
+    res.status(500).json({ message: error.message || "Some error occurred while retrieving Activity." });
   }
 });
 
@@ -63,7 +62,7 @@ expressRouter.get('/:id', async (req, res) => {
   }
 });
 
-expressRouter.put('/:id', roleIdMiddleware, async (req, res) => {
+expressRouter.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -81,11 +80,11 @@ expressRouter.put('/:id', roleIdMiddleware, async (req, res) => {
     res.status(200).json({ message: 'Activity updated successfully' });
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message || `Cannot update Activity with id = ${id}.`});
+    res.status(500).json({ message: error.message || `Cannot update Activity with id = ${id}.` });
   }
 });
 
-expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
+expressRouter.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -103,7 +102,7 @@ expressRouter.delete('/:id', roleIdMiddleware, async (req, res, next) => {
     res.status(200).json({ message: 'Activity deleted successfully' });
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message || `Could not delete Activity with id = ${id}`});
+    res.status(500).json({ message: error.message || `Could not delete Activity with id = ${id}` });
   }
 });
 

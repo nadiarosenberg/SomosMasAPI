@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const handler = require('./../handlers/category');
-const errorHandler = require('./../utils/errorHandler');
+const handler = require('../handlers/category');
+const errorHandler = require('../utils/errorHandler');
 
 router.get('/', async (req, res, next) => {
     try {
