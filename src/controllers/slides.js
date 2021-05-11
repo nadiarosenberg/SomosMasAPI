@@ -27,7 +27,7 @@ Router.get('/', async (req, res, next) => {
   }
 );
 
-Router.get('/:id', async (req, res, next) => {
+Router.get('/:id', isAdmin, async (req, res, next) => {
     try {
       const {id} = req.params;
       const slide = await handler.getSlide(id);
