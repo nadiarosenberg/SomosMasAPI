@@ -63,6 +63,7 @@ const persist = async (newreport) => {
 };
 
 module.exports = {
+  getAll,
   getOne,
   destroy,
   persist
