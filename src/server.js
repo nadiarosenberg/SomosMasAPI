@@ -20,6 +20,7 @@ const newReportRouter = require('./controllers/newreports');
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
+const contactRouter = require('./controllers/contact');
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
+app.use('/contacts', contactRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
