@@ -16,6 +16,16 @@ const Op = db.Sequelize.Op;
 // Var
 const emailSource = emailsSource("newReport");
 
+newReportRouter.get('/', async (req, res) => {
+  try {
+    const results = await handler.getAllNewReport();
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 newReportRouter.get('/:id', async (req, res) => {
   const { id }= req.params;
   try {
@@ -71,18 +81,6 @@ newReportRouter.post("/",/*isAdmin,*/async (req, res) => {
 
 module.exports = {
   newReportRouter,
-  findAll: (req, res) => {
-    NewReport.findAll({ paranoid: false })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving new reports.",
-        });
-      });
-  },
   update: (req, res) => {
     const id = req.params.id;
     NewReport.update(req.body, {
