@@ -8,6 +8,17 @@ const { logger } = require("handlebars");
 
 const emailSource = emailsSource("newReport");
 
+const getAll = async () => {
+  try {
+    const result = await NewReport.findAll({
+      attributes: ['name', 'content', 'image', 'categoryId']
+    })
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 const getOne = async (id) => {
   try {
     const result = await NewReport.findOne({
