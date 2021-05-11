@@ -54,7 +54,6 @@ app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
 app.use('/contacts', contactRouter);
 
-
 app.use(function (req, res, next) {
   next(createError(404));
 });
