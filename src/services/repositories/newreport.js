@@ -24,7 +24,7 @@ const getOne = async (id) => {
     const result = await NewReport.findOne({
       where: { id },
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'deletedAt', 'timestamps']
+        exclude: ['name', 'content', 'image', 'categoryId']
       }
     });
     return result;
