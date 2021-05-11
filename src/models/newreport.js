@@ -54,8 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     categoryId: {
       type: DataTypes.INTEGER
-    },
-    timestamps: DataTypes.STRING
+    }
   }, {
     sequelize,
     paranoid: true,
