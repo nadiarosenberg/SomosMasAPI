@@ -16,7 +16,8 @@ expressRouter.post('/', isAdmin, contactValidationRules(), validate, async (req,
   }
 });
 
-expressRouter.get('/', async (req, res) => {
+
+expressRouter.get('/',isAdmin, async (req, res) => {
   try {
     const results = await handler.getAllContacts();
     res.status(200).json(results);
