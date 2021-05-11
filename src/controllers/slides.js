@@ -45,21 +45,19 @@ Router.get('/:id', isAdmin, async (req, res, next) => {
 
 Router.put('/:id', isAdmin, async (req, res) => {
     const {id} = req.params;
-    const slide = req.body;
-    console.log(slide);
+    const data = req.body;
     try {
-      const slideToUpdate = await handler.getSlide(id);
-    if (!slideToUpdate) {
-      res.status(404).json('Slide not found');
-    }else{
-      const slideUpdated = await handler.updateSlide(slide, id);
-      console.log(slideUpdated);
-      res.status(200).json("Slide updated successfully");
-    }
+      const slide = await handler.getSlide(id);
+      if (!slide) {
+        res.status(404).json('Slide not found');
+      }else{
+        const slideUpdated = await handler.updateSlide(data, id);
+        res.status(200).json("Slide updated successfully");
+      }
     }catch (err) {
       console.log(err);
       res.send("Error updating slide");
-  }
+    }
 });
 
 Router.delete('/:id', isAdmin, async (req, res) => {
