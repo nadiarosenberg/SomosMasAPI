@@ -9,6 +9,7 @@ const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
+const { is } = require("sequelize/types/lib/operators");
 
 const NewReport = db.newreports;
 const Op = db.Sequelize.Op;
@@ -48,6 +49,25 @@ newReportRouter.get('/:id', isAdmin, async (req, res) => {
   }
 },);
 
+newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let newreport = await handler.getNewReportById(id);
+
+    if (!newreport) {
+      res.status(404).json({ message: 'NewReport not found' });
+      return;
+    }
+
+    await handler.updateNewReport(id, updateValues);
+    res.status(200).json({ message: 'NewReport updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message});
+  }
+});
+
 newReportRouter.delete(
   "/:id",
   checkIdInPath,
@@ -79,28 +99,4 @@ newReportRouter.post("/", isAdmin, async (req, res) => {
   }
 })
 
-module.exports = {
-  newReportRouter,
-  update: (req, res) => {
-    const id = req.params.id;
-    NewReport.update(req.body, {
-      where: { id: id },
-    })
-      .then((num) => {
-        if (num == 1) {
-          res.send({
-            message: "NewReport was updated successfully.",
-          });
-        } else {
-          res.send({
-            message: `Cannot update NewReport with id = ${id}. NewReport was not found or req.body is empty!`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: "Error updating NewReport with id = " + id,
-        });
-      });
-  },
-};
+module.exports = newReportRouter;

@@ -44,6 +44,7 @@ const createNewReport = async (newreport) => {
 module.exports = {
   getAllNewReport,
   getNewReportById,
+  updateNewReport,
   deleteNewReport,
   createNewReport
 };
