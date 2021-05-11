@@ -2,8 +2,8 @@ const expressRouter = require('express').Router();
 const path = require('path');
 const handler = require('../handlers/activity');
 const logger = require('../utils/pinoLogger');
-const roleIdMiddleware = require("../controllers/middlewares/roleId.js");
-const { activityValidationRules, validate } = require('../controllers/middlewares/activityValidation');
+const roleIdMiddleware = require("./middlewares/roleId.js");
+const { activityValidationRules, validate } = require('./middlewares/activityValidation');
 
 expressRouter.post('/',  roleIdMiddleware, activityValidationRules(), validate, async (req, res) => {
   try {

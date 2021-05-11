@@ -53,8 +53,6 @@ app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
 
-app.use(isAdmin);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
