@@ -4,7 +4,7 @@ const logger = require('../utils/pinoLogger');
 const isAdmin = require('./middlewares/auth');
 const { contactValidationRules, validate } = require('./middlewares/contactValidation');
 
-expressRouter.post('/',  async (req, res, next) => {
+expressRouter.post('/', isAdmin, async (req, res, next) => {
   try {
     const contactToCreate = req.body;
 
@@ -16,7 +16,6 @@ expressRouter.post('/',  async (req, res, next) => {
   }
 });
 
-
 expressRouter.get('/', async (req, res) => {
   try {
     const results = await handler.getAllContacts();
@@ -26,6 +25,5 @@ expressRouter.get('/', async (req, res) => {
     res.status(500).json({ message: error.message || "Some error occurred while retrieving Contacts."});
   }
 });
-
 
 module.exports = expressRouter;
