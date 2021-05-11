@@ -16,7 +16,7 @@ Router.post('/', isAdmin, async (req, res, next) => {
   }
 );
 
-Router.get('/', async (req, res, next) => {
+Router.get('/', isAdmin, async (req, res, next) => {
     try {
       const result = await handler.getSlides();
       res.status(200).json(result);
