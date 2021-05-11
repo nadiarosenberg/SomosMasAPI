@@ -23,12 +23,16 @@ const getOne = async (id) => {
 };
 
 const destroy = async (id) => {
-  const result = await NewReport.destroy({
-    where: {
-      id: id
-    },
-  });
-  return result;
+  try {
+    const result = await NewReport.destroy({
+      where: {
+        id: id
+      },
+    });
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 const persist = async (newreport) => {
