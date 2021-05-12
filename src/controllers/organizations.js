@@ -1,5 +1,6 @@
 const expressRouter = require('express').Router();
-const handler = require('../handlers/organization');
+const handler = require('./../handlers/organization');
+const handlerSocialMedia = require('./../handlers/socialmedia');
 const logger = require('../utils/pinoLogger');
 const roleIdMiddleware = require('./middlewares/auth');
 const { orgValidationRules, validate } = require('./middlewares/organizations');
@@ -39,8 +40,15 @@ expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
       res.status(404).json({ message: 'Organization not found' });
       return;
     }
+    if (!organization.socialMediaId) {
+      res.status(200).json(organization);
+      return;
+    }
+    const socialMedia = await handlerSocialMedia.getOneSocialMedia(organization.dataValues.socialMediaId);
+    res.status(200).json({organization: organization,
+    socialMedia: socialMedia});
+    ;
 
-    res.status(200).json(organization);
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
