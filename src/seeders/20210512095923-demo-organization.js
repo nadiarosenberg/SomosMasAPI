@@ -8,6 +8,7 @@ module.exports = {
       email: 'organizacion@email.com',
       welcomeText: 'mensaje de bienvenida',
       socialMediaId: 1,
+      timestamps: Date.now(),
       createdAt: new Date(),
       updatedAt: new Date()
     }]);
