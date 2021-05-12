@@ -47,7 +47,6 @@ expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
     const socialMedia = await handlerSocialMedia.getOneSocialMedia(organization.dataValues.socialMediaId);
     res.status(200).json({organization: organization,
     socialMedia: socialMedia});
-    ;
 
   } catch (error) {
     logger.error(error.message);
