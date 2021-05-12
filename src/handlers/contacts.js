@@ -1,4 +1,4 @@
-const repository = require('../services/repositories/contact');
+const repository = require('../services/repositories/contacts');
 
 const createContact = async (contact) => {
   const newContact = await repository.persist(contact);
