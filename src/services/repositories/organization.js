@@ -25,7 +25,7 @@ const getOne = async (id) => {
   try {
     const result = await Organization.findOne({
       where: { id },
-      attributes: ['name', 'image', 'phone', 'address']
+      attributes: ['name', 'image', 'phone', 'address', 'socialMediaId']
     });
 
     return result;
