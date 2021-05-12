@@ -2,7 +2,7 @@ const handler = require('../handlers/members');
 const logger = require('../utils/pinoLogger');
 const expressRouter = require('express').Router();
 const roleIdMiddleware = require('./middlewares/auth');
-const { isValidImage, checkImage, checkName } = require('./middlewares/common');
+const { isValidImage } = require('./middlewares/common');
 const { memberValidationRules, validate } = require('./middlewares/members');
 
 
@@ -87,31 +87,18 @@ const update = async (req, res) => {
     }
 }
 
-// delete a member by id
-const destroy = async (req, res) => {
-    const id = req.params.id
-    if (isNaN(id)) {
-        return res.status(400).json({
-            ok: false,
-            msj: 'invalid id'
-        })
-    }
+expressRouter.delete('/:id', async (req, res, next) => {
+    const id = req.params.id;
     try {
-        await Member.destroy({
-            where: {
-                id
-            }
-        });
-        return res.json({
-            ok: true,
-            msj: 'member deleted successfully'
-        })
-    } catch (e) {
-        return res.status(400).json({
-            ok: false,
-            msj: 'failed to delete member'
-        })
+      const isDeleted = await handler.deleteMember(id);
+      if (!isDeleted) throw new Error('failed to delete member');
+      res.status(200).json({
+        msj: 'member deleted successfully',
+      });
+    } catch (error) {
+      logger.error(error.message);
+      res.status(500).json({ message: 'failed to delete member' });
     }
-}
+});
 
 module.exports = expressRouter;

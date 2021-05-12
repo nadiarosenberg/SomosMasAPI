@@ -21,7 +21,18 @@ const persist = async (memberToPersist) => {
   }
 };
 
+const destroyMember = async (id) => {
+  try {
+    const result = await Members.destroy({
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 module.exports = {
   getAll,
-  persist
+  persist,
+  destroyMember
 };

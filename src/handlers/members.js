@@ -10,7 +10,13 @@ const createMember = async (member) => {
   return createdMember;
 };
 
+const deleteMember = async (id) => {
+  const result = await repository.destroyMember(id);
+  return result;
+}
+
 module.exports = {
   getAllMembers,
-  createMember
+  createMember,
+  deleteMember
 };
