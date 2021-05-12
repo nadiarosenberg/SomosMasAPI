@@ -60,7 +60,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    aboutUsText: DataTypes.TEXT
+    socialMediaId: {
+      type: DataTypes.INTEGER,
+    },
+    aboutUsText: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Organization',
