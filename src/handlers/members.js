@@ -5,6 +5,12 @@ const getAllMembers = async () => {
   return members;
 };
 
+const createMember = async (member) => {
+  const createdMember = await repository.persist(member);
+  return createdMember;
+};
+
 module.exports = {
   getAllMembers,
+  createMember
 };
