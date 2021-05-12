@@ -1,85 +1,106 @@
-const  {Role}  = require('../models/index')
-const Controller = {}
+const expressRouter = require('express').Router();
+const handler = require('../handlers/roles');
+const logger = require('../utils/pinoLogger');
 
-Controller.get = async (req, res) => {
-    try  {
-        const data = await Role.findAll()
-        res.status(200).json(data)
-    } catch (err) {
-        res.status(500).json({
-            error: 'Try again'
-        })
-    }
-}
-
-Controller.getOne = async (req, res) => {
-    try {
-        const id = req.params.id
-        const data = await Role.findByPk(id)
-        if (data === null) {
-            return resp.status(400).json({
-              error: 'Id does not exist'
-            })
-        }
-        res.status(200).json(data)
-    } catch (err) {
-        res.status(500).json({
-            error: 'Try again'
-        })
-    }
-}
-
-Controller.patchRole = async (req, res) => {
-    const newRol = req.body
-    if (!newRol.name || !newRol.description) {
-      return res.status(400).json({
-        error: 'Try again'
+expressRouter.post('/', async (req, res, next) => {
+  try {
+      const roleToCreate = req.body;
+      const result = await handler.createRole(roleToCreate);
+      logger.info({ id: result.id }, 'Role created successfully')
+      res.status(201).json({
+        id: result.id,
+        message: 'Role created successfully'
       })
-    }
-    const data = await Role.update({
-      name: newRol.name,
-      description: newRol.description,
-      updatedAt: new Date()
-    }, {
-      where: {
-        id: req.params.id
-      }
-    })
-    if (data[0] === 0) {
-      return res.status(400).json({
-        error: 'invalid ID'
-      })
-    }
-    res.json('The id was modified correctly')
-}
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message})
+  }
+});
 
-Controller.deleteRole = async (req, res) => {
-    const data = await Role.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    if (data === 0) {
-      return res.status(400).json({
-        error: 'invalid ID'
-      })
-    }
-    res.json('id was successfully removed')
-}
+expressRouter.get('/', async (req, res, next) => {
+  try {
+    const results = await handler.getAllRoles();
+    res.status(200).json(results);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
 
-Controller.postRole = async (req, res) => {
-    const newRol = req.body
-    if (!newRol.name || !newRol.description) {
-        return res.status(400).json({
-          error: 'Try again'
-        })
+expressRouter.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const role = await handler.getRoleById(id);
+
+    if (!role) {
+      logger.warn('role not found');
+      res.status(404).json({ message: 'Role not found' });
+      return;
     }
-    const data = await Role.create({
-        name: newRol.name,
-        description: newRol.description,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })
-    res.json(data)
-}
-module.exports = Controller
+
+    res.status(200).json(role);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
+expressRouter.put('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let role = await handler.getRoleById(id);
+
+    if (!role) {
+      logger.warn('Role not found');
+      res.status(404).json({ message: 'Role not found' });
+      return;
+    }
+
+    await handler.updateRole(id, updateValues);
+    logger.info('Role updated successfully');
+    res.status(200).json({ message: 'Role updated successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
+expressRouter.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    let role = await handler.getRoleById(id);
+
+    if (!role) {
+      logger.warn('Role not found');
+      res.status(404).json({ message: 'Role not found' });
+      return;
+    }
+
+    await handler.deleteRole(id);
+
+    logger.info('Role deleted successfully');
+    res.status(200).json({ message: 'Role deleted successfully' });
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
+
+expressRouter.post('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const role = await handler.retoreRole(id);
+    console.log(role);
+    logger.info('Role restored successfully')
+    res.status(200).json({ message: 'Role restored successfully'})
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = expressRouter;
