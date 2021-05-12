@@ -17,6 +17,10 @@ module.exports = {
       linkedin: {
         type: Sequelize.STRING
       },
+      timestamps: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
