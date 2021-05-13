@@ -10,10 +10,13 @@ const getSlide = async (id) => await repository.findOne(id);
 
 const getSlides = async () => await repository.findAll();
 
+const getSlidesByOrgId = async (orgId) => await repository.getSlidesByOrgId(orgId);
+
 module.exports = {
     createSlide,
     updateSlide,
     deleteSlide,
     getSlide,
-    getSlides
+    getSlides,
+    getSlidesByOrgId
 };
