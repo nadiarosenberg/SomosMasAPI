@@ -56,7 +56,6 @@ expressRouter.put('/:id', rolesValidationPutRules(), validate, async (req, res, 
   try {
     const { id } = req.params;
     const updateValues = req.body;
-    console.log(updateValues);
 
     let role = await handler.getRoleById(id);
 
@@ -102,7 +101,6 @@ expressRouter.post('/:id', async (req, res, next) => {
     const { id } = req.params;
 
     const role = await handler.retoreRole(id);
-    console.log(role);
     logger.info('Role restored successfully')
     res.status(200).json({ message: 'Role restored successfully'})
   } catch (error) {
