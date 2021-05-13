@@ -9,9 +9,14 @@ const wasUpdated = (result, req, res) => result[0]===1;
 Router.post('/', isAdmin, async (req, res, next) => {
     try {
       const slide = req.body;
+      if (!slide.order){
+            const lastSlide = await handler.getLastSlide();
+            const lastOrder = lastSlide.order;
+            slide.order = lastOrder + 1;
+      }
       const result = await handler.createSlide(slide);
       res.status(200).json(result);
-    } catch (err) {
+    }catch (err) {
       console.log(err);
       res.send('Error posting slide');
     }
