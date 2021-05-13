@@ -4,10 +4,10 @@ const logger = require('../utils/pinoLogger');
 const isAdmin = require('./middlewares/auth');
 const { contactValidationRules, validate } = require('./middlewares/contactValidation');
 
-expressRouter.post('/', isAdmin, contactValidationRules(), validate, async (req, res, next) => {
+expressRouter.post('/',  async (req, res, next) => {
   try {
     const contactToCreate = req.body;
-
+console.log(contactToCreate);
     const result = await handler.createContact(contactToCreate);
     res.status(200).json({ id: result.id, message: 'Contact created successfully' });
   } catch (error) {
@@ -17,7 +17,7 @@ expressRouter.post('/', isAdmin, contactValidationRules(), validate, async (req,
 });
 
 
-expressRouter.get('/',isAdmin, async (req, res) => {
+expressRouter.get('/', async (req, res) => {
   try {
     const results = await handler.getAllContacts();
     res.status(200).json(results);
