@@ -17,7 +17,7 @@ expressRouter.post('/', async (req, res) => {
 });
 
 
-expressRouter.get('/',isAdmin, async (req, res) => {
+expressRouter.get('/', async (req, res) => {
   try {
     const results = await handler.getAllContacts();
     res.status(200).json(results);
