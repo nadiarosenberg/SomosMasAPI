@@ -6,8 +6,8 @@ const {
 
 const rolesValidationRules = () => {
     return [
-        check('name').isAlphanumeric().not().isEmpty().withMessage('Name cannot be empty'),
-        check('description').isAlphanumeric().not().isEmpty().withMessage('Description cannot be empty'),
+        check('name').isString().not().isEmpty().withMessage('Name cannot be empty'),
+        check('description').isString().not().isEmpty().withMessage('Description cannot be empty'),
     ]
 }
 
@@ -25,11 +25,11 @@ const rolesValidationPutRules = () => {
     return [
         oneOf([
             [oneOf([
-                    check('name').isAlphanumeric().withMessage('Name is only alphanumeric'),
+                    check('name').isString().withMessage('Name is only alphanumeric'),
                     check('name').isEmpty()
                 ]),
                 oneOf([
-                    check('description').isAlphanumeric().withMessage('Description is only alphanumeric'),
+                    check('description').isString().withMessage('Description is only alphanumeric'),
                     check('description').isEmpty()
                 ])
             ],
