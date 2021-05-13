@@ -1,11 +1,6 @@
 const repository = require("../services/repositories/roles");
 
 const createRole = async (role) => {
-    if (!role.name || !role.description) {
-        return res.status(400).json({
-            error: 'Try again'
-        })
-    }
     const createdRole = await repository.persist(role);
     return createdRole;
 };
@@ -21,11 +16,6 @@ const getRoleById = async (id) => {
 };
 
 const updateRole = async (id, properties) => {
-    if (!properties.name || !properties.description) {
-        return res.status(400).json({
-            error: 'Try again'
-        })
-    }
     const role = await repository.update(id, properties);
     return role;
 };

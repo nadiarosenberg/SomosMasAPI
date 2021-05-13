@@ -1,8 +1,15 @@
 const expressRouter = require('express').Router();
 const handler = require('../handlers/roles');
+const { pino } = require('../utils/pinoLogger');
 const logger = require('../utils/pinoLogger');
+const {
+  rolesValidationRules,
+  validate,
+  rolesValidationPutRules
+} = require('./middlewares/roles');
 
-expressRouter.post('/', async (req, res, next) => {
+
+expressRouter.post('/',rolesValidationRules(),validate, async (req, res, next) => {
   try {
       const roleToCreate = req.body;
       const result = await handler.createRole(roleToCreate);
@@ -45,10 +52,11 @@ expressRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-expressRouter.put('/:id', async (req, res, next) => {
+expressRouter.put('/:id', rolesValidationPutRules(), validate, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
+    console.log(updateValues);
 
     let role = await handler.getRoleById(id);
 

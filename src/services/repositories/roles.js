@@ -3,14 +3,15 @@ const {
 } = require('../../models/index');
 const logger = require('../../utils/pinoLogger');
 
-const persist = async (organizationToPersist) => {
+const persist = async (role) => {
     try {
-        const result = await Role.create(organizationToPersist);
+        const result = await Role.create(role);
         return result;
     } catch (error) {
         logger.error(error.message);
     }
 };
+
 
 const getAll = async () => {
     try {
