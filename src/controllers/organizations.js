@@ -29,17 +29,15 @@ expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
   }
 });
 
-expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
+expressRouter.get('/public/:id', /*roleIdMiddleware,*/ async (req, res, next) => {
   try {
     const { id } = req.params;
     const organization = await handler.getOrganizationById(id);
-
     if (!organization) {
       logger.warn('Organization not found');
       res.status(404).json({ message: 'Organization not found' });
       return;
     }
-
     res.status(200).json(organization);
   } catch (error) {
     logger.error(error.message);
