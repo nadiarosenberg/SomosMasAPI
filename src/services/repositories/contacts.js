@@ -1,6 +1,13 @@
 const { Contact } = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
+const errorHandler = require("../../utils/errorHandler");
+const sendEmail = require("../../utils/emailSender");
+const emailsSource = require("../../utils/fakeEmailSource");
+const userData = require("../../utils/fakeData");
+const emailSource = emailsSource("newContact");
+
+
 const persist = async (contactToPersist) => {
   try {
     const result = await Contact.create(contactToPersist);
