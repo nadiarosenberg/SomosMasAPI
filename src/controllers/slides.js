@@ -11,7 +11,7 @@ Router.post('/', isAdmin, async (req, res, next) => {
     try {
       const slide = req.body;
       const image = req.body.imageUrl;
-      const imageAwsLink = await awsImage(image);
+      const imageAwsLink = await awsImage.uploadBase64Image(image);
       slide.imageUrl = imageAwsLink;
       if (!slide.order){
             const lastSlide = await handler.getLastSlide();

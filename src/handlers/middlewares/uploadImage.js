@@ -2,7 +2,7 @@ const storageS3 = require("../../utils/storageS3");
 const axios = require("axios");
 const { v4: uuidv4 } = require('uuid');
 
-// download the image
+//If image url is provided
 const downloadImage = async (linkUrl) => {
   const downloadedImage = await axios({
     method: 'GET',
@@ -12,22 +12,12 @@ const downloadImage = async (linkUrl) => {
   return downloadedImage;
 };
 
-const generateImageName = async(image) =>{
-  const extension = image.match(/[^:/]\w+(?=;|,)/)[0];
-  const name = uuidv4();
-  const nameImage = name+'.'+extension;
-  return nameImage;
-}
-
-// gets the url of an image and returns the link of that image uploaded to aws
-const uploadImage = async (image) => {
-  //const image = await downloadImage(linkUrl);
-  //const buffer = image.data._readableState.buffer.head.data;
-  const base64Data = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-  const key = await generateImageName(image);
+const uploadImage = async (nameImage, linkUrl) => {
+  const image = await downloadImage(linkUrl);
+  const buffer = image.data._readableState.buffer.head.data;
+  const key = nameImage;
   return new Promise((resolve, reject) => {
-    // call the function to upload the image
-    storageS3.uploadToBucket(base64Data, key, (err, data) => {
+    storageS3.uploadToBucket({buffer: buffer, key: key}, (err, data) => {
       if (err) {
         reject(err);
       } else {
@@ -37,4 +27,29 @@ const uploadImage = async (image) => {
   });
 };
 
-module.exports = uploadImage;
+//If base64 image is provided
+const generateImageName = async(image) =>{
+  const extension = image.match(/[^:/]\w+(?=;|,)/)[0];
+  const name = uuidv4();
+  const nameImage = name+'.'+extension;
+  return nameImage;
+}
+
+const uploadBase64Image = async (image) => {
+  const base64Data = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+  const key = await generateImageName(image);
+  return new Promise((resolve, reject) => {
+    storageS3.uploadToBucket({buffer: base64Data, key: key, contEnc: 'base64'}, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data.Location);
+      }
+    });
+  });
+};
+
+module.exports = {
+  uploadImage,
+  uploadBase64Image
+}
