@@ -13,12 +13,11 @@ const downloadImage = async (linkUrl) => {
 };
 
 const generateImageName = async(image) =>{
-  const extension = 'jpg';
+  const extension = image.match(/[^:/]\w+(?=;|,)/)[0];
   const name = uuidv4();
   const nameImage = name+'.'+extension;
   return nameImage;
 }
-
 
 // gets the url of an image and returns the link of that image uploaded to aws
 const uploadImage = async (image) => {
