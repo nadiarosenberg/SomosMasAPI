@@ -15,11 +15,12 @@ const s3 = new S3({
   maxRetries: 15,
 });
 
-const uploadToBucket = (buffer, key, callback) => {
+const uploadToBucket = (base64Data, key, callback) => {
   var uploadParams = {
     Bucket: process.env.BUCKET_NAME,
     Key: key,
-    Body: buffer,
+    Body: base64Data,
+    ContentEncoding: 'base64' 
   };
 
   s3.upload(uploadParams, (err, data) => {

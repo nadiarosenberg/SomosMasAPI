@@ -12,13 +12,14 @@ const downloadImage = async (linkUrl) => {
 };
 
 // gets the url of an image and returns the link of that image uploaded to aws
-const uploadImage = async (nameImage, linkUrl) => {
-  const image = await downloadImage(linkUrl);
-  const buffer = image.data._readableState.buffer.head.data;
+const uploadImage = async (nameImage, image) => {
+  //const image = await downloadImage(linkUrl);
+  //const buffer = image.data._readableState.buffer.head.data;
+  const base64Data = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
   const key = nameImage;
   return new Promise((resolve, reject) => {
     // call the function to upload the image
-    storageS3.uploadToBucket(buffer, key, (err, data) => {
+    storageS3.uploadToBucket(base64Data, key, (err, data) => {
       if (err) {
         reject(err);
       } else {

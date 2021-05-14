@@ -10,7 +10,7 @@ const wasUpdated = (result, req, res) => result[0]===1;
 Router.post('/', isAdmin, async (req, res, next) => {
     try {
       const slide = req.body;
-      const image = slide.imageUrl;
+      const image = req.body.imageUrl;
       const imageName = "nombredeprueba.jpg";
       const imageAwsLink = await awsImage(imageName, image);
       slide.imageUrl = imageAwsLink;
