@@ -12,6 +12,16 @@ const getAll = async () => {
   }
 };
 
+const persist = async (memberToPersist) => {
+  try {
+    const result = await Members.create(memberToPersist);
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 module.exports = {
   getAll,
+  persist
 };
