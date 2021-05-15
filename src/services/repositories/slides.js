@@ -14,6 +14,7 @@ const persist = async (slide) => {
 const findAll = async () => {
   try {
     const result = await Slide.findAll({
+      attributes: ["imageUrl", "order"],
       order: [['order', 'ASC']]
     });
     return result;
