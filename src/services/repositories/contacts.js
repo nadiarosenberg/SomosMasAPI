@@ -17,7 +17,7 @@ const persist = async (contactToPersist) => {
     subject: "Your new report was created successfully",
     text: `${userData.firstName} your new report called ${result.name} was created without a problem.`,
   };
-  sendEmail(emailSource, message);
+  
     return result;
   } catch (error) {
     logger.error(error.message);
