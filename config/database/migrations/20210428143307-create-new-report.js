@@ -36,16 +36,7 @@ module.exports = {
             msg: 'image is required'
           }
         },
-        type: {
-          allowNull: false,
-          validate: {
-            notNull: {
-              args: true,
-              msg: 'image is required'
-            }
-          },
-          type: Sequelize.STRING
-        },
+        type: Sequelize.STRING
       },
       type: {
         allowNull: false,
