@@ -1,92 +1,131 @@
-const db = require("../models");
-const Testimonial = db.Testimonial;
+const router = require("express").Router();
+const handler = require("./../handlers/testimonials");
+const logger = require("../utils/pinoLogger");
+const {
+  testimonialValidationPutRules,
+  validate,
+} = require("./middlewares/testimonials");
 
-const create = async (req, res) => {
-  const bodyData = req.body;
-  try {
-    const testimonial = await Testimonial.create({
-      name: bodyData.name,
-      image: bodyData.image,
-      content: bodyData.content,
-    });
-    res.json(testimonial);
-  } catch (err) {
-    console.log(err);
-    res.send("Error posting testimonial");
-  }
+const wasUpdated = (result) => {
+  var bool;
+  result[0] === 1 ? (bool = true) : (bool = false);
+  return bool;
 };
 
-const findAll = async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
-    const testimonial = await Testimonial.findAll();
-    res.json(testimonial);
-  } catch (err) {
-    console.log(err);
-    res.send("Error getting testimonials");
-  }
-};
-
-const findOne = async (req, res) => {
-  const idBody = req.params.id;
-  try {
-    const testimonial = await Testimonial.findOne({
-      where: { id: idBody },
+    const result = await handler.getAllTestimonials();
+    res.json(result);
+  } catch (e) {
+    logger.error(e.message);
+    res.send({
+      message: "Error posting testimonial",
     });
-    if (testimonial) {
-      res.json(testimonial);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const result = await handler.getOneTestimonial(id);
+    if (result) {
+      res.json(result);
     } else {
-      res.status(404).json("Testimonial not found");
+      logger.warn("Testimonial not found");
+      res.status(404).json({
+        message: "Testimonial not found",
+      });
     }
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
+    console.log(e);
     res.send("Error getting testimonial");
   }
-};
+});
 
-const update = async (req, res) => {
-  const idBody = req.params.id;
+router.post("/", async (req, res, next) => {
+  const testimonial = {
+    name: req.body.name,
+    image: req.body.image,
+    content: req.body.content,
+  };
+
   try {
-    const testimonial = await Testimonial.findOne({
-      where: { id: idBody },
+    const result = await handler.postTestimonial(testimonial);
+    logger.info(
+      {
+        id: result.id,
+      },
+      "Testimonial created successfully"
+    );
+    res.json(result);
+  } catch (e) {
+    logger.error(e.message);
+    res.send({
+      message: "Error posting testimonial",
     });
-    if (testimonial) {
-      const testimonial = await Testimonial.update(req.body, {
-        where: { id: req.params.id },
-      });
-      res.status(200).json("Testimonial updated successfully");
-    } else {
-      res.status(404).json("Testimonial does not exist");
-    }
-  } catch (err) {
-    console.log(err);
-    res.send("Error updating testimonial");
   }
-};
+});
 
-const destroy = async (req, res) => {
-  const idBody = req.params.id;
+router.put(
+  "/:id",
+  testimonialValidationPutRules(),
+  validate,
+  async (req, res, next) => {
+    const id = req.params.id;
+    const testimonial = req.body;
+    try {
+      const result = await handler.getOneTestimonial(id);
+      
+      if (result) {
+        const testimonialUpdated = await handler.putTestimonial(testimonial, id);
+        if (wasUpdated(testimonialUpdated)) {
+          logger.info("Testimonial updated successfully");
+          res.status(200).json({
+            message: "Testimonial updated successfully",
+          });
+        }
+        logger.info("Testimonial updated failed");
+        res.status(404).json({
+          message: "Testimonial updated failed",
+        });
+      } else {
+        logger.warn("Testimonial not found");
+        res.status(404).json({
+          message: "Testimonial not found",
+        });
+      }
+    } catch (e) {
+      logger.error(e.message);
+      res.send({
+        message: "Error updating testimonial",
+      });
+    }
+  }
+);
+
+router.delete("/:id", async (req, res, next) => {
+  const id = req.params.id;
   try {
-    const testimonial = await Testimonial.findOne({
-      where: { id: idBody },
-    });
-    if (testimonial) {
-      const testimonial = await Testimonial.destroy({
-        where: { id: idBody },
-      });
-      res.status(200).json("Testimonial deleted successfully");
-    } else {
-      res.status(404).json("Testimonial does not exist");
-    }
-  } catch (err) {
-    console.log(err);
-    res.send("Error deleting testimonial");
-  }
-};
+    const result = await handler.getOneTestimonial(id);
 
-module.exports = {
-  create,
-  findAll,
-  findOne,
-  update,
-  destroy,
-};
+    if (result) {
+      const testimonialDeleted = await handler.deleteTestimonial(id);
+      logger.info("Testimonial deleted successfully");
+      res.status(200).json({
+        message: "Testimonial deleted successfully",
+      });
+    } else {
+      logger.warn("Testimonial not found");
+      res.status(404).json({
+        message: "Testimonial not found",
+      });
+    }
+  } catch (e) {
+    logger.error(e.message);
+    res.send({
+      message: "Error deleted testimonial",
+    });
+  }
+});
+
+module.exports = router;
