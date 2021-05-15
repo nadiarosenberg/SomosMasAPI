@@ -47,23 +47,23 @@ module.exports = {
           type: Sequelize.STRING
         },
       },
-      categoryId: {
-        // allowNull: false,
+      type: {
+        allowNull: false,
         validate: {
           notNull: {
             args: true,
             msg: 'image is required'
           }
         },
-        type: {
-          allowNull: false,
-          validate: {
-            notNull: {
-              args: true,
-              msg: 'image is required'
-            }
-          },
-          type: Sequelize.STRING
+        type: Sequelize.STRING
+      },
+      categoryId: {
+        type: Sequelize.INTEGER,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'image is required'
+          }
         },
         references: {
           model: 'Categories',
