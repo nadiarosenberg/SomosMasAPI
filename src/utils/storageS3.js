@@ -19,9 +19,9 @@ const uploadToBucket = (params, callback) => {
   var uploadParams = {
     Bucket: process.env.BUCKET_NAME,
     Key: params.key,
-    Body: params.buffer,
-    ContentEncoding: params.contEnc
+    Body: params.buffer
   };
+  if(params.hasOwnProperty('contEnc')) uploadParams['contentEncoding'] = params.contEnc;
 
   s3.upload(uploadParams, (err, data) => {
     callback(err, data);
