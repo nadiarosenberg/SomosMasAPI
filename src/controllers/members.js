@@ -1,6 +1,10 @@
-const db = require('../models')
-const { checkImage, checkName } = require('./middlewares/common')
-const Member = db.Members;
+const { Members } = require('../models/members');
+const handler = require('../handlers/members');
+const logger = require('../utils/pinoLogger');
+const expressRouter = require('express').Router();
+const roleIdMiddleware = require('./middlewares/auth');
+const { checkImage, checkName } = require('./middlewares/common');
+
 
 // create and save a new Member
 const create = async (req, res) => {
@@ -34,20 +38,15 @@ const create = async (req, res) => {
 }
 
 // get all members
-const findAll = async (req, res) => {
-    try {
-        const members = await Member.findAll();
-        res.json({
-            ok: true,
-            members
-        })
-    } catch (e) {
-        res.status(400).json({
-            ok: false,
-            msj: 'failed to get all members.'
-        })
-    }
-}
+expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
+  try {
+    const members = await handler.getAllMembers();
+    res.status(200).json(members);
+  } catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message});
+  }
+});
 
 // get one member by id
 const findOne = async (req, res) => {
@@ -130,10 +129,4 @@ const destroy = async (req, res) => {
     }
 }
 
-module.exports = {
-    create,
-    findAll,
-    findOne,
-    update,
-    destroy
-}
+module.exports = expressRouter;
