@@ -9,13 +9,37 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull:
+          {
+            args: true,
+            msg: 'name is required'
+          }
+        }
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull:
+          {
+            args: true,
+            msg: 'image is required'
+          }
+        }
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull:
+          {
+            args: true,
+            msg: 'content is required'
+          }
+        }
       },
       createdAt: {
         allowNull: false,

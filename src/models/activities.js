@@ -23,8 +23,28 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    image: DataTypes.STRING,
-    content: DataTypes.STRING,
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull:
+        {
+          args: true,
+          msg: 'image is required'
+        }
+      }
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull:
+        {
+          args: true,
+          msg: 'content is required'
+        }
+      }
+    },
   }, {
     sequelize,
     paranoid: true,

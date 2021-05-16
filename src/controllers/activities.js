@@ -7,9 +7,9 @@ const { activityValidationRules, validate } = require('./middlewares/activities'
 expressRouter.post('/', activityValidationRules(), validate, async (req, res) => {
   try {
     const activity = {
-      name: req.body.name ? req.body.name : 'pepe',
-      content: req.body.content ? req.body.content : 'Loren',
-      image: req.body.image ? req.body.image : 'randomimage.png'
+      name: req.body.name,
+      content: req.body.content,
+      image: req.body.image
     };
 
     const extensionsAvailable = ['png', 'jpg', 'jpeg'];
