@@ -1,5 +1,6 @@
 const repository = require('../services/repositories/contacts');
-const sendContactEmail = require('../utils/ContactEmail')
+const sendContactEmail = require('../utils/ContactEmail');
+
 const createContact = async (contact) => {
   const newContact = await repository.persist(contact);
   sendContactEmail(contact.email, contact.name);
