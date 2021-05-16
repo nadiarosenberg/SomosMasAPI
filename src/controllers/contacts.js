@@ -4,7 +4,7 @@ const logger = require('../utils/pinoLogger');
 const isAdmin = require('./middlewares/auth');
 const { contactValidationRules, validate } = require('./middlewares/contactValidation');
 
-expressRouter.post('/', async (req, res) => {
+expressRouter.post('/', isAdmin, async (req, res, next) => {
   try {
     const contactToCreate = req.body;
     const result = await handler.createContact(contactToCreate);
