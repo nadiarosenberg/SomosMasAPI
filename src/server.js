@@ -22,7 +22,6 @@ const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
 const contactRouter = require('./controllers/contacts');
 
-
 const app = express();
 
 app.use(cors())
