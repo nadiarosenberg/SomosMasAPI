@@ -20,7 +20,7 @@ const newReportsRouter = require('./controllers/newreports');
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
-const contactRouter = require('./controllers/contact');
+const contactRouter = require('./controllers/contacts');
 
 
 const app = express();
