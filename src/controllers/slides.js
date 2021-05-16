@@ -4,6 +4,8 @@ const Router = express.Router();
 const handler = require('../handlers/slides');
 const isAdmin = require('./middlewares/auth');
 
+const wasUpdated = (result, req, res) => result[0]===1;
+
 Router.post('/', isAdmin, async (req, res, next) => {
     try {
       const slide = req.body;
@@ -45,21 +47,23 @@ Router.get('/:id', isAdmin, async (req, res, next) => {
 
 Router.put('/:id', isAdmin, async (req, res) => {
     const {id} = req.params;
-    const slide = req.body;
-    console.log(slide);
+    const data = req.body;
     try {
-      const slideToUpdate = await handler.getSlide(id);
-    if (!slideToUpdate) {
-      res.status(404).json('Slide not found');
-    }else{
-      const slideUpdated = await handler.updateSlide(slide, id);
-      console.log(slideUpdated);
-      res.status(200).json("Slide updated successfully");
-    }
+      const slide = await handler.getSlide(id);
+      if (!slide) {
+        res.status(404).json('Slide not found');
+      }else{
+      const slideUpdated = await handler.updateSlide(data, id);
+        if(wasUpdated(slideUpdated)){
+          res.status(200).json("Slide updated successfully");
+        }else{
+          res.status(404).json('Error updating slide')
+        }
+      }
     }catch (err) {
       console.log(err);
       res.send("Error updating slide");
-  }
+    }
 });
 
 Router.delete('/:id', isAdmin, async (req, res) => {
