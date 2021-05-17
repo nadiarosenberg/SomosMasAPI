@@ -6,6 +6,7 @@ const {
   testimonialValidationPostRules,
   validate,
 } = require("./middlewares/testimonials");
+const isAdmin = require('./middlewares/auth');
 
 const wasUpdated = (result) => {
   var bool;
@@ -43,7 +44,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", testimonialValidationPostRules(), validate, async (req, res, next) => {
+router.post("/", isAdmin, testimonialValidationPostRules(), validate, async (req, res, next) => {
   const testimonial = {
     name: req.body.name,
     image: req.body.image,
