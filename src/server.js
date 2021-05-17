@@ -14,8 +14,8 @@ const usersRouter = require('./controllers/users');
 const organizationsController = require('./controllers/organizations');
 const testimonialsRouter = require('./routes/testimonials');
 const authRouter = require('./routes/auth');
-const rolesRouter = require('./controllers/roles');
 const membersRouter = require('./controllers/members');
+const rolesRouter = require('./controllers/roles');
 const newReportRouter = require('./controllers/newreports');
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
@@ -46,7 +46,7 @@ app.use('/auth', authRouter);
 app.use('/members', membersRouter);
 app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
-app.use('/news', newReportRouter);
+app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
