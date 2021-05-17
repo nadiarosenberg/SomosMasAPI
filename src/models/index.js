@@ -34,6 +34,6 @@ db.users = require("./user.js")(sequelize, Sequelize);
 db.activities = require("./activities.js")(sequelize, Sequelize);
 db.slides= require("./slide.js")(sequelize, Sequelize);
 db.organizations= require("./organization.js")(sequelize, Sequelize);
-db.socialmedia = require("./socialmedia.js")(sequelize, Sequelize);
+db.socialMedia = require("./socialmedia.js")(sequelize, Sequelize);
 
 module.exports = db;
