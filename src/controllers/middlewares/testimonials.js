@@ -17,6 +17,13 @@ const testimonialValidationPutRules = () => {
     ]
 }
 
+const testimonialValidationPostRules = () => {
+    return [
+        check('name').notEmpty().withMessage('name cannot be empty'),
+        check('content').notEmpty().withMessage('content cannot be empty'),
+    ]
+}
+
 const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -25,4 +32,8 @@ const validate = (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
 }
 
-module.exports = {testimonialValidationPutRules, validate}
+module.exports = {
+    testimonialValidationPutRules,
+    testimonialValidationPostRules, 
+    validate
+}

@@ -3,6 +3,7 @@ const handler = require("./../handlers/testimonials");
 const logger = require("../utils/pinoLogger");
 const {
   testimonialValidationPutRules,
+  testimonialValidationPostRules,
   validate,
 } = require("./middlewares/testimonials");
 
@@ -42,7 +43,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", testimonialValidationPostRules(), validate, async (req, res, next) => {
   const testimonial = {
     name: req.body.name,
     image: req.body.image,
