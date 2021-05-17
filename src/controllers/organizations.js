@@ -1,6 +1,5 @@
 const expressRouter = require('express').Router();
 const handler = require('./../handlers/organization');
-const handlerSocialMedia = require('./../handlers/socialmedia');
 const logger = require('../utils/pinoLogger');
 const roleIdMiddleware = require('./middlewares/auth');
 const { orgValidationRules, validate } = require('./middlewares/organizations');
@@ -43,7 +42,7 @@ expressRouter.get('/public/:id',  async (req, res, next) => {
       res.status(200).json(organization);
       return;
     }
-    const socialMedia = await handlerSocialMedia.getOneSocialMedia(organization.dataValues.socialMediaId);
+    const socialMedia = await handler.getOneSocialMedia(organization.dataValues.socialMediaId);
     res.status(200).json({organization: organization,
     socialMedia: socialMedia});
 
@@ -75,7 +74,7 @@ expressRouter.put('/public/:id',  async (req, res, next) => {
       return;
     } else {
       await handler.updateOrganization(id, updateValues);
-      const socialMedia = await handlerSocialMedia.putSocialMedia(socialmedia, organization.dataValues.socialMediaId);
+      const socialMedia = await handler.putSocialMedia(socialmedia, organization.dataValues.socialMediaId);
       res.status(200).json({ message: 'Organization updated successfully', socialmedia: socialmedia });
     }
 
