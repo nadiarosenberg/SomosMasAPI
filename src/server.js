@@ -12,7 +12,7 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./controllers/users');
 const organizationsController = require('./controllers/organizations');
-const testimonialsRouter = require('./routes/testimonials');
+const testimonialsRouter = require('./controllers/testimonials');
 const authRouter = require('./routes/auth');
 const membersRouter = require('./controllers/members');
 const rolesRouter = require('./controllers/roles');
