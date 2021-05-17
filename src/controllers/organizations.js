@@ -1,5 +1,6 @@
 const expressRouter = require('express').Router();
 const handler = require('../handlers/organization');
+const handlerSlides = require('../handlers/slides');
 const logger = require('../utils/pinoLogger');
 const roleIdMiddleware = require('./middlewares/auth');
 const { orgValidationRules, validate } = require('./middlewares/organizations');
@@ -33,14 +34,13 @@ expressRouter.get('/public/:id', roleIdMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const organization = await handler.getOrganizationById(id);
-
     if (!organization) {
       logger.warn('Organization not found');
       res.status(404).json({ message: 'Organization not found' });
       return;
     }
-
-    res.status(200).json(organization);
+    const slides = await handlerSlides.getSlidesByOrgId(id);
+    res.status(200).json({"organizationInfo": organization, "slides": slides});
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message});
