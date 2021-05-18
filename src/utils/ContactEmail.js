@@ -1,6 +1,5 @@
 const emailsSource = require("./fakeEmailSource");
-
-const sendEmail = require("./emailSenderwithouthbs");
+const sendEmail = require("./emailSender");
 const emailSource = emailsSource("contacts");
 
 const Contact_Email = (userEmail, userName, surName) => {
