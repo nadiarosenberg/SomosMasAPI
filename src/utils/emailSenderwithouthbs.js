@@ -37,9 +37,9 @@ const emailSender = (emailAccount, data) => {
         from: data.from,
         to: data.to,
         subject: data.subject,
-        text: data.text
-        //template: data.template,
-        //context: data.context
+        text: data.text,
+        template: data.template,
+        context: data.context
     }
 
     sendEmailTo(message);
