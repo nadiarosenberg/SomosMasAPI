@@ -10,7 +10,6 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         validate: {
           notNull: {
             args: true,
@@ -36,7 +35,6 @@ module.exports = {
       },
       newReportId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         validate: {
           notNull: {
             args: true,
