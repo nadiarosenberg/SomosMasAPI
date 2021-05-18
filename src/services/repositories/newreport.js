@@ -8,9 +8,11 @@ const { logger } = require("handlebars");
 
 const emailSource = emailsSource("newReport");
 
-const getAll = async () => {
+const getAll = async (limit, offset) => {
   try {
-    const result = await NewReport.findAll({
+    const result = await NewReport.findAndCountAll({
+      limit: limit,
+      offset: offset,
       attributes: ['id', 'name', 'content', 'image', 'categoryId']
     })
     return result;
