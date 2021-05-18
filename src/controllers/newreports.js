@@ -13,8 +13,8 @@ const emailSource = emailsSource("newReport");
 
 newReportsRouter.get('/', async (req, res) => {
   try {
-    const {page, pageSize} = req.query;
-    const results = await handler.getAllNewReports(page, pageSize);
+    const {page} = req.query;
+    const results = await handler.getAllNewReports(page);
     res.status(200).json(results);
   } catch (error) {
     console.error(error.message);

@@ -22,17 +22,17 @@ const getPreviousPage = (page) => {
   return ('/news?page='+(page - 1));
 };
 
-const getAllNewReports = async (page, pageSize) => { 
+const getAllNewReports = async (page) => { 
     try {
       page = parseInt(page);
-      const limit = parseInt(pageSize);
+      const limit = 10;
       const offset = getOffSet(page,limit);
 
       const {count, rows} = await repository.getAll(limit, offset);
       return {
         previousPage: getPreviousPage(page),
         currentPage: page,
-        nextPage: getNextPage(page, pageSize, count),
+        nextPage: getNextPage(page, limit, count),
         total: count,
         limit: limit,
         data: rows,
