@@ -1,6 +1,5 @@
-// Requires
-const newReportRouter = require("express").Router();
-const handler = require("../handlers/newreport");
+const newReportsRouter = require("express").Router();
+const handler = require("../handlers/newreports");
 const { checkIdInPath } = require("./middlewares/common");
 const db = require("../models");
 const path = require("path");
@@ -10,12 +9,12 @@ const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
 
-// Var
 const emailSource = emailsSource("newReport");
 
-newReportRouter.get('/', isAdmin, async (req, res) => {
+newReportsRouter.get('/', async (req, res) => {
   try {
-    const results = await handler.getAllNewReports();
+    const {page, pageSize} = req.query;
+    const results = await handler.getAllNewReports(page, pageSize);
     res.status(200).json(results);
   } catch (error) {
     console.error(error.message);
@@ -23,7 +22,7 @@ newReportRouter.get('/', isAdmin, async (req, res) => {
   }
 });
 
-newReportRouter.get('/:id', isAdmin, async (req, res) => {
+newReportsRouter.get('/:id', isAdmin, async (req, res) => {
   const { id }= req.params;
   try {
 
@@ -44,7 +43,7 @@ newReportRouter.get('/:id', isAdmin, async (req, res) => {
   }
 },);
 
-newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
+newReportsRouter.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -63,7 +62,7 @@ newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
   }
 });
 
-newReportRouter.delete(
+newReportsRouter.delete(
   "/:id",
   checkIdInPath,
   async (req, res) => {
@@ -81,7 +80,7 @@ newReportRouter.delete(
   }
 );
 
-newReportRouter.post("/", isAdmin, async (req, res) => {
+newReportsRouter.post("/", isAdmin, async (req, res) => {
   try {
     const newreport = req.body;
     const result = await handler.createNewReport(newreport);
@@ -94,4 +93,4 @@ newReportRouter.post("/", isAdmin, async (req, res) => {
   }
 })
 
-module.exports = newReportRouter;
+module.exports = newReportsRouter;
