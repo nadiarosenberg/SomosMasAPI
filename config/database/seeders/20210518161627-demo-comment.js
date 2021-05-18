@@ -7,7 +7,6 @@ module.exports = {
       body: 'Blablabla texto super largo para probar el body blablablabla',
       newReportId: 1,
       createdAt: new Date(),
-      timestamps: Date.now(),
       updatedAt: new Date()
     }]);
   },
