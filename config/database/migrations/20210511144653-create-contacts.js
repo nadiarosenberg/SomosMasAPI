@@ -20,7 +20,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       message: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
@@ -32,7 +31,6 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });
