@@ -6,10 +6,14 @@ module.exports = (sequelize, DataTypes) => {
   class Comments extends Model {
     static associate(models) {
       Comments.belongsToMany(models.NewReport, {
-        as: 'newreport'
+        through: 'NewReports',
+        as: 'newreport',
+        foreingKey: 'id'
       });
       Comments.belongsToMany(models.User, {
-        as: 'user'
+        through: 'Users',
+        as: 'user',
+        foreingKey: 'id'
       });
     }
   };
