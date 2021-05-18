@@ -16,7 +16,13 @@ module.exports = {
             args: true,
             msg: 'userId is required'
           }
-        }
+        },
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       body: {
         type: Sequelize.STRING,
@@ -36,7 +42,13 @@ module.exports = {
             args: true,
             msg: 'newReportId is required'
           }
-        }
+        },
+        references: {
+          model: 'newReports',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       createdAt: {
         allowNull: false,

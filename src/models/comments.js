@@ -4,21 +4,49 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Comments extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Comments.belongsToMany(models.NewReport, {
+        as: 'newreport'
+      });
+      Comments.belongsToMany(models.User, {
+        as: 'user'
+      });
     }
   };
   Comments.init({
-    userId: DataTypes.INTEGER,
-    body: DataTypes.STRING,
-    newReportId: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'userId is required'
+        }
+      },
+    },
+    body: {
+      type: DataTypes.STRING, 
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'body is required'
+        }
+      }},
+    newReportId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'newReportId is required'
+        }
+      },},
+    timestamps: DataTypes.STRING
   }, {
     sequelize,
+    paranoid: true,
+    timestamps: true,
     modelName: 'Comments',
   });
   return Comments;
