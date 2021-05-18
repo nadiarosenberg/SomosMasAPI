@@ -8,7 +8,7 @@ expressRouter.post('/', async (req, res) => {
   try {
     const contactToCreate = req.body;
     const result = await handler.createContact(contactToCreate);
-	console.log(result.id);
+	
     res.status(200).json({ id: result.id, message: 'Contact created successfully' });
   } catch (error) {
     logger.error(error.message);
