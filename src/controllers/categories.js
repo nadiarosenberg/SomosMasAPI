@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const handler = require('../handlers/category');
-const errorHandler = require('../utils/errorHandler');
+const handler = require('./../handlers/categories');
+const errorHandler = require('./../utils/errorHandler');
+const { validate } = require('../controllers/middlewares/categories');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -20,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
     const id = req.params.id;
     try {
         const result = await handler.getOneCategory(id);
-        if ( result === null ) {
+        if ( !result ) {
             return res.status(404).json({
                 ok: false,
                 message: `Cannot find Category with id = ${id}`
@@ -36,8 +37,8 @@ router.get('/:id', async (req, res, next) => {
 
 });
 
-router.post('/', async (req, res, next) => {
-
+router.post('/', [validate], async (req, res, next) => {
+    
     const category = {
         name: req.body.name,
         description: req.body.description,

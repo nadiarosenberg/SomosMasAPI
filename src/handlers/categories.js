@@ -1,4 +1,4 @@
-const repository = require('./../services/repositories/category');
+const repository = require('../services/repositories/category');
 
 const getAllCategories = async () => {
     const categories = await repository.getAll();
