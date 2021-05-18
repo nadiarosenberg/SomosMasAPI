@@ -63,11 +63,12 @@ const destroy = async (id) => {
 
 const FindMe=async (id)=>
 {
+	console.log(id);
 	try{
 		 const data = await User.findByPk(id,{ raw : true });
 		 if (data === null) 
 							{
-                                res.status(404).send({
+                                data.send({
                                                        message: `Cannot find User with id = ${id}`
                                                       })
                                    return;

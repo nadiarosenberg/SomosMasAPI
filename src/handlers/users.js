@@ -35,10 +35,8 @@ module.exports = {
     createUser,
     updateUser,
     getAllUsers,
-
     getUserById,
     deleteUser,
-
-	getFindMe
+    getFindMe
 
 };
