@@ -1,6 +1,7 @@
 
 'use strict'
 const { Slide } = require("../../models/index");
+const Sequelize = require('sequelize');
 
 const persist = async (slide) => {
   try {
@@ -26,7 +27,7 @@ const findAll = async () => {
 const findOne = async (id) => {
   try {
     const result = await Slide.findOne({
-      where: {id},
+      where: { id },
     });
     return result;
   } catch (error) {
@@ -38,7 +39,7 @@ const update = async (slide, id) => {
   console.log(slide);
   try {
     const result = await Slide.update(slide, {
-      where: {id}
+      where: { id }
     });
     return result;
   } catch (error) {
@@ -49,7 +50,7 @@ const update = async (slide, id) => {
 const destroy = async (id) => {
   try {
     const result = await Slide.destroy({
-      where: {id},
+      where: { id },
     });
     return result;
   } catch (error) {
@@ -57,12 +58,24 @@ const destroy = async (id) => {
   }
 };
 
-const getSlidesByOrgId = async(orgId) =>{
+const getSlidesByOrgId = async (orgId) => {
   try {
     const result = await Slide.findAll({
-      where: {organizationId: orgId},
-      order:[['order', 'ASC']],
+      where: { organizationId: orgId },
+      order: [['order', 'ASC']],
       attributes: ['imageUrl']
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const lastSlide = async () => {
+  try {
+    const result = await Slide.findOne({
+      order: [['order', 'DESC']],
+      attributes: ['order']
     });
     return result;
   } catch (error) {
@@ -76,5 +89,6 @@ module.exports = {
   findOne,
   update,
   destroy,
-  getSlidesByOrgId
+  getSlidesByOrgId,
+  lastSlide
 }

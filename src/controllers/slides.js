@@ -3,15 +3,24 @@ const express = require('express');
 const Router = express.Router();
 const handler = require('../handlers/slides');
 const isAdmin = require('./middlewares/auth');
+const awsImage = require('../handlers/middlewares/uploadImage');
 
 const wasUpdated = (result, req, res) => result[0]===1;
 
 Router.post('/', isAdmin, async (req, res, next) => {
     try {
       const slide = req.body;
+      const image = req.body.imageUrl;
+      const imageAwsLink = await awsImage.uploadBase64Image(image);
+      slide.imageUrl = imageAwsLink;
+      if (!slide.order){
+            const lastSlide = await handler.getLastSlide();
+            const lastOrder = lastSlide.order;
+            slide.order = lastOrder + 1;
+      }
       const result = await handler.createSlide(slide);
       res.status(200).json(result);
-    } catch (err) {
+    }catch (err) {
       console.log(err);
       res.send('Error posting slide');
     }

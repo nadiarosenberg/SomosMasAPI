@@ -20,13 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Slide.init({
     imageUrl:{
-      type: DataTypes.STRING,
-      validate:{
-        is:{
-          args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
-          msg: "You must enter an image url"
-        }
-      }
+      type: DataTypes.STRING
     },
     text: DataTypes.STRING,
     order: {

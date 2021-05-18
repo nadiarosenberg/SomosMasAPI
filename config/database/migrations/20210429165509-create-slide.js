@@ -9,13 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       imageUrl:{
-        type: Sequelize.STRING,
-        validate:{
-          is:{
-            args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
-            msg: "You must enter an image url"
-          }
-        }
+        type: Sequelize.STRING
       },
       text: {
         type: Sequelize.STRING

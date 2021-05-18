@@ -30,10 +30,10 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs'
 }));
+
 app.set('view engine', 'hbs');
-
-
 app.set(key.secretName, key.key);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
