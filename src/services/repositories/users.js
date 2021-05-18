@@ -90,6 +90,7 @@ const destroy = async (id) => {
 
 const getById=async (id)=>
 {
+	console.log(id);
 	try{
 		 const data = await User.findByPk(id,{ raw : true });
 		 if (data === null) 

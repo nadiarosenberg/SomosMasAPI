@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const {
@@ -6,7 +7,6 @@ const {
   userValidationPutRules
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
-
 const isAdmin = require('./middlewares/auth');
 const jwt = require('jsonwebtoken');
 const app = express();
@@ -131,7 +131,9 @@ router.get('/auth/me',async(req,res,next)=>
 	
 	catch (error) {
     console.log(error);
-    res.status(500).json('Error getting auht me');
+    
+	
+	 res.status(500).json({ message: error.message });
               }
 });
 
