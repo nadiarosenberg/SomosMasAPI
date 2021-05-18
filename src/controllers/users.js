@@ -9,7 +9,7 @@ const handler = require('./../handlers/users');
 const isAdmin = require('./middlewares/auth');
 const app = express();
 const key = require('../utils/key')
-const sendWelcomEmail = require('../utils/welcomEmail')
+
 app.set('key', key.key);
 
 const wasUpdated = (result, req, res) => {
@@ -26,7 +26,7 @@ router.post('/auth/register', async (req, res, next) => {
   try {
     const user = req.body;
     const result = await handler.createUser(user);
-    //sendWelcomEmail(data.email, data.firstName)
+    
     res.status(200).json(result);
   } catch (e) {
     res.status(400).json({
