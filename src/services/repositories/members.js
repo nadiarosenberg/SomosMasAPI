@@ -1,9 +1,11 @@
 const { Members } = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
-const getAll = async () => {
+const getAll = async (fromMember, limit) => {
   try {
-    const result = await Members.findAll({
+    const result = await Members.findAndCountAll({
+      offset: fromMember,
+      limit,
       attributes: ['name', 'image'],
     });
     return result;
