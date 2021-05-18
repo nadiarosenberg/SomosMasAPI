@@ -10,18 +10,25 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        validate: {
-          notNull: {
-            args: true,
-            msg: 'userId is required'
-          }
-        },
+        onDelete: 'CASCADE',
         references: {
-          model: 'Users',
-          key: 'id',
+          model: {
+            tableName: 'Users',
+          },
+          key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        allowNull: false
+      },
+      newReportId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: {
+            tableName: 'NewReports',
+          },
+          key: 'id'
+        },
+        allowNull: false
       },
       body: {
         type: Sequelize.STRING,
@@ -32,21 +39,6 @@ module.exports = {
             msg: 'body is required'
           }
         }
-      },
-      newReportId: {
-        type: Sequelize.INTEGER,
-        validate: {
-          notNull: {
-            args: true,
-            msg: 'newReportId is required'
-          }
-        },
-        references: {
-          model: 'newReports',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
       },
       timestamps: {
         type: Sequelize.STRING,
@@ -63,7 +55,7 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
-    });
+    })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Comments');
