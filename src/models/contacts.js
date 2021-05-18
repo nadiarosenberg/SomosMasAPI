@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   Contacts.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      SallowNull: false,
       validate: {
         notEmpty: {
           args: true,
@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     message: {
       type: DataTypes.STRING,
     }
-  }, {
+  }, 
+  {
     sequelize,
     modelName: 'Contact',
     timestamps: true,
