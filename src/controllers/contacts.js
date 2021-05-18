@@ -16,7 +16,6 @@ expressRouter.post('/', async (req, res) => {
   }
 });
 
-
 expressRouter.get('/', async (req, res) => {
   try {
     const results = await handler.getAllContacts();

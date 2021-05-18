@@ -1,10 +1,6 @@
 const { Contact } = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
-const errorHandler = require("../../utils/errorHandler");
-
-
-
 const persist = async (contactToPersist) => {
   try {
     const result = await Contact.create(contactToPersist);
