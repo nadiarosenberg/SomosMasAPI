@@ -21,6 +21,7 @@ const newReportRouter = require('./controllers/newreports').newReportRouter;
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
+const commentsRouter = require('./controllers/comments');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
 app.use('/users', usersRouter);
+app.use('/comments', commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
