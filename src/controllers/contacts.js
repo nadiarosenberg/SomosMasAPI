@@ -1,11 +1,10 @@
-
 const expressRouter = require('express').Router();
 const handler = require('../handlers/contacts');
 const logger = require('../utils/pinoLogger');
 const isAdmin = require('./middlewares/auth');
 const { contactValidationRules, validate } = require('./middlewares/contactValidation');
 
-expressRouter.post('/', contactValidationRules(), validate, async (req, res, next) => {
+expressRouter.post('/', async (req, res) => {
   try {
     const contactToCreate = req.body;
     const result = await handler.createContact(contactToCreate);

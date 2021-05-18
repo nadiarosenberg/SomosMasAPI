@@ -32,13 +32,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     message: {
       type: DataTypes.STRING,
+      allowNull: false
     }
-  }, 
-  {
-    sequelize,
-    modelName: 'Contact',
-    timestamps: true,
-    paranoid: true
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Contact',
+      timestamps: true,
+      paranoid: true
+    });
   return Contacts;
 };
