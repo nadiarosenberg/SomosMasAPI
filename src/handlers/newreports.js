@@ -9,7 +9,7 @@ const getNextPage = (page, limit, count) => {
   let rest = count - limit*page;
   if(rest >0){
     page = page+1;
-    return page;
+    return ('/news?page='+page);
   }else{
     return null;
   }
@@ -19,7 +19,7 @@ const getPreviousPage = (page) => {
   if (page <= 1) {
     return null;
   }
-  return page - 1;
+  return ('/news?page='+(page - 1));
 };
 
 const getAllNewReports = async (page, pageSize) => { 
