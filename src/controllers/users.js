@@ -7,6 +7,7 @@ const {
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
 const isAdmin = require('./middlewares/auth');
+const jwt = require('jsonwebtoken');
 const app = express();
 const key = require('../utils/key')
 const jwt = require('jsonwebtoken');
@@ -119,9 +120,8 @@ router.get('/auth/me',async(req,res,next)=>
          if (err) {
              return res.json({ mensaje: 'invalid Token  or without token' });
                   }
-			console.log(decoded);	  
-			const id= decoded.sub;
-			
+				  
+			const id= decoded.id;
 			
 		    const results = await handler.getFindMe(id); 	  
 			res.status(200).json(results);	  
@@ -131,11 +131,8 @@ router.get('/auth/me',async(req,res,next)=>
 	
 	catch (error) {
     console.log(error);
-    
-	
-	 res.status(500).json({ message: error.message });
+    res.status(500).json('Error getting auht me');
               }
 });
-
 
 module.exports = router;
