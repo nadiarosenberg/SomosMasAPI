@@ -22,11 +22,11 @@ const wasUpdated = (result, req, res) => {
   });
 };
 
-router.post('/auth/register', userValidationRules(), validate, async (req, res, next) => {
+router.post('/auth/register', async (req, res, next) => {
   try {
     const user = req.body;
     const result = await handler.createUser(user);
-    sendWelcomEmail(data.email, data.firstName)
+    //sendWelcomEmail(data.email, data.firstName)
     res.status(200).json(result);
   } catch (e) {
     res.status(400).json({
