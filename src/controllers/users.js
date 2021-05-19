@@ -10,7 +10,6 @@ const isAdmin = require('./middlewares/auth');
 const jwt = require('jsonwebtoken');
 const app = express();
 const key = require('../utils/key')
-const jwt = require('jsonwebtoken');
 
 app.set('key', key.key);
 
@@ -30,7 +29,6 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
     const result = await handler.createUser(user);
     
     res.status(200).json(result);
-
   } catch (e) {
     res.status(400).json({
       ok: false,
@@ -102,8 +100,6 @@ router.delete('/:id', async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-
 
 router.get('/auth/me',async(req,res,next)=>
 {
