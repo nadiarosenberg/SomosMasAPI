@@ -1,11 +1,11 @@
 const repository = require('../services/repositories/users');
 
 const createUser = async (user) => {
-	user.roleId=2;
     const createdUser = await repository.persist(user);
 	
     return createdUser;
 };
+
 
 const updateUser = async (userId, user) => {
     const updatedUser = await repository.update(userId, user);
