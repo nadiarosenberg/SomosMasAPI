@@ -13,8 +13,22 @@ const emailSource = emailsSource("newReport");
 
 newReportsRouter.get('/', async (req, res) => {
   try {
-    const {page} = req.query;
-    const results = await handler.getAllNewReports(page);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.pageSize) || 10;
+    //const order = req.query.order || 'ASC';
+    const paginationInfo = {page, limit};
+    const results = await handler.getAllNewReports(paginationInfo);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//For testing
+newReportsRouter.get('/prueba', async (req, res) => {
+  try {
+    const results = await handler.getAllNewReports2();
     res.status(200).json(results);
   } catch (error) {
     console.error(error.message);

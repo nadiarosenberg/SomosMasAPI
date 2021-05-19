@@ -1,46 +1,17 @@
 const repository = require("../services/repositories/newreport");
 const path = require('path');
+const pagination = require('../utils/pagination');
 
-const getOffSet = (page, limit) => {
-  return page * limit - limit;
+const getAllNewReports = async (paginationInfo) => {
+  const result = await repository.getAll(paginationInfo);
+  const route = '/news?page=';
+  const count = result.count;
+  const paginationData = await pagination.getPaginationData(paginationInfo, route, count);
+  return {paginationData, result};
 };
 
-const getNextPage = (page, limit, count) => {
-  let rest = count - limit*page;
-  if(rest >0){
-    page = page+1;
-    return ('/news?page='+page);
-  }else{
-    return null;
-  }
-}
-
-const getPreviousPage = (page) => {
-  if (page <= 1) {
-    return null;
-  }
-  return ('/news?page='+(page - 1));
-};
-
-const getAllNewReports = async (page) => { 
-    try {
-      page = parseInt(page);
-      const limit = 10;
-      const offset = getOffSet(page,limit);
-
-      const {count, rows} = await repository.getAll(limit, offset);
-      return {
-        previousPage: getPreviousPage(page),
-        currentPage: page,
-        nextPage: getNextPage(page, limit, count),
-        total: count,
-        limit: limit,
-        data: rows,
-      };
-    } catch (error) {
-      console.log(error);
-    }
-};
+//For testing
+const getAllNewReports2 = async () => await repository.getAll();
 
 const getNewReportById = async (newReportId) => await repository.getOne(newReportId);
 
@@ -70,6 +41,7 @@ const createNewReport = async (newreport) => {
 
 module.exports = {
   getAllNewReports,
+  getAllNewReports2,
   getNewReportById,
   updateNewReport,
   deleteNewReport,
