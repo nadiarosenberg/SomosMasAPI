@@ -87,7 +87,7 @@ const destroy = async (id) => {
 };
 
 
-const FindMe=async (id)=>
+const getById=async (id)=>
 {
 	try{
 		 const data = await User.findByPk(id,{ raw : true });
@@ -112,6 +112,6 @@ module.exports = {
     getAll,
     getOne,
     destroy,
-	FindMe
+	getById
 };
 

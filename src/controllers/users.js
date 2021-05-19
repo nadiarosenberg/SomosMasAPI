@@ -119,7 +119,7 @@ router.get('/auth/me',async(req,res,next)=>
 				  
 			const id= decoded.id;
 			
-		    const results = await handler.getFindMe(id); 	  
+		    const results = await handler.getById(id); 	  
 			res.status(200).json(results);	  
 		 });
 		

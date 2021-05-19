@@ -23,8 +23,8 @@ const deleteUser = async (id) => {
   return user;
 };
 
-const getFindMe = async (id) => {
-    const me = await repository.FindMe(id);
+const getById = async (id) => {
+    const me = await repository.getById(id);
     return me;
 };
 
@@ -35,6 +35,6 @@ module.exports = {
     getAllUsers,
     getUserById,
     deleteUser,
-    getFindMe
+    getById
 
 };
