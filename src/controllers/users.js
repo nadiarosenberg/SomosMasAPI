@@ -29,7 +29,6 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
     const result = await handler.createUser(user);
     
     res.status(200).json(result);
-
   } catch (e) {
     res.status(400).json({
       ok: false,
