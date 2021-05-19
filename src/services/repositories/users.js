@@ -89,7 +89,6 @@ const destroy = async (id) => {
 
 const getById=async (id)=>
 {
-	console.log(id);
 	try{
 		 const data = await User.findByPk(id,{ raw : true });
 		 if (data === null) 
@@ -105,7 +104,7 @@ const getById=async (id)=>
 	catch (error) {
         console.log(error);
     }	
-}};
+	};
 
 module.exports = {
     persist,
