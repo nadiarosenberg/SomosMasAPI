@@ -1,13 +1,3 @@
-
-/*
-Se utilizará para proteger endpoints que son solo para el usuario actual. 
-Deberá verificar el parámetro id 
-y compararlo con el ID del usuario enviado en el token JWT, 
-caso contrario, devolver error 403. 
-Sin embargo, si el usuario que es enviado en el token es administrador, 
-si le permitirá continuar.
-
-*/
 const jwt = require('jsonwebtoken');
 const express = require("express");
 const app = express();
