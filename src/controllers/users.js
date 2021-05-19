@@ -123,7 +123,7 @@ router.get('/auth/me',async(req,res,next)=>
          if (err) {
              return res.json({ mensaje: 'invalid Token  or without token' });
                   }
-				  
+			console.log(decoded);	  
 			const id= decoded.sub;
 			
 			

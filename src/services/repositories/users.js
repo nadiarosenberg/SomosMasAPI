@@ -1,6 +1,4 @@
-const {
-    User
-} = require('../../models/index');
+const {User} = require('../../models/index');
 const bcrypt = require('bcryptjs');
 
 const persist = async (user) => {
@@ -9,7 +7,8 @@ const persist = async (user) => {
         aux.password = bcrypt.hashSync(aux.password, 8);
         const result = await User.create(aux);
         return result;
-    } catch (error) {
+    } catch (error) 
+	{
         console.log(error.message)
     }
 };
@@ -70,8 +69,9 @@ const FindMe=async (id)=>
 							{
                                 data.send({
                                                        message: `Cannot find User with id = ${id}`
-                                                      })
-                                   return;
+                                                      })*/
+                                   //return message: `Cannot find User with id = ${id}`;
+								   return console.log("no puedo encontrar al usuario con id tal");
                             }
       
 	                        delete data.password;
@@ -82,7 +82,7 @@ const FindMe=async (id)=>
 	catch (error) {
         console.log(error);
     }	
-	};
+}};
 
 module.exports = {
     persist,
