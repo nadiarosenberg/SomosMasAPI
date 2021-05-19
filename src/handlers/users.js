@@ -5,7 +5,6 @@ const createUser = async (user) => {
     return createdUser;
 };
 
-
 const updateUser = async (userId, user) => {
     const updatedUser = await repository.update(userId, user);
     return updatedUser;
@@ -22,11 +21,6 @@ const deleteUser = async (id) => {
   const user = await repository.destroy(id);
   return user;
 };
-const getFindMe = async (id) => {
-    const me = await repository.FindMe(id);
-    return me;
-};
-
 
 module.exports = {
     createUser,

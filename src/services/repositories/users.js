@@ -1,6 +1,7 @@
-const {User} = require('../../models/index');
+const {
+    User
+} = require('../../models/index');
 const bcrypt = require('bcryptjs');
-
 
 const persist = async (user) => {
     try {
@@ -36,7 +37,6 @@ const getAll = async () => {
         console.log(error);
     }
 };
-
 
 const getOne = async (id) => {
   try {
@@ -89,8 +89,6 @@ module.exports = {
     update,
     getAll,
     getOne,
-    destroy,
-	FindMe
-
+    destroy
 };
 
