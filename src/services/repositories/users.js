@@ -1,14 +1,14 @@
 const {User} = require('../../models/index');
 const bcrypt = require('bcryptjs');
 
+
 const persist = async (user) => {
     try {
         var aux = user
         aux.password = bcrypt.hashSync(aux.password, 8);
         const result = await User.create(aux);
         return result;
-    } catch (error) 
-	{
+    } catch (error) {
         console.log(error.message)
     }
 };

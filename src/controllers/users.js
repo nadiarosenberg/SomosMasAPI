@@ -27,7 +27,6 @@ const wasUpdated = (result, req, res) => {
 router.post('/auth/register', async (req, res, next) => {
   try {
     const user = req.body;
-	
     const result = await handler.createUser(user);
     
     res.status(200).json(result);
@@ -39,6 +38,8 @@ router.post('/auth/register', async (req, res, next) => {
     });
   }
 });
+
+
 
 router.put('/:id', userValidationPutRules(), validate, async (req, res, next) => {
   try {
