@@ -14,7 +14,6 @@ const updateUser = async (userId, user) => {
 
 const getAllUsers = async () => await repository.getAll();
 
-
 const getUserById = async (id) => {
   const user = await repository.getOne(id);
   return user;

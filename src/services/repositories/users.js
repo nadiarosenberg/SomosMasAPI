@@ -1,6 +1,4 @@
-const {
-    User
-} = require('../../models/index');
+const {User} = require('../../models/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const key = require("../../utils/key");
@@ -106,7 +104,7 @@ const getById=async (id)=>
 	catch (error) {
         console.log(error);
     }	
-	};
+}};
 
 module.exports = {
     persist,
