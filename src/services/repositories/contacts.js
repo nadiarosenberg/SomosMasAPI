@@ -19,8 +19,6 @@ const getAll = async () => {
     logger.error(error.message);
   }
 }
-
 module.exports = {
-  persist,
-  getAll
+  persist
 }
