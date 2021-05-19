@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const {
@@ -39,8 +38,6 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
   }
 });
 
-
-
 router.put('/:id', userValidationPutRules(), validate, async (req, res, next) => {
   try {
     const user = req.body;
@@ -55,7 +52,7 @@ router.put('/:id', userValidationPutRules(), validate, async (req, res, next) =>
   }
 });
 
-router.get('/',  async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const results = await handler.getAllUsers();
     res.status(200).json(results);
@@ -64,8 +61,6 @@ router.get('/',  async (req, res, next) => {
     res.status(500).json('Error getting users');
   }
 });
-
-
 
 router.get('/:id', async (req, res, next) => {
   try {

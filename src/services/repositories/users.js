@@ -1,4 +1,6 @@
-const {User} = require('../../models/index');
+const {
+    User
+} = require('../../models/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const key = require("../../utils/key");
@@ -61,7 +63,6 @@ const getAll = async () => {
         console.log(error);
     }
 };
-
 
 const getOne = async (id) => {
   try {
