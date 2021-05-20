@@ -4,7 +4,7 @@ const expressRouter = require('express').Router();
 const roleIdMiddleware = require('./middlewares/auth');
 const { isValidImage } = require('./middlewares/common');
 const { memberValidationRules, validate } = require('./middlewares/members');
-
+const pagination = require('../utils/pagination');
 
 expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (req, res, next) => {
     try {
