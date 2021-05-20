@@ -26,7 +26,7 @@ expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (
 expressRouter.get('/', /*roleIdMiddleware,*/ async (req, res, next) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
-    const results = await handler.getAllNewReports(paginationInfo);
+    const results = await handler.getAllMembers(paginationInfo);
     const route = '/members?page=';
     const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
     res.status(200).json(paginationResult);
