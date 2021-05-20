@@ -2,7 +2,7 @@ const getPaginationInfo = (body) => {
   const paginationInfo = {
     page: parseInt(body.page) || 1,
     limit: parseInt(body.pageSize) || 10,
-    order: body.order || 'ASC'
+    order: body.order
   }
   return paginationInfo;
 };
@@ -29,13 +29,12 @@ const getPreviousPage = (page, route) => {
   return route+(page-1);
 };
 
-const getPaginationParams = (paginationInfo) => {
-  const paginationParams = {
-    limit: paginationInfo.limit || null,
-    offset: getOffSet(paginationInfo) || null,
-    order: paginationInfo.order || 'ASC'
-  }
-  return paginationParams;
+const getPaginationParams = (paginationInfo, propertyToSort) => {
+  return paginationInfo?{
+    limit: paginationInfo.limit,
+    offset: getOffSet(paginationInfo),
+    order: [[propertyToSort, paginationInfo.order]]
+  }:{}
 };
 
 const getPaginationResult = (paginationInfo, route, results) => {
