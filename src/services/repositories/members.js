@@ -1,12 +1,14 @@
 const { Members } = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
-const getAll = async (fromMember, limit) => {
+const getAll = async (paginationInfo={}) => {
   try {
-    const result = await Members.findAndCountAll({
-      offset: fromMember,
+    const {limit, offset, order} = pagination.getPaginationParams(paginationInfo);
+    const result = await NewReport.findAndCountAll({
+      offset,
       limit,
-      attributes: ['name', 'image'],
+      order: [['id', order]],
+      attributes: ['id', 'name', 'image']
     });
     return result;
   } catch (error) {

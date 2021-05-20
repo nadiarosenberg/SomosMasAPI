@@ -23,17 +23,13 @@ expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (
 });
 
 // get all members
-expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
-  const page = Number(req.query.page);
-  const limit = Number(req.query.limit);
+expressRouter.get('/', /*roleIdMiddleware,*/ async (req, res, next) => {
   try {
-    const { rows: members, count, nextPage, priorPage } = await handler.getAllMembers(page, limit);
-    res.status(200).json({
-      members,
-      count,
-      nextPage,
-      priorPage
-    });
+    const paginationInfo = pagination.getPaginationInfo(req.query);
+    const results = await handler.getAllNewReports(paginationInfo);
+    const route = '/members?page=';
+    const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
+    res.status(200).json(paginationResult);
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message });
