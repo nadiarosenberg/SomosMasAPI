@@ -2,7 +2,7 @@ const getPaginationInfo = (body) => {
   const paginationInfo = {
     page: parseInt(body.page) || 1,
     limit: parseInt(body.pageSize) || 10,
-    order: body.order
+    order: body.order || 'DESC'
   }
   return paginationInfo;
 };
