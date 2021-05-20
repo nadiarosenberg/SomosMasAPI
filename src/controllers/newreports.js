@@ -8,17 +8,17 @@ const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
+const pagination = require('../utils/pagination');
 
 const emailSource = emailsSource("newReport");
 
 newReportsRouter.get('/', async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.pageSize) || 10;
-    //const order = req.query.order || 'ASC';
-    const paginationInfo = {page, limit};
+    const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllNewReports(paginationInfo);
-    res.status(200).json(results);
+    const route = '/news?page=';
+    const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
+    res.status(200).json(paginationResult);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: error.message });

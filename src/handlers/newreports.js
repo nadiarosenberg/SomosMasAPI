@@ -2,13 +2,7 @@ const repository = require("../services/repositories/newreport");
 const path = require('path');
 const pagination = require('../utils/pagination');
 
-const getAllNewReports = async (paginationInfo) => {
-  const result = await repository.getAll(paginationInfo);
-  const route = '/news?page=';
-  const count = result.count;
-  const paginationData = await pagination.getPaginationData(paginationInfo, route, count);
-  return {paginationData, result};
-};
+const getAllNewReports = async (paginationInfo) => await repository.getAll(paginationInfo);
 
 //For testing
 const getAllNewReports2 = async () => await repository.getAll();
