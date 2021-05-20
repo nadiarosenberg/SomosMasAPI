@@ -1,10 +1,11 @@
 const { Members } = require('../../models');
 const logger = require('../../utils/pinoLogger');
+const pagination = require('../../utils/pagination');
 
 const getAll = async (paginationInfo={}) => {
   try {
     const {limit, offset, order} = pagination.getPaginationParams(paginationInfo);
-    const result = await NewReport.findAndCountAll({
+    const result = await Members.findAndCountAll({
       offset,
       limit,
       order: [['id', order]],
