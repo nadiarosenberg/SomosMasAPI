@@ -1,3 +1,12 @@
+const getPaginationInfo = (body) => {
+  const paginationInfo = {
+    page: parseInt(body.page) || 1,
+    limit: parseInt(body.pageSize) || 10,
+    order: body.order || 'ASC'
+  }
+  return paginationInfo;
+};
+
 const getOffSet = (paginationInfo) => {
     const offset = paginationInfo.page * paginationInfo.limit - paginationInfo.limit
     return offset;
@@ -22,24 +31,22 @@ const getPreviousPage = (page) => {
 
 const getPaginationParams = (paginationInfo) => {
     const paginationParams = {
-        limit: paginationInfo.limit,
-        offset: getOffSet(paginationInfo)
+        limit: paginationInfo.limit || null,
+        offset: getOffSet(paginationInfo) || null,
+        order: paginationInfo.order || 'ASC'
     }
     return paginationParams;
 };
 
-const getPaginationData = (paginationInfo, route, count) => {
-    const paginationData = { 
-        previousPage: route+getPreviousPage(paginationInfo.page),
-        currentPage: paginationInfo.page,
-        nextPage: route+getNextPage(paginationInfo, count)
-    };
-    return paginationData; 
+const getPaginationResult = (paginationInfo, route, results) => {
+    results.prev = route+getPreviousPage(paginationInfo.page),
+    results.current = paginationInfo.page,
+    results.next = route+getNextPage(paginationInfo, results.count)
+    return results; 
 };
 
 module.exports = {
     getPaginationParams,
-    getPaginationData,
-    getPreviousPage,
-    getNextPage
+    getPaginationResult,
+    getPaginationInfo
 };

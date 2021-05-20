@@ -9,13 +9,15 @@ const pagination = require("../../utils/pagination");
 
 const emailSource = emailsSource("newReport");
 
-const getAll = async (paginationInfo) => {
+const getAll = async (paginationInfo={}) => {
   try {
-    const paginationParams = pagination.getPaginationParams(paginationInfo);
-    const result = await NewReport.findAndCountAll(paginationParams);
-    /*,{
-      attributes: ['id', 'name', 'content', 'image', 'categoryId']
-    });*/
+    const {limit, offset, order} = pagination.getPaginationParams(paginationInfo);
+    const result = await NewReport.findAndCountAll({
+            offset,
+            limit,
+            order: [['id', order]],
+            attributes: ['id', 'name', 'content', 'image', 'categoryId']
+    });
     return result;
   } catch (error) {
     console.error(error.message);
