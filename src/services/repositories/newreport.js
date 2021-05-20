@@ -11,7 +11,6 @@ const emailSource = emailsSource("newReport");
 
 const getAll = async (paginationInfo) => {
   try {
-    //const {limit, offset, order} = pagination.getPaginationParams(paginationInfo);
     const paginationData = pagination.getPaginationParams(paginationInfo, 'id');
     const result = await NewReport.findAndCountAll({
       ...paginationData,

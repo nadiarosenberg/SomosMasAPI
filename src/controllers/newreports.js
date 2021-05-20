@@ -27,17 +27,6 @@ newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => 
   }
 });
 
-//For testing
-newReportsRouter.get('/prueba', async (req, res) => {
-  try {
-    const results = await handler.getAllNewReports2();
-    res.status(200).json(results);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
 newReportsRouter.get('/:id', isAdmin, async (req, res) => {
   const { id }= req.params;
   try {

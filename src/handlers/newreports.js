@@ -4,9 +4,6 @@ const pagination = require('../utils/pagination');
 
 const getAllNewReports = async (paginationInfo) => await repository.getAll(paginationInfo);
 
-//For testing
-const getAllNewReports2 = async () => await repository.getAll();
-
 const getNewReportById = async (newReportId) => await repository.getOne(newReportId);
 
 const updateNewReport = async (id, properties) => await repository.update(id, properties);
@@ -35,7 +32,6 @@ const createNewReport = async (newreport) => {
 
 module.exports = {
   getAllNewReports,
-  getAllNewReports2,
   getNewReportById,
   updateNewReport,
   deleteNewReport,
