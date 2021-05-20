@@ -1,11 +1,36 @@
 const getPaginationInfo = (body) => {
-  const paginationInfo = {
-    page: parseInt(body.page) || 1,
-    limit: parseInt(body.pageSize) || 10,
-    order: body.order 
+  const page = body.page;
+  const limit = body.pageSize;
+  const order = body.order;
+
+  const isValidOrder = (data) =>{
+    const order = data.toUpperCase();
+    if (order === 'ASC' || order === 'DESC'){
+      return true
+    }else{
+      return false
+    }
   }
-  if (paginationInfo.order != 'DESC') paginationInfo.order = 'ASC'
-  return paginationInfo;
+
+  const isValidNum = (data) => {
+    const regex = /^[0-9]*$/;
+    if (data.match(regex) != null){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  if (isValidNum(page) && isValidNum(limit) && isValidOrder(order)){
+    const paginationInfo = {
+        page: parseInt(page) || 1,
+        limit: parseInt(limit) || 10,
+        order: order || 'ASC'
+    }
+    return paginationInfo;
+  }else{
+    return console.log('Error')
+  }
 };
 
 const getOffSet = (paginationInfo) => {

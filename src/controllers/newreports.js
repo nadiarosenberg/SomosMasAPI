@@ -9,6 +9,7 @@ const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
 const pagination = require('../utils/pagination');
+const logger = require('../utils/pinoLogger');
 
 const emailSource = emailsSource("newReport");
 
@@ -20,8 +21,8 @@ newReportsRouter.get('/', async (req, res) => {
     const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
     res.status(200).json(paginationResult);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: error.message });
+    logger.error(error.message);
+    res.status(500).json({ message: 'Error getting news' });
   }
 });
 
