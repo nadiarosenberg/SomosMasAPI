@@ -10,10 +10,11 @@ const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
 const pagination = require('../utils/pagination');
 const logger = require('../utils/pinoLogger');
+const { paginationValidation, validate } = require('./middlewares/pagination');
 
 const emailSource = emailsSource("newReport");
 
-newReportsRouter.get('/', async (req, res) => {
+newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllNewReports(paginationInfo);

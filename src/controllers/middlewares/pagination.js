@@ -1,23 +1,23 @@
-  const page = body.page;
-  const limit = body.pageSize;
-  const order = body.order;
+const { check, validationResult } = require("express-validator");
 
-  const isValidOrder = (data) =>{
-    const order = data.toUpperCase();
-    if (order === 'ASC' || order === 'DESC'){
-      return true
-    }else{
-      return false
-    }
+const paginationValidation = () => {
+  return [
+    check("page").isInt({min: 1}).withMessage("Page can only be numeric"),
+    check("pageSize").isInt({min: 1}).withMessage("PageSize can only be numeric"),
+    check("order").isAlpha().isIn('ASCDESCascdesc').withMessage("Order is ASC or DESC")
+  ];
+};
+
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
   }
+  return res.status(400).json({ errors: errors.array() });
+};
 
-  const isValidNum = (data) => {
-    const regex = /^[0-9]*$/;
-    if (data.match(regex) != null){
-      return true
-    }else{
-      return false
-    }
-  }
+module.exports = {
+  paginationValidation,
+  validate
+};
 
-  if (isValidNum(page) && isValidNum(limit) && isValidOrder(order)){
