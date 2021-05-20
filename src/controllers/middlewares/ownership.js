@@ -18,8 +18,8 @@ ownerShip.use((req, res, next) => {
              return res.json({ mensaje: 'invalid Token  or without token' });
                   }
 				  
-			const id= req.body.id;
-			if ((decoded.role === "1") || (decoded.id==req.body.id)) 
+			
+			if ((decoded.role === "1") || (decoded.id===req.body.id)) 
 			{
               const authorizeAccess = (next) => next();
 			}
