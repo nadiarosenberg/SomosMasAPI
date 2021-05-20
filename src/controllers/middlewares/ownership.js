@@ -19,7 +19,7 @@ ownerShip.use((req, res, next) => {
                   }
 				  
 			const id= decoded.id;
-			if ((decoded.role === "1") || (decoded.id===id)) 
+			if ((decoded.role === "1") || (decoded.id==req.body.id)) 
 			{
               const authorizeAccess = (next) => next();
 			}
