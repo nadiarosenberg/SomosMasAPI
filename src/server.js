@@ -20,7 +20,7 @@ const newReportRouter = require('./controllers/newreports');
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
-const contactRouter = require('./controllers/contacts');
+
 
 const app = express();
 
@@ -51,7 +51,7 @@ app.use('/news', newReportRouter)
 app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
-app.use('/contacts', contactRouter);
+
 
 app.use(function (req, res, next) {
   next(createError(404));
