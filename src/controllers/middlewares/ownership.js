@@ -1,18 +1,20 @@
 const jwt = require('jsonwebtoken');
 const express = require("express");
 const app = express();
-const key = require("../utils/key");
+
 app.set('key', key.key);
+const API_TOKEN = 'API-TOKEN';
 const authorizeAccess = (next) => next();
 const ownerShip = express.Router();
+const getRequestToken = (req) => req.get(API_TOKEN)
+const rejectAcces = (response) => response.status(403).json({ mensaje: 'Invalid or missing API-TOKEN header' });
 
 ownerShip.use((req, res, next) => {
-    if (!req.headers.authorization)
-		 {
-			res.send({message:"widthout headers authorization"});
-		 }
+	const receivedToken = getRequestToken(req);
+	if (!receivedToken) rejectAcces(res);
+    
 	     var token=req.headers.authorization.split(" ")[1];
-		 jwt.verify(token, app.get('key'), async (err, decoded) =>
+		 jwt.verify(token, app.get(key.secretName), async (err, decoded) =>
 		 {
          if (err) {
              return res.json({ mensaje: 'invalid Token  or without token' });
