@@ -18,7 +18,7 @@ newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => 
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllNewReports(paginationInfo);
-    const route = '/news?page=';
+    const route = '/news';
     const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
     res.status(200).json(paginationResult);
   } catch (error) {

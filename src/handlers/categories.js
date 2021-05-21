@@ -1,9 +1,6 @@
 const repository = require('../services/repositories/category');
 
-const getAllCategories = async () => {
-    const categories = await repository.getAll();
-    return categories;
-}
+const getAllCategories = async (paginationInfo) => await repository.getAll(paginationInfo);
 
 const getOneCategory = async (id) => {
     const category = await repository.getOne(id);
