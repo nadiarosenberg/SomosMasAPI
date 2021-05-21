@@ -39,8 +39,8 @@ const getPaginationParams = (paginationInfo, propertyToSort) => {
 
 const getPaginationResult = (paginationInfo, route, results) => {
   results.prev = getPreviousPage(paginationInfo.page, route),
-  results.current = paginationInfo.page,
-  results.next = getNextPage(paginationInfo, route, results.count)
+  results.next = getNextPage(paginationInfo, route, results.count),
+  results.current = route+paginationInfo.page+'&pageSize='+paginationInfo.limit+'&order='+paginationInfo.order
   return results; 
 };
 
