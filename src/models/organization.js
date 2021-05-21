@@ -4,7 +4,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Organization extends Model {
     static associate(models) {
-      // define association here
+      Organization.hasOne(models.SocialMedia, {
+        as: 'socialmedia',
+        foreingKey: 'socialMediaId'
+      });
     }
   };
 
@@ -57,7 +60,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    aboutUsText: DataTypes.TEXT
+    socialMediaId: {
+      type: DataTypes.INTEGER,
+    },
+    aboutUsText: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Organization',

@@ -58,6 +58,15 @@ module.exports = {
       aboutUsText: {
         type: Sequelize.TEXT
       },
+      socialMediaId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'SocialMedia',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
