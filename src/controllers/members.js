@@ -23,7 +23,7 @@ expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (
 });
 
 // get all members
-expressRouter.get('/', /*roleIdMiddleware,*/ async (req, res, next) => {
+expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
   try {
     const paginationInfo = getPaginationInfo(req.query);
     const results = await handler.getAllMembers(paginationInfo);
