@@ -57,10 +57,24 @@ const destroy = async (id) => {
   }
 };
 
+const getSlidesByOrgId = async(orgId) =>{
+  try {
+    const result = await Slide.findAll({
+      where: {organizationId: orgId},
+      order:[['order', 'ASC']],
+      attributes: ['imageUrl']
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   persist,
   findAll,
   findOne,
   update,
-  destroy
+  destroy,
+  getSlidesByOrgId
 }

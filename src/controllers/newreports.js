@@ -8,14 +8,60 @@ const errorHandler = require("../utils/errorHandler");
 const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
-
 const emailsSource = require("../utils/fakeEmailSource");
-
-const NewReport = db.newreports;
-const Op = db.Sequelize.Op;
 
 // Var
 const emailSource = emailsSource("newReport");
+
+newReportRouter.get('/', isAdmin, async (req, res) => {
+  try {
+    const results = await handler.getAllNewReports();
+    res.status(200).json(results);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+newReportRouter.get('/:id', isAdmin, async (req, res) => {
+  const { id }= req.params;
+  try {
+
+    let newReport = await handler.getNewReportById(id);
+
+    if(!newReport){
+      res.status(404).json({
+        message: `Cannot find NewReport with id = ${id}`,
+      });
+    }
+
+    res.status(200).json(newReport);
+      
+    } catch (error) {
+      res.status(500).json({
+        message:   `Error retrieving NewReport with id = ${id}`
+      });
+  }
+},);
+
+newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+
+    let newreport = await handler.getNewReportById(id);
+
+    if (!newreport) {
+      res.status(404).json({ message: 'NewReport not found' });
+      return;
+    }
+
+    await handler.updateNewReport(id, updateValues);
+    res.status(200).json({ message: 'NewReport updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message});
+  }
+});
 
 newReportRouter.delete(
   "/:id",
@@ -35,7 +81,7 @@ newReportRouter.delete(
   }
 );
 
-newReportRouter.post("/",/*isAdmin,*/async (req, res) => {
+newReportRouter.post("/", isAdmin, async (req, res) => {
   try {
     const newreport = req.body;
     const result = await handler.createNewReport(newreport);
@@ -48,60 +94,4 @@ newReportRouter.post("/",/*isAdmin,*/async (req, res) => {
   }
 })
 
-module.exports = {
-  newReportRouter,
-  findAll: (req, res) => {
-    NewReport.findAll({ paranoid: false })
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving new reports.",
-        });
-      });
-  },
-  findOne: (req, res) => {
-    const id = req.params.id;
-
-    NewReport.findByPk(id)
-      .then((data) => {
-        if (data === null) {
-          res.status(404).send({
-            message: `Cannot find NewReport with id = ${id}`,
-          });
-          return;
-        }
-        res.send(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).send({
-          message: "Error retrieving NewReport with id = " + id,
-        });
-      });
-  },
-  update: (req, res) => {
-    const id = req.params.id;
-    NewReport.update(req.body, {
-      where: { id: id },
-    })
-      .then((num) => {
-        if (num == 1) {
-          res.send({
-            message: "NewReport was updated successfully.",
-          });
-        } else {
-          res.send({
-            message: `Cannot update NewReport with id = ${id}. NewReport was not found or req.body is empty!`,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: "Error updating NewReport with id = " + id,
-        });
-      });
-  },
-};
+module.exports = newReportRouter;
