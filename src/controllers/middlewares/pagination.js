@@ -2,9 +2,9 @@ const { check, validationResult} = require("express-validator");
 
 const paginationValidation = () => {
   return [
-    check("page").optional().isInt({min: 1}).withMessage("Page can only be numeric"),
-    check("pageSize").optional().isInt({min: 1}).withMessage("PageSize can only be numeric"),
-    check("order").optional().isIn('ASCDESCascdesc').withMessage("Order is ASC or DESC")
+    check("page").optional({ checkFalsy: true }).isInt({min: 1}).withMessage("Page can only be numeric"),
+    check("pageSize").optional({ checkFalsy: true }).isInt({min: 1}).withMessage("PageSize can only be numeric"),
+    check("order").optional({ checkFalsy: true }).isIn('ASCDESCascdesc').withMessage("Order is ASC or DESC")
   ];
 };
 
