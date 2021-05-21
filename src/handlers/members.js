@@ -1,5 +1,4 @@
 const repository = require('../services/repositories/members');
-const { getNextPage, getPriorPage } = require('./middlewares/pagination');
 
 const getAllMembers = async (paginationInfo) => await repository.getAll(paginationInfo);
 
