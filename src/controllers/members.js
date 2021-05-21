@@ -4,7 +4,7 @@ const expressRouter = require('express').Router();
 const roleIdMiddleware = require('./middlewares/auth');
 const { isValidImage } = require('./middlewares/common');
 const { memberValidationRules, validate } = require('./middlewares/members');
-const pagination = require('../utils/pagination');
+const { getPaginationInfo, getPaginationResult } = require('../utils/pagination');
 
 expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (req, res, next) => {
     try {
@@ -25,10 +25,10 @@ expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (
 // get all members
 expressRouter.get('/', /*roleIdMiddleware,*/ async (req, res, next) => {
   try {
-    const paginationInfo = pagination.getPaginationInfo(req.query);
+    const paginationInfo = getPaginationInfo(req.query);
     const results = await handler.getAllMembers(paginationInfo);
-    const route = '/members?page=';
-    const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
+    const route = '/members';
+    const paginationResult = await getPaginationResult(paginationInfo, route, results);
     res.status(200).json(paginationResult);
   } catch (error) {
     logger.error(error.message);
