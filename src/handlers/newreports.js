@@ -1,25 +1,14 @@
 const repository = require("../services/repositories/newreport");
 const path = require('path');
+const pagination = require('../utils/pagination');
 
-const getAllNewReports = async () => {
-  const newReports = await repository.getAll();
-  return newReports;
-};
+const getAllNewReports = async (paginationInfo) => await repository.getAll(paginationInfo);
 
-const getNewReportById = async (newReportId) => {
-  const result = await repository.getOne(newReportId);
-  return result;
-};
+const getNewReportById = async (newReportId) => await repository.getOne(newReportId);
 
-const updateNewReport = async (id, properties) => {
-  const result = await repository.update(id, properties);
-  return result;
-};
+const updateNewReport = async (id, properties) => await repository.update(id, properties);
 
-const deleteNewReport = async (id) => {
-  const result = await repository.destroy(id);
-  return result;
-};
+const deleteNewReport = async (id) => await repository.destroy(id);
 
 const createNewReport = async (newreport) => {
   newreport.type = 'news'

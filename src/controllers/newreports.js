@@ -1,6 +1,5 @@
-// Requires
-const newReportRouter = require("express").Router();
-const handler = require("../handlers/newreport");
+const newReportsRouter = require("express").Router();
+const handler = require("../handlers/newreports");
 const { checkIdInPath } = require("./middlewares/common");
 const db = require("../models");
 const path = require("path");
@@ -9,21 +8,26 @@ const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
 const isAdmin = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
+const pagination = require('../utils/pagination');
+const logger = require('../utils/pinoLogger');
+const { paginationValidation, validate } = require('./middlewares/pagination');
 
-// Var
 const emailSource = emailsSource("newReport");
 
-newReportRouter.get('/', isAdmin, async (req, res) => {
+newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => {
   try {
-    const results = await handler.getAllNewReports();
-    res.status(200).json(results);
+    const paginationInfo = pagination.getPaginationInfo(req.query);
+    const results = await handler.getAllNewReports(paginationInfo);
+    const route = '/news?page=';
+    const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
+    res.status(200).json(paginationResult);
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: error.message });
+    logger.error(error.message);
+    res.status(500).json({ message: 'Error getting news' });
   }
 });
 
-newReportRouter.get('/:id', isAdmin, async (req, res) => {
+newReportsRouter.get('/:id', isAdmin, async (req, res) => {
   const { id }= req.params;
   try {
 
@@ -44,7 +48,7 @@ newReportRouter.get('/:id', isAdmin, async (req, res) => {
   }
 },);
 
-newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
+newReportsRouter.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -63,7 +67,7 @@ newReportRouter.put('/:id', isAdmin, async (req, res, next) => {
   }
 });
 
-newReportRouter.delete(
+newReportsRouter.delete(
   "/:id",
   checkIdInPath,
   async (req, res) => {
@@ -81,7 +85,7 @@ newReportRouter.delete(
   }
 );
 
-newReportRouter.post("/", isAdmin, async (req, res) => {
+newReportsRouter.post("/", isAdmin, async (req, res) => {
   try {
     const newreport = req.body;
     const result = await handler.createNewReport(newreport);
@@ -94,4 +98,4 @@ newReportRouter.post("/", isAdmin, async (req, res) => {
   }
 })
 
-module.exports = newReportRouter;
+module.exports = newReportsRouter;

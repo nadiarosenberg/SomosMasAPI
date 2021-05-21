@@ -5,14 +5,17 @@ const sendEmail = require("../../utils/emailSender");
 const emailsSource = require("../../utils/fakeEmailSource");
 const userData = require("../../utils/fakeData");
 const { logger } = require("handlebars");
+const pagination = require("../../utils/pagination");
 
 const emailSource = emailsSource("newReport");
 
-const getAll = async () => {
+const getAll = async (paginationInfo) => {
   try {
-    const result = await NewReport.findAll({
+    const paginationData = pagination.getPaginationParams(paginationInfo, 'id');
+    const result = await NewReport.findAndCountAll({
+      ...paginationData,
       attributes: ['id', 'name', 'content', 'image', 'categoryId']
-    })
+    });
     return result;
   } catch (error) {
     console.error(error.message);
