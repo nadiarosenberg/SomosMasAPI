@@ -8,7 +8,7 @@ const errorHandler = require("../../utils/errorHandler");
 const persist = async (contactToPersist) => {
   try {
     const result = await Contact.create(contactToPersist);
-	
+	console.log(contactToPersist);
     return result;
   } catch (error) {
     logger.error(error.message);

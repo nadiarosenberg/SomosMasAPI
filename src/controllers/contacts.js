@@ -7,9 +7,12 @@ const { contactValidationRules, validate } = require('./middlewares/contactValid
 expressRouter.post('/', async (req, res) => {
   try {
     const contactToCreate = req.body;
+	console.log(req.body);
+	
     const result = await handler.createContact(contactToCreate);
 	
     res.status(200).json({ id: result.id, message: 'Contact created successfully' });
+	
   } catch (error) {
     logger.error(error.message);
     res.status(500).json({ message: error.message });
