@@ -9,6 +9,11 @@ const emails = {
         SOURCE_MAIL_NOTIFICATION: 'alkemyprueba@gmail.com',
         SOURCE_PASSWORD_MAIL_NOTIFICATION: '123123123asdasd'
     },
+	'contacts': {
+        SOURCE_SERVICE_NOTIFICATION: 'gmail',
+        SOURCE_MAIL_NOTIFICATION: 'alkemyprueba@gmail.com',
+        SOURCE_PASSWORD_MAIL_NOTIFICATION: '123123123asdasd'
+    },
     default: {
         SOURCE_SERVICE_NOTIFICATION: 'gmail',
         SOURCE_MAIL_NOTIFICATION: 'alkemyprueba@gmail.com',
