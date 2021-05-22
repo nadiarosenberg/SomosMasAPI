@@ -4,7 +4,7 @@ const logger = require('../utils/pinoLogger');
 const isAdmin = require('./middlewares/auth');
 const { contactValidationRules, validate } = require('./middlewares/contactValidation');
 const pagination = require('../utils/pagination');
-const { paginationValidation, validate } = require('./middlewares/pagination');
+const { paginationValidation } = require('./middlewares/pagination');
 
 expressRouter.post('/', async (req, res) => {
   try {
