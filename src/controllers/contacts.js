@@ -32,7 +32,7 @@ expressRouter.get('/', async (req, res) => {
   }
 });
 
-expressRouter.get('/backoffice',isAdmin(),paginationValidation(),validate, async (req, res) => {
+expressRouter.get('/backoffice',isAdmin,paginationValidation(),validate, async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllContactsPaginate(paginationInfo);
