@@ -12,7 +12,10 @@ const getAllContacts = async () => {
   return contacts;
 };
 
+const getAllContactsPaginate = async (paginationInfo) => await repository.getAll(paginationInfo);
+
 module.exports = {
   createContact,
-  getAllContacts
-}
+  getAllContacts,
+  getAllContactsPaginate
+};
