@@ -1,10 +1,13 @@
 const { Members } = require('../../models');
 const logger = require('../../utils/pinoLogger');
+const { getPaginationParams } = require('../../utils/pagination');
 
-const getAll = async () => {
+const getAll = async (paginationInfo) => {
   try {
-    const result = await Members.findAll({
-      attributes: ['name', 'image'],
+    const paginationData = getPaginationParams(paginationInfo, 'id');
+    const result = await Members.findAndCountAll({
+      ...paginationData,
+      attributes: ['id', 'name', 'image']
     });
     return result;
   } catch (error) {
