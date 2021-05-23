@@ -70,6 +70,7 @@ router.post("/", isAdmin, testimonialValidationPostRules(), validate, async (req
 
 router.put(
   "/:id",
+  isAdmin,
   testimonialValidationPutRules(),
   validate,
   async (req, res, next) => {
@@ -105,7 +106,7 @@ router.put(
   }
 );
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", isAdmin, async (req, res, next) => {
   const id = req.params.id;
   try {
     const result = await handler.getOneTestimonial(id);
