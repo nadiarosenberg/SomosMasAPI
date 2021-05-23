@@ -32,11 +32,11 @@ expressRouter.get('/', async (req, res) => {
   }
 });
 
-expressRouter.get('/backoffice',paginationValidation(),validate, async (req, res) => {
+expressRouter.get('/backoffice',isAdmin(),paginationValidation(),validate, async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllContactsPaginate(paginationInfo);
-    const route = '/contacts';
+    const route = '/contacts/backoffice';
     const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
     res.status(200).json(paginationResult);
   } catch (error) {
