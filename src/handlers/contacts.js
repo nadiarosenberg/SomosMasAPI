@@ -1,6 +1,5 @@
-const repository = require('../services/repositories/contacts');
-const sendContactEmail = require('../utils/ContactEmail');
-
+const repository = require('../services/repositories/contact');
+const sendContactEmail = require('../utils/ContactEmail')
 const createContact = async (contact) => {
   const newContact = await repository.persist(contact);
   sendContactEmail(contact.email, contact.name);
@@ -12,10 +11,7 @@ const getAllContacts = async () => {
   return contacts;
 };
 
-const getAllContactsPaginate = async (paginationInfo) => await repository.getAll(paginationInfo);
-
 module.exports = {
   createContact,
-  getAllContacts,
-  getAllContactsPaginate
-};
+  getAllContacts
+}
