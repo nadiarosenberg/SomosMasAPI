@@ -2,6 +2,7 @@ const repository = require('../services/repositories/users');
 
 const createUser = async (user) => {
     const createdUser = await repository.persist(user);
+	
     return createdUser;
 };
 
@@ -22,10 +23,20 @@ const deleteUser = async (id) => {
   return user;
 };
 
+const getById = async (id) => {
+    const me = await repository.getById(id);
+    return me;
+};
+
+
 module.exports = {
     createUser,
     updateUser,
     getAllUsers,
     getUserById,
-    deleteUser
+    deleteUser,
+    getById
+
+
+
 };

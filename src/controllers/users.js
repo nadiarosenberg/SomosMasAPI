@@ -7,6 +7,7 @@ const {
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
 const isAdmin = require('./middlewares/auth');
+const jwt = require('jsonwebtoken');
 const app = express();
 const key = require('../utils/key')
 
@@ -22,7 +23,7 @@ const wasUpdated = (result, req, res) => {
   });
 };
 
-router.post('/auth/register', async (req, res, next) => {
+router.post('/auth/register', userValidationRules(), validate, async (req, res, next) => {
   try {
     const user = req.body;
     const result = await handler.createUser(user);
@@ -98,6 +99,36 @@ router.delete('/:id', async (req, res, next) => {
     console.log(error.message);
     res.status(500).json({ message: error.message });
   }
+});
+
+router.get('/auth/me',async(req,res,next)=>
+{
+	try{
+		
+		 if (!req.headers.authorization)
+		 {
+			res.send({message:"widthout headers authorization"});
+		 }
+		 
+		 var token=req.headers.authorization.split(" ")[1];
+		 jwt.verify(token, app.get('key'), async (err, decoded) =>
+		 {
+         if (err) {
+             return res.json({ mensaje: 'invalid Token  or without token' });
+                  }
+				  
+			const id= decoded.id;
+			
+		    const results = await handler.getById(id); 	  
+			res.status(200).json(results);	  
+		 });
+		
+	   }
+	
+	catch (error) {
+    console.log(error);
+    res.status(500).json('Error getting auht me');
+              }
 });
 
 module.exports = router;
