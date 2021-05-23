@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const express = require("express");
 const app = express();
-app.set('key', key.key);
+
 const API_TOKEN = 'API-TOKEN';
 const authorizeAccess = (next) => next();
 const ownerShip = express.Router();

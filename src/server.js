@@ -21,6 +21,7 @@ const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
 const slidesRouter = require('./controllers/slides');
 const contactRouter = require('./controllers/contacts');
+const commentsRouter = require('./controllers/comments');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController)
 app.use('/slides', slidesRouter);
 app.use('/contacts', contactRouter);
+app.use('/comments', commentsRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
