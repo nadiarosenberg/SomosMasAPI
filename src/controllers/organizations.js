@@ -1,5 +1,6 @@
 const expressRouter = require('express').Router();
-const handler = require('./../handlers/organization');
+const handler = require('../handlers/organizations');
+const handlerSlides = require('./../handlers/slides');
 const logger = require('../utils/pinoLogger');
 const roleIdMiddleware = require('./middlewares/auth');
 const { orgValidationRules, validate } = require('./middlewares/organizations');

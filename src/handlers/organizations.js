@@ -1,5 +1,5 @@
-const repository = require('./../services/repositories/organization');
-const socialMedia = require('./../services/repositories/socialmedia');
+const repository = require('../services/repositories/organization');
+const socialMedia = require('../services/repositories/socialmedia');
 
 const createOrganization = async (organization) => {
   const createdOrganization = await repository.persist(organization);
