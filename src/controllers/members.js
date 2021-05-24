@@ -36,7 +36,6 @@ expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
   }
 });
 
-// get one member by id
 const findOne = async (req, res) => {
     const id = req.params.id;
     try {
@@ -53,7 +52,6 @@ const findOne = async (req, res) => {
     }
 }
 
-// update a member by id
 const update = async (req, res) => {
     const id = req.params.id;
     if (isNaN(id)) {
@@ -103,5 +101,29 @@ expressRouter.delete('/:id', async (req, res, next) => {
       res.status(500).json({ message: 'failed to delete member' });
     }
 });
+
+
+expressRouter.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateValues = req.body;
+    let selMember = await handler.getMemberById(id);
+    if (!selMember) 
+	{
+      logger.warn('Member not found');
+      res.status(404).json({ message: 'Member not found' });
+      return;
+	}
+      await handler.updateMember(id, updateValues);
+      logger.info('Member updated successfully');
+      res.status(200).json({ message: 'Member updated successfully' });
+	  
+  } 
+  catch (error) {
+    logger.error(error.message);
+    res.status(500).json({ message: error.message || `Cannot update Member with id = ${id}.` });
+  }
+});
+
 
 module.exports = expressRouter;

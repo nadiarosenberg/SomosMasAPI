@@ -11,9 +11,17 @@ const deleteMember = async (id) => {
   const result = await repository.destroyMember(id);
   return result;
 }
+const getMemberById = async (id) => {
+  const member = await repository.getOne(id);
+  return member;
+};
+const updateMember = async (id, properties) => await repository.update(id, properties);
+
 
 module.exports = {
   getAllMembers,
   createMember,
-  deleteMember
-};
+  deleteMember,
+  getMemberById,
+  updateMember
+  };

@@ -34,8 +34,34 @@ const destroyMember = async (id) => {
     logger.error(error.message);
   }
 };
+
+
+const getOne = async (id) => {
+  try {
+    const result = await Members.findOne({
+      where: { id }
+    });
+
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+const update = async (id, properties) => {
+  try {
+    const result = await Members.update(properties, {
+      where: { id }
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+}
 module.exports = {
   getAll,
   persist,
-  destroyMember
+  destroyMember,
+  getOne,
+  update
 };
