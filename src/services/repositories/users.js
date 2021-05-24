@@ -2,44 +2,21 @@ const {
     User
 } = require('../../models/index');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const key = require("../../utils/key");
 const express = require("express");
 const app = express();
 app.set('key', key.key);
-//console.log("la key es" + key.key);
-const persist = async (user) => {
-    try {
-        var aux = user;
-		var datos;
-        aux.password = bcrypt.hashSync(aux.password, 8);
-        const result = await User.create(aux).then(data=>{
-						 //token info contens roleId
-						  const payload = 
-						  {
-							id: data.id,
-							roleId: data.roleId
-						  };
-			           //create token
-       const token = jwt.sign(payload, app.get('key'), {
-                 expiresIn: 144000000000000000000000000000
-                   });
-	   datos=
-        {
-          data: data,
-          token: token,
-          message: "Token realizado"
-        };
-               	
-		});
-				
-		
-        return datos;
-    } catch (error) {
-        console.log(error.message)
-    }
-};
 
+const persist = async (user) => {
+  try {
+      var aux = user
+      aux.password = bcrypt.hashSync(aux.password, 8);
+      const result = await User.create(aux);
+      return result;
+  } catch (error) {
+      console.log(error.message)
+  }
+};
 const update = async (userId, user) => {
     var aux = user
     if (aux.password) {

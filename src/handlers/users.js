@@ -1,15 +1,8 @@
 const repository = require('../services/repositories/users');
 
-const createUser = async (user) => {
-    const createdUser = await repository.persist(user);
-	
-    return createdUser;
-};
+const createUser = async (user) => await repository.persist(user);
 
-const updateUser = async (userId, user) => {
-    const updatedUser = await repository.update(userId, user);
-    return updatedUser;
-};
+const updateUser = async (userId, user) => await repository.update(userId, user);
 
 const getAllUsers = async () => await repository.getAll();
 

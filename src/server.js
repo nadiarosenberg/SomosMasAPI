@@ -10,7 +10,7 @@ const exphbs = require('express-handlebars')
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./controllers/users');
+const usersController = require('./controllers/users');
 const organizationsController = require('./controllers/organizations');
 const testimonialsRouter = require('./controllers/testimonials');
 const authRouter = require('./routes/auth');
@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', usersController);
 app.use('/testimonials', testimonialsRouter);
 app.use('/auth', authRouter);
 app.use('/members', membersRouter);
