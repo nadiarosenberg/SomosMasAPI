@@ -24,4 +24,16 @@ const getOne = async (id) => {
   }
 };
 
-module.exports = { destroy, getOne };
+const getAllByNewReportId = async (id) => {
+  try {
+    const result = await Comments.findAll({
+      where: { newReportId: id },
+      attributes: ["id", "userId", "newReportId", "body"],
+    });
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+module.exports = { destroy, getOne , getAllByNewReportId };

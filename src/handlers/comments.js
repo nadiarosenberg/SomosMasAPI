@@ -10,7 +10,13 @@ const getCommentById = async (id) => {
   return result;
 };
 
+const getAllByNewReportId = async (id) => {
+  const result = await repository.getAllByNewReportId(id);
+  return result;
+};
+
 module.exports = {
   deleteComments,
-  getCommentById
+  getCommentById,
+  getAllByNewReportId
 };

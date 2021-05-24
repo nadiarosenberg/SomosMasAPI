@@ -16,4 +16,25 @@ commentsRouter.delete("/:id",isAdminOrOwnsership, async (req, res) => {
   }
 });
 
+const isEmpty = (result) => {
+  var bool;
+  result.length === 0 ? (bool = null) : (bool = 1);
+  return bool;
+};
+
+commentsRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const results = await handler.getAllByNewReportId(id);
+    if (isEmpty(results)) {
+      res.status(200).json(results);
+    } else {
+      res.status(404).send("No comments for that id");
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = commentsRouter;
