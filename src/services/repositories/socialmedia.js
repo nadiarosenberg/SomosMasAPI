@@ -1,7 +1,6 @@
 const db = require("./../../models");
 const SocialMedia = db.socialMedia;
 
-
 const getOne = async (id) => await SocialMedia.findByPk(id, {paranoid: false});
 
 const create = async (socialmedia) => await SocialMedia.create(socialmedia);
