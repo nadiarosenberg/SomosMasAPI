@@ -2,6 +2,7 @@ const router = require('express').Router();
 const handler = require('./../handlers/categories');
 const { validate } = require('../controllers/middlewares/categories');
 const { getPaginationInfo, getPaginationResult } = require('../utils/pagination');
+const allowAdmins = require('./middlewares/auth');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -38,7 +39,7 @@ router.get('/:id', async (req, res, next) => {
 
 });
 
-router.post('/', [validate], async (req, res, next) => {
+router.post('/', allowAdmins, [validate], async (req, res, next) => {
 
   const category = {
     name: req.body.name,
@@ -63,7 +64,7 @@ router.post('/', [validate], async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', allowAdmins, async (req, res, next) => {
   const id = req.params.id;
   const category = {
     name: req.body.name,
@@ -91,7 +92,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', allowAdmins, async (req, res, next) => {
   const id = req.params.id;
   try {
     const result = await handler.deleteCategory(id);

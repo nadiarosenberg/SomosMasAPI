@@ -7,9 +7,9 @@ const {
   validate,
   rolesValidationPutRules
 } = require('./middlewares/roles');
+const allowAdmins = require('./middlewares/auth');
 
-
-expressRouter.post('/',rolesValidationRules(),validate, async (req, res, next) => {
+expressRouter.post('/', allowAdmins, rolesValidationRules(),validate, async (req, res, next) => {
   try {
       const roleToCreate = req.body;
       const result = await handler.createRole(roleToCreate);
@@ -52,7 +52,7 @@ expressRouter.get('/:id', async (req, res, next) => {
   }
 });
 
-expressRouter.put('/:id', rolesValidationPutRules(), validate, async (req, res, next) => {
+expressRouter.put('/:id', allowAdmins, rolesValidationPutRules(), validate, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -74,7 +74,7 @@ expressRouter.put('/:id', rolesValidationPutRules(), validate, async (req, res, 
   }
 });
 
-expressRouter.delete('/:id', async (req, res, next) => {
+expressRouter.delete('/:id', allowAdmins, async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -96,7 +96,7 @@ expressRouter.delete('/:id', async (req, res, next) => {
   }
 });
 
-expressRouter.post('/:id', async (req, res, next) => {
+expressRouter.post('/:id', allowAdmins, async (req, res, next) => {
   try {
     const { id } = req.params;
 

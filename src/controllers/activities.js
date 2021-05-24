@@ -3,8 +3,9 @@ const path = require('path');
 const handler = require('../handlers/activity');
 const logger = require('../utils/pinoLogger');
 const { activityValidationRules, validate } = require('./middlewares/activities');
+const allowAdmins = require('./middlewares/auth');
 
-expressRouter.post('/', activityValidationRules(), validate, async (req, res) => {
+expressRouter.post('/', allowAdmins, activityValidationRules(), validate, async (req, res) => {
   try {
     const activity = {
       name: req.body.name,
@@ -62,7 +63,7 @@ expressRouter.get('/:id', async (req, res) => {
   }
 });
 
-expressRouter.put('/:id', async (req, res) => {
+expressRouter.put('/:id', allowAdmins, async (req, res) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -84,7 +85,7 @@ expressRouter.put('/:id', async (req, res) => {
   }
 });
 
-expressRouter.delete('/:id', async (req, res, next) => {
+expressRouter.delete('/:id', allowAdmins, async (req, res, next) => {
   try {
     const { id } = req.params;
 

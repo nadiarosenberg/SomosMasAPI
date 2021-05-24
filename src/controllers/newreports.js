@@ -6,7 +6,7 @@ const path = require("path");
 const errorHandler = require("../utils/errorHandler");
 const sendEmail = require("../utils/emailSender");
 const userData = require("../utils/fakeData");
-const isAdmin = require('./middlewares/auth');
+const allowAdmins = require('./middlewares/auth');
 const emailsSource = require("../utils/fakeEmailSource");
 const pagination = require('../utils/pagination');
 const logger = require('../utils/pinoLogger');
@@ -14,7 +14,7 @@ const { paginationValidation, validate } = require('./middlewares/pagination');
 
 const emailSource = emailsSource("newReport");
 
-newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => {
+newReportsRouter.get('/', allowAdmins, paginationValidation(), async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllNewReports(paginationInfo);
@@ -27,7 +27,7 @@ newReportsRouter.get('/', paginationValidation(), validate, async (req, res) => 
   }
 });
 
-newReportsRouter.get('/:id', isAdmin, async (req, res) => {
+newReportsRouter.get('/:id', allowAdmins, async (req, res) => {
   const { id }= req.params;
   try {
 
@@ -48,7 +48,7 @@ newReportsRouter.get('/:id', isAdmin, async (req, res) => {
   }
 },);
 
-newReportsRouter.put('/:id', isAdmin, async (req, res, next) => {
+newReportsRouter.put('/:id', allowAdmins, async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateValues = req.body;
@@ -67,10 +67,7 @@ newReportsRouter.put('/:id', isAdmin, async (req, res, next) => {
   }
 });
 
-newReportsRouter.delete(
-  "/:id",
-  checkIdInPath,
-  async (req, res) => {
+newReportsRouter.delete("/:id", allowAdmins, checkIdInPath, async (req, res) => {
     try {
       const id = req.params.id;
       const result = await handler.deleteNewReport(id);
@@ -85,7 +82,7 @@ newReportsRouter.delete(
   }
 );
 
-newReportsRouter.post("/", isAdmin, async (req, res) => {
+newReportsRouter.post("/", allowAdmins, async (req, res) => {
   try {
     const newreport = req.body;
     const result = await handler.createNewReport(newreport);

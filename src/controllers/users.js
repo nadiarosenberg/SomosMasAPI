@@ -7,8 +7,8 @@ const {
   userValidationPutRules,
 } = require('./middlewares/users');
 const handler = require('./../handlers/users');
-const isAdmin = require('./middlewares/auth');
 const jwt = require('jsonwebtoken');
+const allowAdmins = require('./middlewares/auth');
 const app = express();
 const key = require('../utils/key');
 const sendWelcomEmail = require('../utils/welcomEmail');
@@ -27,7 +27,7 @@ const wasUpdated = (result, req, res) => {
       });
 };
 
-router.post('/auth/register', userValidationRules(), validate, async (req, res, next) => {
+router.post('/auth/register', allowAdmins, userValidationRules(), validate, async (req, res, next) => {
   try {
     const user = req.body;
     const result = await handler.createUser(user);
@@ -48,7 +48,7 @@ router.post('/auth/register', userValidationRules(), validate, async (req, res, 
   }
 });
 
-router.put('/:id', userValidationPutRules(), validate, async (req, res, next) => {
+router.put('/:id', allowAdmins, userValidationPutRules(), validate, async (req, res, next) => {
   try {
     const user = req.body;
     const id = req.params.id;
@@ -62,7 +62,7 @@ router.put('/:id', userValidationPutRules(), validate, async (req, res, next) =>
   }
 });
 
-router.get('/', /*isAdmin,*/ async (req, res, next) => {
+router.get('/', allowAdmins, async (req, res, next) => {
   try {
     const results = await handler.getAllUsers();
     res.status(200).json(results);
@@ -90,7 +90,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', allowAdmins, async (req, res, next) => {
   try {
     const {id} = req.params;
 

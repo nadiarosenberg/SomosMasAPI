@@ -2,12 +2,12 @@
 const express = require('express');
 const Router = express.Router();
 const handler = require('../handlers/slides');
-const isAdmin = require('./middlewares/auth');
 const awsImage = require('../handlers/middlewares/uploadImage');
+const allowAdmins = require('./middlewares/auth');
 
 const wasUpdated = (result, req, res) => result[0]===1;
 
-Router.post('/', isAdmin, async (req, res, next) => {
+Router.post('/', allowAdmins, async (req, res, next) => {
     try {
       const slide = req.body;
       const image = req.body.imageUrl;
@@ -27,7 +27,7 @@ Router.post('/', isAdmin, async (req, res, next) => {
   }
 );
 
-Router.get('/', isAdmin, async (req, res, next) => {
+Router.get('/', allowAdmins, async (req, res, next) => {
     try {
       const result = await handler.getSlides();
       res.status(200).json(result);
@@ -38,7 +38,7 @@ Router.get('/', isAdmin, async (req, res, next) => {
   }
 );
 
-Router.get('/:id', isAdmin, async (req, res, next) => {
+Router.get('/:id', allowAdmins, async (req, res, next) => {
     try {
       const {id} = req.params;
       const slide = await handler.getSlide(id);
@@ -54,7 +54,7 @@ Router.get('/:id', isAdmin, async (req, res, next) => {
   }
 );
 
-Router.put('/:id', isAdmin, async (req, res) => {
+Router.put('/:id', allowAdmins, async (req, res) => {
     const {id} = req.params;
     const data = req.body;
     try {
@@ -75,7 +75,7 @@ Router.put('/:id', isAdmin, async (req, res) => {
     }
 });
 
-Router.delete('/:id', isAdmin, async (req, res) => {
+Router.delete('/:id', allowAdmins, async (req, res) => {
     const {id} = req.params;
     try {
       const slide = await handler.getSlide(id);

@@ -1,12 +1,12 @@
 const handler = require('../handlers/members');
 const logger = require('../utils/pinoLogger');
 const expressRouter = require('express').Router();
-const roleIdMiddleware = require('./middlewares/auth');
+const allowAdmins = require('./middlewares/auth');
 const { isValidImage } = require('./middlewares/common');
 const { memberValidationRules, validate } = require('./middlewares/members');
 const { getPaginationInfo, getPaginationResult } = require('../utils/pagination');
 
-expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (req, res, next) => {
+expressRouter.post('/', allowAdmins, memberValidationRules(), validate, isValidImage, async (req, res, next) => {
     try {
         const member = {
             name: req.body.name.trim(),
@@ -23,7 +23,7 @@ expressRouter.post('/', memberValidationRules(), validate, isValidImage, async (
 });
 
 // get all members
-expressRouter.get('/', roleIdMiddleware, async (req, res, next) => {
+expressRouter.get('/', async (req, res, next) => {
   try {
     const paginationInfo = getPaginationInfo(req.query);
     const results = await handler.getAllMembers(paginationInfo);
@@ -88,7 +88,7 @@ const update = async (req, res) => {
     }
 }
 
-expressRouter.delete('/:id', async (req, res, next) => {
+expressRouter.delete('/:id', allowAdmins, async (req, res, next) => {
     const id = req.params.id;
     try {
       const isDeleted = await handler.deleteMember(id);

@@ -1,8 +1,9 @@
 const commentsRouter = require("express").Router();
 const handler = require("../handlers/comments");
 const isAdminOrOwnsership = require("./middlewares/ownership");
+const allowAdmins = require('./middlewares/auth');
 
-commentsRouter.delete("/:id",isAdminOrOwnsership, async (req, res) => {
+commentsRouter.delete("/:id", allowAdmins, isAdminOrOwnsership, async (req, res) => {
   try {
     const id = req.params.id;
     const comment = await handler.getCommentById(id);
