@@ -76,23 +76,11 @@ commentsRouter.get('/:id', async (req, res) => {
   }
 });
 
-commentsRouter.get('/', isAdmin, async (req, res, next) => {
-  try {
-    const result = await handler.getAllComments();
-    res.json(result);
-  } catch (e) {
-    logger.error(e.message);
-    res.send({
-      message: 'Error to get comments',
-    });
-  }
-});
-
 commentsRouter.put('/:id', async (req, res, next) => {
   const id = req.params.id;
   const comment = req.body;
   try {
-    const result = await handler.getOneComment(id);
+    const result = await handler.getCommentById(id);
     if (result) {
       logger.info('Comment updated successfully');
       res.status(200).json({

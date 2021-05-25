@@ -43,11 +43,6 @@ const getAllByNewReportId = async id => {
   }
 };
 
-const getOne = async id => {
-  const result = await Comments.findByPk(id);
-  return result;
-};
-
 const create = async comment => {
   const result = await Comments.create(comment);
   return result;
