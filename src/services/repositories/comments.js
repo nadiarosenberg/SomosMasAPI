@@ -1,5 +1,4 @@
-const db = require("../../models");
-const Comments = db.comments;
+const { Comments } = require("../../models");
 
 const destroy = async (id) => {
   try {
@@ -24,6 +23,15 @@ const getOne = async (id) => {
   }
 };
 
+
+const getAll = async () => {
+  const result = await Comments.findAll({
+    attributes: ["body"],
+    order: [["createdAt", "DESC"]],
+  });
+  return result;
+};
+
 const getAllByNewReportId = async (id) => {
   try {
     const result = await Comments.findAll({
@@ -36,4 +44,28 @@ const getAllByNewReportId = async (id) => {
   }
 };
 
-module.exports = { destroy, getOne , getAllByNewReportId };
+const getOne = async (id) => {
+  const result = await Comments.findByPk(id);
+  return result;
+}
+
+const create = async (comment) => {
+  const result = await Comments.create(comment);
+  return result;
+}
+
+const update = async (comment, id) => {
+  const result = await Comments.update(comment, {
+      where: { id: id }
+    });
+  return result;
+}
+
+module.exports = {
+  destroy,
+  getAll,
+  getAllByNewReportId,
+  getOne,
+  create,
+  update
+};

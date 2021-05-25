@@ -31,7 +31,8 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "pino": "^6.11.3",
     "sequelize": "^6.6.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "express-list-endpoints": "^5.0.0",
