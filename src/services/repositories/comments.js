@@ -1,9 +1,9 @@
-const { Comments } = require("../../models");
+const {Comments} = require('../../models');
 
-const destroy = async (id) => {
+const destroy = async id => {
   try {
     const result = await Comments.destroy({
-      where: { id },
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -11,11 +11,11 @@ const destroy = async (id) => {
   }
 };
 
-const getOne = async (id) => {
+const getOne = async id => {
   try {
     const result = await Comments.findOne({
-      where: { id },
-      attributes: ["id", "userId", "newReportId", "body"],
+      where: {id},
+      attributes: ['id', 'userId', 'newReportId', 'body'],
     });
     return result;
   } catch (error) {
@@ -23,20 +23,19 @@ const getOne = async (id) => {
   }
 };
 
-
 const getAll = async () => {
   const result = await Comments.findAll({
-    attributes: ["body"],
-    order: [["createdAt", "DESC"]],
+    attributes: ['body'],
+    order: [['createdAt', 'DESC']],
   });
   return result;
 };
 
-const getAllByNewReportId = async (id) => {
+const getAllByNewReportId = async id => {
   try {
     const result = await Comments.findAll({
-      where: { newReportId: id },
-      attributes: ["id", "userId", "newReportId", "body"],
+      where: {newReportId: id},
+      attributes: ['id', 'userId', 'newReportId', 'body'],
     });
     return result;
   } catch (error) {
@@ -44,22 +43,22 @@ const getAllByNewReportId = async (id) => {
   }
 };
 
-const getOne = async (id) => {
+const getOne = async id => {
   const result = await Comments.findByPk(id);
   return result;
-}
+};
 
-const create = async (comment) => {
+const create = async comment => {
   const result = await Comments.create(comment);
   return result;
-}
+};
 
 const update = async (comment, id) => {
   const result = await Comments.update(comment, {
-      where: { id: id }
-    });
+    where: {id: id},
+  });
   return result;
-}
+};
 
 module.exports = {
   destroy,
@@ -67,5 +66,5 @@ module.exports = {
   getAllByNewReportId,
   getOne,
   create,
-  update
+  update,
 };

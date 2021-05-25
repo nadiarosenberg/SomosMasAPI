@@ -1,7 +1,7 @@
-const { Activities } = require('../../models');
+const {Activities} = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
-const persist = async (activityToPersist) => {
+const persist = async activityToPersist => {
   try {
     const result = await Activities.create(activityToPersist);
     return result;
@@ -17,12 +17,12 @@ const getAll = async () => {
   } catch (error) {
     logger.error(error.message);
   }
-}
+};
 
-const getOne = async (id) => {
+const getOne = async id => {
   try {
     const result = await Activities.findOne({
-      where: { id }
+      where: {id},
     });
 
     return result;
@@ -34,18 +34,7 @@ const getOne = async (id) => {
 const update = async (id, properties) => {
   try {
     const result = await Activities.update(properties, {
-      where: { id }
-    });
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
-}
-
-const destroy = async (id) => {
-  try {
-    const result = await Activities.destroy({
-      where: { id }
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -53,16 +42,27 @@ const destroy = async (id) => {
   }
 };
 
-const restore = async (id) => {
+const destroy = async id => {
   try {
-    const result = await Activities.restore({
-      where: { id }
-    })
+    const result = await Activities.destroy({
+      where: {id},
+    });
     return result;
   } catch (error) {
     logger.error(error.message);
   }
-}
+};
+
+const restore = async id => {
+  try {
+    const result = await Activities.restore({
+      where: {id},
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 
 module.exports = {
   persist,
@@ -70,5 +70,5 @@ module.exports = {
   getOne,
   update,
   destroy,
-  restore
-}
+  restore,
+};

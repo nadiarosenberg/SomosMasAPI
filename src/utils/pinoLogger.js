@@ -1,10 +1,10 @@
-const pino = require("pino");
+const pino = require('pino');
 
-const pinoLogger = pino ({
+const pinoLogger = pino({
   prettyPrint: {
     colorize: true,
-    ignore: "pid,hostname,level,time",
-  }
+    ignore: 'pid,hostname,level,time',
+  },
 });
 
 module.exports = pinoLogger;

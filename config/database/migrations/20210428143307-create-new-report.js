@@ -6,62 +6,62 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: 'name is required'
-          }
+            msg: 'name is required',
+          },
         },
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       content: {
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: 'content is required'
-          }
+            msg: 'content is required',
+          },
         },
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       image: {
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: 'image is required'
-          }
+            msg: 'image is required',
+          },
         },
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       type: {
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: 'image is required'
-          }
+            msg: 'image is required',
+          },
         },
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       categoryId: {
         type: Sequelize.INTEGER,
         validate: {
           notNull: {
             args: true,
-            msg: 'image is required'
-          }
+            msg: 'image is required',
+          },
         },
         references: {
           model: 'Categories',
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'SET NULL',
       },
       deletedAt: {
         type: Sequelize.DATE,
@@ -73,15 +73,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('NewReports');
-  }
+  },
 };

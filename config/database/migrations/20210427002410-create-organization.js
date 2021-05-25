@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
@@ -14,9 +14,9 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'name is required'
-          }
-        }
+            msg: 'name is required',
+          },
+        },
       },
       image: {
         type: Sequelize.STRING,
@@ -24,15 +24,15 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'image is required'
-          }
-        }
+            msg: 'image is required',
+          },
+        },
       },
       address: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       phone: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       email: {
         type: Sequelize.STRING,
@@ -40,10 +40,10 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'email is required'
+            msg: 'email is required',
           },
-          isEmail: true
-        }
+          isEmail: true,
+        },
       },
       welcomeText: {
         type: Sequelize.TEXT,
@@ -51,12 +51,12 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'welcomeText is required'
-          }
-        }
+            msg: 'welcomeText is required',
+          },
+        },
       },
       aboutUsText: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       socialMediaId: {
         type: Sequelize.INTEGER,
@@ -65,22 +65,22 @@ module.exports = {
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'SET NULL',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       deletedAt: {
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Organizations');
-  }
+  },
 };

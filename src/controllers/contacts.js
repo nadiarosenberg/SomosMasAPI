@@ -2,25 +2,23 @@ const expressRouter = require('express').Router();
 const handler = require('../handlers/contacts');
 const logger = require('../utils/pinoLogger');
 const allowAdmins = require('./middlewares/auth');
-const { contactValidationRules, validate } = require('./middlewares/contactValidation');
+const {contactValidationRules, validate} = require('./middlewares/contactValidation');
 const pagination = require('../utils/pagination');
-const { paginationValidation } = require('./middlewares/pagination');
+const {paginationValidation} = require('./middlewares/pagination');
 
 expressRouter.post('/', allowAdmins, async (req, res) => {
   try {
     const contactToCreate = req.body;
-	console.log(req.body);
-	
+    console.log(req.body);
+
     const result = await handler.createContact(contactToCreate);
-	
-    res.status(200).json({ id: result.id, message: 'Contact created successfully' });
-	
+
+    res.status(200).json({id: result.id, message: 'Contact created successfully'});
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({message: error.message});
   }
 });
-
 
 expressRouter.get('/', async (req, res) => {
   try {
@@ -28,11 +26,11 @@ expressRouter.get('/', async (req, res) => {
     res.status(200).json(results);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message || "Some error occurred while retrieving Contacts."});
+    res.status(500).json({message: error.message || 'Some error occurred while retrieving Contacts.'});
   }
 });
 
-expressRouter.get('/backoffice', paginationValidation(),validate, async (req, res) => {
+expressRouter.get('/backoffice', paginationValidation(), validate, async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllContactsPaginate(paginationInfo);
@@ -41,7 +39,7 @@ expressRouter.get('/backoffice', paginationValidation(),validate, async (req, re
     res.status(200).json(paginationResult);
   } catch (error) {
     logger.error(error.message);
-    res.status(500).json({ message: error.message || "Some error occurred while retrieving Contacts."});
+    res.status(500).json({message: error.message || 'Some error occurred while retrieving Contacts.'});
   }
 });
 

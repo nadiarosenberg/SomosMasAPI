@@ -1,32 +1,32 @@
-const db = require("../../models");
+const db = require('../../models');
 const NewReport = db.newreports;
-const errorHandler = require("../../utils/errorHandler");
-const sendEmail = require("../../utils/emailSender");
-const emailsSource = require("../../utils/fakeEmailSource");
-const userData = require("../../utils/fakeData");
-const { logger } = require("handlebars");
-const pagination = require("../../utils/pagination");
+const errorHandler = require('../../utils/errorHandler');
+const sendEmail = require('../../utils/emailSender');
+const emailsSource = require('../../utils/fakeEmailSource');
+const userData = require('../../utils/fakeData');
+const {logger} = require('handlebars');
+const pagination = require('../../utils/pagination');
 
-const emailSource = emailsSource("newReport");
+const emailSource = emailsSource('newReport');
 
-const getAll = async (paginationInfo) => {
+const getAll = async paginationInfo => {
   try {
     const paginationData = pagination.getPaginationParams(paginationInfo, 'id');
     const result = await NewReport.findAndCountAll({
       ...paginationData,
-      attributes: ['id', 'name', 'content', 'image', 'categoryId']
+      attributes: ['id', 'name', 'content', 'image', 'categoryId'],
     });
     return result;
   } catch (error) {
     console.error(error.message);
   }
-}
+};
 
-const getOne = async (id) => {
+const getOne = async id => {
   try {
     const result = await NewReport.findOne({
-      where: { id },
-      attributes: ['id', 'name', 'content', 'image', 'categoryId']
+      where: {id},
+      attributes: ['id', 'name', 'content', 'image', 'categoryId'],
     });
     return result;
   } catch (error) {
@@ -34,10 +34,10 @@ const getOne = async (id) => {
   }
 };
 
-const update = async(id, properties) => {
+const update = async (id, properties) => {
   try {
-    const result = await NewReport.update(properties, { 
-      where: { id } 
+    const result = await NewReport.update(properties, {
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -45,11 +45,11 @@ const update = async(id, properties) => {
   }
 };
 
-const destroy = async (id) => {
+const destroy = async id => {
   try {
     const result = await NewReport.destroy({
       where: {
-        id: id
+        id: id,
       },
     });
     return result;
@@ -58,13 +58,13 @@ const destroy = async (id) => {
   }
 };
 
-const persist = async (newreport) => {
+const persist = async newreport => {
   try {
     const result = await NewReport.create(newreport);
     const message = {
       from: emailSource.email,
       to: userData.email,
-      subject: "Your new report was created successfully",
+      subject: 'Your new report was created successfully',
       text: `${userData.firstName} your new report called ${result.name} was created without a problem.`,
     };
     sendEmail(emailSource, message);
@@ -79,5 +79,5 @@ module.exports = {
   getOne,
   update,
   destroy,
-  persist
+  persist,
 };

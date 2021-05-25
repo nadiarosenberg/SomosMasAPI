@@ -1,7 +1,7 @@
 const Axios = require('axios');
 const logger = require('../../utils/pinoLogger');
 
-const downloadImage = async (url) => {
+const downloadImage = async url => {
   const downloadedImage = await Axios({
     method: 'GET',
     url: url,
@@ -10,7 +10,7 @@ const downloadImage = async (url) => {
   return downloadedImage;
 };
 
-const checkImage = async (req) => {
+const checkImage = async req => {
   // fileType validation
   const url = req.body.image;
   try {
@@ -18,7 +18,7 @@ const checkImage = async (req) => {
     const fileType = downloadedImage.headers['content-type'].split('/')[0] || null;
     return fileType === 'image' ? true : false;
   } catch (error) {
-    logger.error(error.message)
+    logger.error(error.message);
     return false;
   }
 };
@@ -50,18 +50,18 @@ const checkIdInPath = (req, res, next) => {
 
 const isValidImage = async (req, res, next) => {
   const validatedImage = await checkImage(req);
-	if(!validatedImage){
-		res.status(400).json({
-			ok: false, 
-			msj: 'the file is not an image'
-		});
-  }else{
-    next()
+  if (!validatedImage) {
+    res.status(400).json({
+      ok: false,
+      msj: 'the file is not an image',
+    });
+  } else {
+    next();
   }
-}
+};
 module.exports = {
   checkIdInPath,
   checkImage,
   checkName,
-  isValidImage
+  isValidImage,
 };

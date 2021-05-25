@@ -1,9 +1,8 @@
-
-'use strict'
-const { Slide } = require("../../models/index");
+'use strict';
+const {Slide} = require('../../models/index');
 const Sequelize = require('sequelize');
 
-const persist = async (slide) => {
+const persist = async slide => {
   try {
     const result = await Slide.create(slide);
     return result;
@@ -15,8 +14,8 @@ const persist = async (slide) => {
 const findAll = async () => {
   try {
     const result = await Slide.findAll({
-      attributes: ["imageUrl", "order"],
-      order: [['order', 'ASC']]
+      attributes: ['imageUrl', 'order'],
+      order: [['order', 'ASC']],
     });
     return result;
   } catch (error) {
@@ -24,10 +23,10 @@ const findAll = async () => {
   }
 };
 
-const findOne = async (id) => {
+const findOne = async id => {
   try {
     const result = await Slide.findOne({
-      where: { id },
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -39,7 +38,7 @@ const update = async (slide, id) => {
   console.log(slide);
   try {
     const result = await Slide.update(slide, {
-      where: { id }
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -47,10 +46,10 @@ const update = async (slide, id) => {
   }
 };
 
-const destroy = async (id) => {
+const destroy = async id => {
   try {
     const result = await Slide.destroy({
-      where: { id },
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -58,12 +57,12 @@ const destroy = async (id) => {
   }
 };
 
-const getSlidesByOrgId = async (orgId) => {
+const getSlidesByOrgId = async orgId => {
   try {
     const result = await Slide.findAll({
-      where: { organizationId: orgId },
+      where: {organizationId: orgId},
       order: [['order', 'ASC']],
-      attributes: ['imageUrl']
+      attributes: ['imageUrl'],
     });
     return result;
   } catch (error) {
@@ -75,7 +74,7 @@ const lastSlide = async () => {
   try {
     const result = await Slide.findOne({
       order: [['order', 'DESC']],
-      attributes: ['order']
+      attributes: ['order'],
     });
     return result;
   } catch (error) {
@@ -90,5 +89,5 @@ module.exports = {
   update,
   destroy,
   getSlidesByOrgId,
-  lastSlide
-}
+  lastSlide,
+};

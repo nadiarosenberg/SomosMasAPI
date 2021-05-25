@@ -1,35 +1,31 @@
 const repository = require('../services/repositories/users');
 
-const createUser = async (user) => await repository.persist(user);
+const createUser = async user => await repository.persist(user);
 
 const updateUser = async (userId, user) => await repository.update(userId, user);
 
 const getAllUsers = async () => await repository.getAll();
 
-const getUserById = async (id) => {
+const getUserById = async id => {
   const user = await repository.getOne(id);
   return user;
 };
 
-const deleteUser = async (id) => {
+const deleteUser = async id => {
   const user = await repository.destroy(id);
   return user;
 };
 
-const getById = async (id) => {
-    const me = await repository.getById(id);
-    return me;
+const getById = async id => {
+  const me = await repository.getById(id);
+  return me;
 };
 
-
 module.exports = {
-    createUser,
-    updateUser,
-    getAllUsers,
-    getUserById,
-    deleteUser,
-    getById
-
-
-
+  createUser,
+  updateUser,
+  getAllUsers,
+  getUserById,
+  deleteUser,
+  getById,
 };

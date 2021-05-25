@@ -3,9 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cors = require('cors')
-const key = require("./utils/key");
-const exphbs = require('express-handlebars')
+const cors = require('cors');
+const key = require('./utils/key');
+const exphbs = require('express-handlebars');
 
 require('dotenv').config();
 
@@ -25,19 +25,22 @@ const commentsRouter = require('./controllers/comments');
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
 
-app.engine('hbs', exphbs({
-  defaultLayout: 'main',
-  extname: '.hbs'
-}));
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
+  })
+);
 
 app.set('view engine', 'hbs');
 app.set(key.secretName, key.key);
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -50,7 +53,7 @@ app.use('/roles', rolesRouter);
 app.use('/categories', categoriesRouter);
 app.use('/news', newReportsRouter);
 app.use('/activities', activitiesRouter);
-app.use('/organizations', organizationsController)
+app.use('/organizations', organizationsController);
 app.use('/slides', slidesRouter);
 app.use('/contacts', contactRouter);
 app.use('/comments', commentsRouter);
