@@ -1,14 +1,12 @@
-const { Contact } = require('../../models');
+const {Contact} = require('../../models');
 const logger = require('../../utils/pinoLogger');
 
-const errorHandler = require("../../utils/errorHandler");
+const errorHandler = require('../../utils/errorHandler');
 
-
-
-const persist = async (contactToPersist) => {
+const persist = async contactToPersist => {
   try {
     const result = await Contact.create(contactToPersist);
-	
+
     return result;
   } catch (error) {
     logger.error(error.message);
@@ -22,9 +20,9 @@ const getAll = async () => {
   } catch (error) {
     logger.error(error.message);
   }
-}
+};
 
 module.exports = {
   persist,
-  getAll
-}
+  getAll,
+};

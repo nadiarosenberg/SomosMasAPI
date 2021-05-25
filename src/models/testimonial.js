@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Testimonial extends Model {
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notNull: {
             args: true,
-            msg: "Name is required",
+            msg: 'Name is required',
           },
         },
       },
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           is: {
             args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
-            msg: "You must enter an image url",
+            msg: 'You must enter an image url',
           },
         },
       },
@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Testimonial",
-      tableName: "Testimonials",
+      modelName: 'Testimonial',
+      tableName: 'Testimonials',
       timestamps: true,
       paranoid: true,
     }

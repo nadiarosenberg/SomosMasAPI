@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
@@ -14,9 +14,9 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'name is required'
-          }
-        }
+            msg: 'name is required',
+          },
+        },
       },
       image: {
         type: Sequelize.STRING,
@@ -24,24 +24,24 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'image is required'
-          }
-        }
+            msg: 'image is required',
+          },
+        },
       },
       deletedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Members');
-  }
+  },
 };

@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const {body, validationResult} = require('express-validator');
 
 const memberValidationRules = () => {
   return [
@@ -12,7 +12,7 @@ const validate = (req, res, next) => {
   if (errors.isEmpty()) {
     return next();
   }
-  return res.status(400).json({ errors: errors.array() });
+  return res.status(400).json({errors: errors.array()});
 };
 
-module.exports = { memberValidationRules, validate };
+module.exports = {memberValidationRules, validate};

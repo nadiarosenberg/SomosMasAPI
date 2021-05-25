@@ -6,56 +6,53 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notNull:
-          {
+          notNull: {
             args: true,
-            msg: 'name is required'
-          }
-        }
+            msg: 'name is required',
+          },
+        },
       },
       image: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notNull:
-          {
+          notNull: {
             args: true,
-            msg: 'image is required'
-          }
-        }
+            msg: 'image is required',
+          },
+        },
       },
       content: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notNull:
-          {
+          notNull: {
             args: true,
-            msg: 'content is required'
-          }
-        }
+            msg: 'content is required',
+          },
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
-      }
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Activities');
-  }
+  },
 };

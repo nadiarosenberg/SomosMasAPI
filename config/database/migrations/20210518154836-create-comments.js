@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -15,9 +15,9 @@ module.exports = {
           model: {
             tableName: 'Users',
           },
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
       newReportId: {
         type: Sequelize.INTEGER,
@@ -26,9 +26,9 @@ module.exports = {
           model: {
             tableName: 'NewReports',
           },
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
       body: {
         type: Sequelize.STRING,
@@ -36,9 +36,9 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'body is required'
-          }
-        }
+            msg: 'body is required',
+          },
+        },
       },
       timestamps: {
         type: Sequelize.STRING,
@@ -46,18 +46,18 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       deletedAt: {
-        type: Sequelize.DATE
-      }
-    })
+        type: Sequelize.DATE,
+      },
+    });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Comments');
-  }
+  },
 };

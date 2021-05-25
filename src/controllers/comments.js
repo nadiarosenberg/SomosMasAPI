@@ -1,37 +1,37 @@
-const commentsRouter = require("express").Router();
-const handler = require("./../handlers/comments");
-const logger = require("../utils/pinoLogger");
+const commentsRouter = require('express').Router();
+const handler = require('./../handlers/comments');
+const logger = require('../utils/pinoLogger');
 const allowAdmins = require('./middlewares/auth');
-const isAdminOrOwnsership = require("./middlewares/ownership");
-const { commentValidationPost, validate } = require('./middlewares/comments');
+const isAdminOrOwnsership = require('./middlewares/ownership');
+const {commentValidationPost, validate} = require('./middlewares/comments');
 
-commentsRouter.delete("/:id", allowAdmins, isAdminOrOwnsership, async (req, res) => {
+commentsRouter.delete('/:id', allowAdmins, isAdminOrOwnsership, async (req, res) => {
   try {
     const id = req.params.id;
     const comment = await handler.getCommentById(id);
     if (!comment) {
-      res.status(404).send("Comment not found!");
+      res.status(404).send('Comment not found!');
     }
     const result = await handler.deleteComments(id);
-    res.status(200).send("Comment was deleted successfully!");
+    res.status(200).send('Comment was deleted successfully!');
   } catch (e) {
     res.status(400).send(e.messege);
   }
 });
 
-commentsRouter.get("/", allowAdmins, async (req, res, next) => {
+commentsRouter.get('/', allowAdmins, async (req, res, next) => {
   try {
     const result = await handler.getAllComments();
     res.json(result);
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error getting Comments",
+      message: 'Error getting Comments',
     });
   }
 });
 
-commentsRouter.post("/", commentValidationPost(), validate, async (req, res, next) => {
+commentsRouter.post('/', commentValidationPost(), validate, async (req, res, next) => {
   const comment = {
     newReportId: req.body.newReportId,
     userId: req.body.userId,
@@ -44,70 +44,70 @@ commentsRouter.post("/", commentValidationPost(), validate, async (req, res, nex
       {
         id: result.id,
       },
-      "Comment created successfully"
+      'Comment created successfully'
     );
     res.json(result);
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error posting Comment",
+      message: 'Error posting Comment',
     });
   }
 });
 
-const isEmpty = (result) => {
+const isEmpty = result => {
   var bool;
   result.length === 0 ? (bool = null) : (bool = 1);
   return bool;
 };
 
-commentsRouter.get("/:id", async (req, res) => {
+commentsRouter.get('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     const results = await handler.getAllByNewReportId(id);
     if (isEmpty(results)) {
       res.status(200).json(results);
     } else {
-      res.status(404).send("No comments for that id");
+      res.status(404).send('No comments for that id');
     }
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({message: error.message});
   }
 });
 
-commentsRouter.get("/", isAdmin, async (req, res, next) => {
+commentsRouter.get('/', isAdmin, async (req, res, next) => {
   try {
     const result = await handler.getAllComments();
     res.json(result);
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error to get comments",
+      message: 'Error to get comments',
     });
   }
 });
 
-commentsRouter.put("/:id", async (req, res, next) => {
+commentsRouter.put('/:id', async (req, res, next) => {
   const id = req.params.id;
   const comment = req.body;
   try {
     const result = await handler.getOneComment(id);
     if (result) {
-      logger.info("Comment updated successfully");
+      logger.info('Comment updated successfully');
       res.status(200).json({
-        message: "Comment updated successfully",
+        message: 'Comment updated successfully',
       });
     } else {
-      logger.warn("Comment not found");
+      logger.warn('Comment not found');
       res.status(404).json({
-        message: "Comment not found",
+        message: 'Comment not found',
       });
     }
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error updating Comment",
+      message: 'Error updating Comment',
     });
   }
 });

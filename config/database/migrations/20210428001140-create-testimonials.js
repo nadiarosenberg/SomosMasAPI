@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Testimonials", {
+    await queryInterface.createTable('Testimonials', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,7 +14,7 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: "Name is required",
+            msg: 'Name is required',
           },
         },
       },
@@ -23,7 +23,7 @@ module.exports = {
         validate: {
           is: {
             args: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/g,
-            msg: "You must enter an image url",
+            msg: 'You must enter an image url',
           },
         },
       },
@@ -42,6 +42,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Testimonials");
+    await queryInterface.dropTable('Testimonials');
   },
 };

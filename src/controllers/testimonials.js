@@ -1,50 +1,46 @@
-const router = require("express").Router();
-const handler = require("./../handlers/testimonials");
-const logger = require("../utils/pinoLogger");
-const {
-  testimonialValidationPutRules,
-  testimonialValidationPostRules,
-  validate,
-} = require("./middlewares/testimonials");
+const router = require('express').Router();
+const handler = require('./../handlers/testimonials');
+const logger = require('../utils/pinoLogger');
+const {testimonialValidationPutRules, testimonialValidationPostRules, validate} = require('./middlewares/testimonials');
 const isAdmin = require('./middlewares/auth');
 
-const wasUpdated = (result) => {
+const wasUpdated = result => {
   var bool;
   result[0] === 1 ? (bool = true) : (bool = false);
   return bool;
 };
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const result = await handler.getAllTestimonials();
     res.json(result);
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error posting testimonial",
+      message: 'Error posting testimonial',
     });
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
   try {
     const result = await handler.getOneTestimonial(id);
     if (result) {
       res.json(result);
     } else {
-      logger.warn("Testimonial not found");
+      logger.warn('Testimonial not found');
       res.status(404).json({
-        message: "Testimonial not found",
+        message: 'Testimonial not found',
       });
     }
   } catch (e) {
     console.log(e);
-    res.send("Error getting testimonial");
+    res.send('Error getting testimonial');
   }
 });
 
-router.post("/", isAdmin, testimonialValidationPostRules(), validate, async (req, res, next) => {
+router.post('/', isAdmin, testimonialValidationPostRules(), validate, async (req, res, next) => {
   const testimonial = {
     name: req.body.name,
     image: req.body.image,
@@ -57,76 +53,70 @@ router.post("/", isAdmin, testimonialValidationPostRules(), validate, async (req
       {
         id: result.id,
       },
-      "Testimonial created successfully"
+      'Testimonial created successfully'
     );
     res.json(result);
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error posting testimonial",
+      message: 'Error posting testimonial',
     });
   }
 });
 
-router.put(
-  "/:id",
-  isAdmin,
-  testimonialValidationPutRules(),
-  validate,
-  async (req, res, next) => {
-    const id = req.params.id;
-    const testimonial = req.body;
-    try {
-      const result = await handler.getOneTestimonial(id);
-      
-      if (result) {
-        const testimonialUpdated = await handler.putTestimonial(testimonial, id);
-        if (wasUpdated(testimonialUpdated)) {
-          logger.info("Testimonial updated successfully");
-          res.status(200).json({
-            message: "Testimonial updated successfully",
-          });
-        }
-        logger.info("Testimonial updated failed");
-        res.status(404).json({
-          message: "Testimonial updated failed",
-        });
-      } else {
-        logger.warn("Testimonial not found");
-        res.status(404).json({
-          message: "Testimonial not found",
+router.put('/:id', isAdmin, testimonialValidationPutRules(), validate, async (req, res, next) => {
+  const id = req.params.id;
+  const testimonial = req.body;
+  try {
+    const result = await handler.getOneTestimonial(id);
+
+    if (result) {
+      const testimonialUpdated = await handler.putTestimonial(testimonial, id);
+      if (wasUpdated(testimonialUpdated)) {
+        logger.info('Testimonial updated successfully');
+        res.status(200).json({
+          message: 'Testimonial updated successfully',
         });
       }
-    } catch (e) {
-      logger.error(e.message);
-      res.send({
-        message: "Error updating testimonial",
+      logger.info('Testimonial updated failed');
+      res.status(404).json({
+        message: 'Testimonial updated failed',
+      });
+    } else {
+      logger.warn('Testimonial not found');
+      res.status(404).json({
+        message: 'Testimonial not found',
       });
     }
+  } catch (e) {
+    logger.error(e.message);
+    res.send({
+      message: 'Error updating testimonial',
+    });
   }
-);
+});
 
-router.delete("/:id", isAdmin, async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   const id = req.params.id;
   try {
     const result = await handler.getOneTestimonial(id);
 
     if (result) {
       const testimonialDeleted = await handler.deleteTestimonial(id);
-      logger.info("Testimonial deleted successfully");
+      logger.info('Testimonial deleted successfully');
       res.status(200).json({
-        message: "Testimonial deleted successfully",
+        message: 'Testimonial deleted successfully',
       });
     } else {
-      logger.warn("Testimonial not found");
+      logger.warn('Testimonial not found');
       res.status(404).json({
-        message: "Testimonial not found",
+        message: 'Testimonial not found',
       });
     }
   } catch (e) {
     logger.error(e.message);
     res.send({
-      message: "Error deleted testimonial",
+      message: 'Error deleted testimonial',
     });
   }
 });

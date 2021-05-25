@@ -1,4 +1,4 @@
 module.exports = {
-    secretName: 'secret-key',
-    key: "miclaveultrasecreta123*"
-}
+  secretName: 'secret-key',
+  key: 'miclaveultrasecreta123*',
+};

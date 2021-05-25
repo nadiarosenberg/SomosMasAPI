@@ -1,13 +1,13 @@
-const { Members } = require('../../models');
+const {Members} = require('../../models');
 const logger = require('../../utils/pinoLogger');
-const { getPaginationParams } = require('../../utils/pagination');
+const {getPaginationParams} = require('../../utils/pagination');
 
-const getAll = async (paginationInfo) => {
+const getAll = async paginationInfo => {
   try {
     const paginationData = getPaginationParams(paginationInfo, 'id');
     const result = await Members.findAndCountAll({
       ...paginationData,
-      attributes: ['id', 'name', 'image']
+      attributes: ['id', 'name', 'image'],
     });
     return result;
   } catch (error) {
@@ -15,7 +15,7 @@ const getAll = async (paginationInfo) => {
   }
 };
 
-const persist = async (memberToPersist) => {
+const persist = async memberToPersist => {
   try {
     const result = await Members.create(memberToPersist);
     return result;
@@ -24,10 +24,10 @@ const persist = async (memberToPersist) => {
   }
 };
 
-const destroyMember = async (id) => {
+const destroyMember = async id => {
   try {
     const result = await Members.destroy({
-      where: { id }
+      where: {id},
     });
     return result;
   } catch (error) {
@@ -35,11 +35,10 @@ const destroyMember = async (id) => {
   }
 };
 
-
-const getOne = async (id) => {
+const getOne = async id => {
   try {
     const result = await Members.findOne({
-      where: { id }
+      where: {id},
     });
 
     return result;
@@ -51,17 +50,17 @@ const getOne = async (id) => {
 const update = async (id, properties) => {
   try {
     const result = await Members.update(properties, {
-      where: { id }
+      where: {id},
     });
     return result;
   } catch (error) {
     logger.error(error.message);
   }
-}
+};
 module.exports = {
   getAll,
   persist,
   destroyMember,
   getOne,
-  update
+  update,
 };

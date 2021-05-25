@@ -1,11 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const {
-  userValidationRules,
-  validate,
-  userValidationPutRules,
-} = require('./middlewares/users');
+const {userValidationRules, validate, userValidationPutRules} = require('./middlewares/users');
 const handler = require('./../handlers/users');
 const jwt = require('jsonwebtoken');
 const allowAdmins = require('./middlewares/auth');
@@ -40,7 +36,7 @@ router.post('/auth/register', allowAdmins, userValidationRules(), validate, asyn
     } else {
       res.status(500).json('Error creating token');
     }
-  }catch (e) {
+  } catch (e) {
     res.status(400).json({
       ok: false,
       msj: 'failed to create user',

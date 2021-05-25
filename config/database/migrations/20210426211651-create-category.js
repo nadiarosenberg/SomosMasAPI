@@ -6,7 +6,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
@@ -14,13 +14,13 @@ module.exports = {
         validate: {
           notNull: {
             args: true,
-            msg: 'name is required'
-          }
-        }
+            msg: 'name is required',
+          },
+        },
       },
       description: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.STRING,
@@ -41,10 +41,10 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-      }
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Categories');
-  }
+  },
 };

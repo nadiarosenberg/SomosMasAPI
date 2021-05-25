@@ -1,5 +1,5 @@
 'use strict';
-const { Model } = require('sequelize');
+const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Activities extends Model {
     /**
@@ -10,46 +10,46 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Activities.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull:
-        {
-          args: true,
-          msg: 'name is required'
-        }
-      }
+  }
+  Activities.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'name is required',
+          },
+        },
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'image is required',
+          },
+        },
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'content is required',
+          },
+        },
+      },
     },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull:
-        {
-          args: true,
-          msg: 'image is required'
-        }
-      }
-    },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull:
-        {
-          args: true,
-          msg: 'content is required'
-        }
-      }
-    },
-  }, {
-    sequelize,
-    paranoid: true,
-    timestamps: true,
-    modelName: 'Activities',
-  });
+    {
+      sequelize,
+      paranoid: true,
+      timestamps: true,
+      modelName: 'Activities',
+    }
+  );
   return Activities;
 };

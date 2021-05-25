@@ -1,5 +1,5 @@
 'use strict';
-const { Model } = require('sequelize');
+const {Model} = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
@@ -11,43 +11,46 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
+  }
 
-  Role.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'name is required'
+  Role.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'name is required',
+          },
+          notEmpty: true,
         },
-        notEmpty: true,
-      }
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: 'description is required'
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: 'description is required',
+          },
+          notEmpty: true,
         },
-        notEmpty: true,
-      }
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Role',
+      timestamps: true,
+      tableName: 'roles',
+      paranoid: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Role',
-    timestamps: true,
-    tableName: 'roles',
-    paranoid: true
-  });
+  );
   return Role;
 };
