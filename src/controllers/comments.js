@@ -55,17 +55,11 @@ commentsRouter.post('/', commentValidationPost(), validate, async (req, res, nex
   }
 });
 
-const isEmpty = result => {
-  var bool;
-  result.length === 0 ? (bool = null) : (bool = 1);
-  return bool;
-};
-
 commentsRouter.get('/:id', async (req, res) => {
   try {
     const {id} = req.params;
-    const results = await handler.getAllByNewReportId(id);
-    if (isEmpty(results)) {
+    const results = await handler.getCommentById(id);
+    if (results) {
       res.status(200).json(results);
     } else {
       res.status(404).send('No comments for that id');

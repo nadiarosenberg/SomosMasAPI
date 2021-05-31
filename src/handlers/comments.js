@@ -10,10 +10,6 @@ const getCommentById = async id => {
   return result;
 };
 
-const getAllByNewReportId = async id => {
-  const result = await repository.getAllByNewReportId(id);
-  return result;
-};
 const getAllComments = async () => await repository.getAll();
 
 const postComment = async newComment => await repository.create(newComment);
@@ -23,7 +19,6 @@ const putComment = async (editedComment, id) => await repository.update(editedCo
 module.exports = {
   deleteComments,
   getCommentById,
-  getAllByNewReportId,
   getAllComments,
   postComment,
   putComment,

@@ -14,6 +14,12 @@ const {paginationValidation, validate} = require('./middlewares/pagination');
 
 const emailSource = emailsSource('newReport');
 
+const isNotEmpty = result => {
+  var bool;
+  result.length === 0 ? (bool = null) : (bool = 1);
+  return bool;
+};
+
 newReportsRouter.get('/', allowAdmins, paginationValidation(), async (req, res) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
@@ -88,5 +94,21 @@ newReportsRouter.post('/', allowAdmins, async (req, res) => {
     });
   }
 });
+
+newReportsRouter.get('/:id/comments', async (req, res) => {
+  try {
+    const {id} = req.params;
+    const results = await handler.getAllByNewReportId(id);
+    if (isNotEmpty(results)) {
+      res.status(200).json(results);
+    } else {
+      res.status(404).send('No comments for that id');
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({message: error.message});
+  }
+});
+
 
 module.exports = newReportsRouter;

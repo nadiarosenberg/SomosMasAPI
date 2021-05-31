@@ -31,18 +31,6 @@ const getAll = async () => {
   return result;
 };
 
-const getAllByNewReportId = async id => {
-  try {
-    const result = await Comments.findAll({
-      where: {newReportId: id},
-      attributes: ['id', 'userId', 'newReportId', 'body'],
-    });
-    return result;
-  } catch (error) {
-    console.error(error.message);
-  }
-};
-
 const create = async comment => {
   const result = await Comments.create(comment);
   return result;
@@ -58,7 +46,6 @@ const update = async (comment, id) => {
 module.exports = {
   destroy,
   getAll,
-  getAllByNewReportId,
   getOne,
   create,
   update,

@@ -28,10 +28,16 @@ const createNewReport = async newreport => {
   return result;
 };
 
+const getAllByNewReportId = async id => {
+  const result = await repository.getAllByNewReportId(id);
+  return result;
+};
+
 module.exports = {
   getAllNewReports,
   getNewReportById,
   updateNewReport,
   deleteNewReport,
   createNewReport,
+  getAllByNewReportId
 };

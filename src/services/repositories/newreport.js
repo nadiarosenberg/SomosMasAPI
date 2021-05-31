@@ -1,5 +1,6 @@
 const db = require('../../models');
 const NewReport = db.newreports;
+const Comments = db.comments;
 const errorHandler = require('../../utils/errorHandler');
 const sendEmail = require('../../utils/emailSender');
 const emailsSource = require('../../utils/fakeEmailSource');
@@ -74,10 +75,23 @@ const persist = async newreport => {
   }
 };
 
+const getAllByNewReportId = async id => {
+  try {
+    const result = await Comments.findAll({
+      where: {newReportId: id},
+      attributes: ['id', 'userId', 'newReportId', 'body'],
+    });
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   getAll,
   getOne,
   update,
   destroy,
   persist,
+  getAllByNewReportId
 };
