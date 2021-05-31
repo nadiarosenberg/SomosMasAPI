@@ -1,17 +1,39 @@
-const db = require('./../../models');
-const SocialMedia = db.socialMedia;
+const {SocialMedia} = require('../../models');
+const logger = require('../../utils/pinoLogger');
 
-const getOne = async id => await SocialMedia.findByPk(id, {paranoid: false});
+const persist = async socialmedia => {
+  try {
+    const result = await SocialMedia.create(socialmedia);
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 
-const create = async socialmedia => await SocialMedia.create(socialmedia);
+const getOne = async orgId => {
+  try {
+    const result = await SocialMedia.findOne({
+      where: {organizationId: orgId}
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 
-const update = async (socialmedia, id) => await SocialMedia.update(socialmedia, {where: {id: id}});
-
-const deleteOne = async id => await SocialMedia.destroy({where: {id: id}});
+const update = async (socialmedia, orgId) => {
+  try {
+    const result = await SocialMedia.update(socialmedia, {
+      where: {organizationId: orgId},
+    });
+    return result;
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
 
 module.exports = {
+  persist,
   getOne,
-  create,
-  update,
-  deleteOne,
+  update
 };

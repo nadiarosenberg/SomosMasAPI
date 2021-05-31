@@ -1,77 +1,40 @@
 const {Organization} = require('../../models');
-const logger = require('../../utils/pinoLogger');
 
-const persist = async organizationToPersist => {
-  try {
-    const result = await Organization.create(organizationToPersist);
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
-};
+const persist = async organizationToCreate => await Organization.create(organizationToCreate);
 
 const getAll = async () => {
-  try {
-    const result = await Organization.findAll({
-      attributes: ['name', 'image', 'phone', 'address'],
-    });
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
+  const result = await Organization.findAll({
+    attributes: ['name', 'image', 'phone', 'address', 'id'],
+  });
+  return result;
 };
 
-const getOne = async id => {
-  try {
-    const result = await Organization.findOne({
-      where: {id},
-      attributes: ['name', 'image', 'phone', 'address', 'socialMediaId'],
-    });
-
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
+const getOne = async orgId => {
+  const result = await Organization.findOne({
+    where: {id: orgId},
+    attributes: ['name', 'image', 'phone', 'address'],
+  });
+  return result;
 };
 
-const update = async (id, properties) => {
-  try {
-    const result = await Organization.update(properties, {
-      where: {id},
-    });
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
+const update = async (orgId, properties) => {
+  const result = await Organization.update(properties, {
+    where: {id: orgId},
+  });
+  return result;
 };
 
-const destroy = async id => {
-  try {
-    const result = await Organization.destroy({
-      where: {id},
-    });
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
-};
-
-const restore = async id => {
-  try {
-    const result = await Organization.restore({
-      where: {id},
-    });
-    return result;
-  } catch (error) {
-    logger.error(error.message);
-  }
+const destroy = async orgId => {
+  const result = await Organization.destroy({
+    where: {id: orgId},
+  });
+  return result;
 };
 
 module.exports = {
   persist,
-  update,
   getAll,
   getOne,
-  destroy,
-  restore,
+  update,
+  destroy
 };

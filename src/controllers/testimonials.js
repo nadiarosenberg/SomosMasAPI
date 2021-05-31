@@ -38,8 +38,8 @@ router.get('/:id', async (req, res, next) => {
         message: 'Testimonial not found',
       });
     }
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    logger.error(error.message);
     res.send('Error getting testimonial');
   }
 });
@@ -68,7 +68,7 @@ router.post('/', isAdmin, testimonialValidationPostRules(), validate, async (req
   }
 });
 
-router.put('/:id', isAdmin, testimonialValidationPutRules(), validate, async (req, res, next) => {
+router.put('/:id', /*isAdmin,*/ testimonialValidationPutRules(), validate, async (req, res, next) => {
   const id = req.params.id;
   const testimonial = req.body;
   try {

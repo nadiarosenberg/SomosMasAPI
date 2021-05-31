@@ -9,7 +9,7 @@ module.exports = {
           name: 'name1',
           image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
           address: 'address1',
-          phone: 1234,
+          phone: '1234',
           email: 'email1@gmail.com',
           welcomeText: 'hola1',
           aboutUsText: 'nosotros1',
@@ -20,7 +20,7 @@ module.exports = {
           name: 'name2',
           image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
           address: 'address2',
-          phone: 234,
+          phone: '234',
           email: 'email2@gmail.com',
           welcomeText: 'hola2',
           aboutUsText: 'nosotros2',
@@ -33,11 +33,5 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
   },
 };

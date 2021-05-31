@@ -4,13 +4,8 @@ const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Organization extends Model {
     static associate(models) {
-      Organization.hasOne(models.SocialMedia, {
-        as: 'socialmedia',
-        foreingKey: 'socialMediaId',
-      });
     }
   }
-
   Organization.init(
     {
       id: {
@@ -39,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       address: DataTypes.STRING,
-      phone: DataTypes.INTEGER,
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -61,15 +59,12 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      socialMediaId: {
-        type: DataTypes.INTEGER,
-      },
       aboutUsText: DataTypes.TEXT,
     },
     {
       sequelize,
       modelName: 'Organization',
-      tableName: 'organizations',
+      tableName: 'Organizations',
       timestamps: true,
       paranoid: true,
     }

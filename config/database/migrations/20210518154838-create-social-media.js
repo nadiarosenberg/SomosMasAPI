@@ -17,9 +17,14 @@ module.exports = {
       linkedin: {
         type: Sequelize.STRING,
       },
-      timestamps: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      organizationId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Organizations',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

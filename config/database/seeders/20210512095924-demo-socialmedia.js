@@ -7,7 +7,7 @@ module.exports = {
         facebook: 'facebook.com',
         instagram: 'instagram.com',
         linkedin: 'linkedin.com',
-        timestamps: Date.now(),
+        organizationId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

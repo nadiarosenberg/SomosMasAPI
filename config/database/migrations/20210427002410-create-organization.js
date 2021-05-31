@@ -32,7 +32,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
       phone: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+        allowNull: true
       },
       email: {
         type: Sequelize.STRING,
@@ -57,15 +58,6 @@ module.exports = {
       },
       aboutUsText: {
         type: Sequelize.TEXT,
-      },
-      socialMediaId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'SocialMedia',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
       },
       createdAt: {
         allowNull: false,

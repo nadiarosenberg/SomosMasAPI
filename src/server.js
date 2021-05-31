@@ -19,7 +19,6 @@ const rolesRouter = require('./controllers/roles');
 const newReportsRouter = require('./controllers/newreports');
 const categoriesRouter = require('./controllers/categories');
 const activitiesRouter = require('./controllers/activities');
-const slidesRouter = require('./controllers/slides');
 const contactRouter = require('./controllers/contacts');
 const commentsRouter = require('./controllers/comments');
 
@@ -54,7 +53,6 @@ app.use('/categories', categoriesRouter);
 app.use('/news', newReportsRouter);
 app.use('/activities', activitiesRouter);
 app.use('/organizations', organizationsController);
-app.use('/slides', slidesRouter);
 app.use('/contacts', contactRouter);
 app.use('/comments', commentsRouter);
 

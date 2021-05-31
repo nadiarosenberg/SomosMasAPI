@@ -1,65 +1,51 @@
-const repository = require('../services/repositories/organization');
-const socialMedia = require('../services/repositories/socialmedia');
+const repositoryOrganizations = require('../services/repositories/organization');
+const repositorySocialMedia = require('../services/repositories/socialmedia');
+const repositorySlides = require('../services/repositories/slides');
 
-const createOrganization = async organization => {
-  const createdOrganization = await repository.persist(organization);
-  return createdOrganization;
-};
+const createOrganization = async (organizationToCreate) => await repositoryOrganizations.persist(organizationToCreate);
 
-const getAllOrganizations = async () => {
-  const organizations = await repository.getAll();
-  return organizations;
-};
+const getAllOrganizations = async () => await repositoryOrganizations.getAll();
 
-const getOrganizationById = async id => {
-  const organization = await repository.getOne(id);
-  return organization;
-};
+const getOrganization = async orgId => await repositoryOrganizations.getOne(orgId);
 
-const updateOrganization = async (id, properties) => {
-  const organization = await repository.update(id, properties);
-  return organization;
-};
+const updateOrganization = async (orgId, properties) => await repositoryOrganizations.update(orgId, properties);
 
-const deleteOrganization = async id => {
-  const organization = await repository.destroy(id);
-  return organization;
-};
+const deleteOrganization = async orgId => await repositoryOrganizations.destroy(orgId);
 
-const retoreOrganization = async id => {
-  const organization = await repository.restore(id);
-  return organization;
-};
+const getSocialMedia = async orgId => await repositorySocialMedia.getOne(orgId);
 
-const getOneSocialMedia = async id => {
-  const socialmedia = await socialMedia.getOne(id);
-  return socialmedia;
-};
+const createSocialMedia = async (socialmedia) => await repositorySocialMedia.persist(socialmedia);
 
-const postSocialMedia = async newSocialMedia => {
-  const socialmedia = await socialMedia.create(newSocialMedia);
-  return socialmedia;
-};
+const updateSocialMedia = async (socialmedia, orgId) => await repositorySocialMedia.update(socialmedia, orgId);
 
-const putSocialMedia = async (editedSocialMedia, id) => {
-  const socialmedia = await socialMedia.update(editedSocialMedia, id);
-  return socialmedia;
-};
+const createSlide = async slide => await repositorySlides.persist(slide);
 
-const deleteSocialMedia = async id => {
-  const socialmedia = await socialMedia.deleteOne(id);
-  return socialmedia;
-};
+const updateSlide = async (orgId, slideId, slide) => await repositorySlides.update(orgId, slideId, slide);
+
+const deleteSlide = async (orgId, slideId) => await repositorySlides.destroy(orgId, slideId);
+
+const getSlide = async (orgId, slideId) => await repositorySlides.getOne(orgId, slideId);
+
+const getAllSlides = async orgId => await repositorySlides.getAll(orgId);
+
+const getSlidesByOrgId = async orgId => await repositorySlides.getSlidesByOrgId(orgId);
+
+const getLastOrder = async orgId => await repositorySlides.lastOrder(orgId);
 
 module.exports = {
   createOrganization,
   getAllOrganizations,
-  getOrganizationById,
+  getOrganization,
   updateOrganization,
   deleteOrganization,
-  retoreOrganization,
-  getOneSocialMedia,
-  postSocialMedia,
-  putSocialMedia,
-  deleteSocialMedia,
+  createSocialMedia,
+  getSocialMedia,
+  updateSocialMedia,
+  createSlide,
+  getAllSlides,
+  getSlide,
+  updateSlide,
+  deleteSlide,
+  getSlidesByOrgId,
+  getLastOrder
 };

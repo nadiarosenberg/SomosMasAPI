@@ -1,93 +1,99 @@
 'use strict';
-const {Slide} = require('../../models/index');
+const {Slide} = require('../../models');
 const Sequelize = require('sequelize');
+const logger = require('../../utils/pinoLogger');
 
 const persist = async slide => {
   try {
     const result = await Slide.create(slide);
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
-const findAll = async () => {
+const getAll = async orgId => {
   try {
     const result = await Slide.findAll({
       attributes: ['imageUrl', 'order'],
       order: [['order', 'ASC']],
+      where: {organizationId: orgId},
     });
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
-const findOne = async id => {
+const getOne = async (orgId, slideId) => {
   try {
     const result = await Slide.findOne({
-      where: {id},
+      where: {organizationId: orgId, id: slideId},
     });
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
-const update = async (slide, id) => {
-  console.log(slide);
+const update = async (orgId, slideId, slide) => {
   try {
     const result = await Slide.update(slide, {
-      where: {id},
+      where: {organizationId: orgId, id: slideId},
     });
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
-const destroy = async id => {
+const destroy = async (orgId, slideId) => {
   try {
     const result = await Slide.destroy({
-      where: {id},
+      where: {organizationId: orgId, id: slideId},
     });
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
 const getSlidesByOrgId = async orgId => {
   try {
     const result = await Slide.findAll({
-      where: {organizationId: orgId},
       order: [['order', 'ASC']],
       attributes: ['imageUrl'],
+      where: {organizationId: orgId},
     });
     return result;
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
-const lastSlide = async () => {
+const lastOrder = async orgId => {
   try {
     const result = await Slide.findOne({
       order: [['order', 'DESC']],
       attributes: ['order'],
+      where: {organizationId: orgId},
     });
-    return result;
+    if (!result) {
+      return 0;
+    } else {
+      return result.order;
+    }
   } catch (error) {
-    console.log(error);
+    logger.error(error.message);
   }
 };
 
 module.exports = {
   persist,
-  findAll,
-  findOne,
+  getAll,
+  getOne,
   update,
   destroy,
   getSlidesByOrgId,
-  lastSlide,
+  lastOrder
 };
