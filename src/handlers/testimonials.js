@@ -1,9 +1,7 @@
 const repository = require('./../services/repositories/testimonials');
 
-const getAllTestimonials = async () => {
-  const testimonials = await repository.getAll();
-  return testimonials;
-};
+const getAllTestimonials = async (paginationInfo) => await repository.getAll(paginationInfo);
+
 
 const getOneTestimonial = async id => {
   const testimonial = await repository.getOne(id);

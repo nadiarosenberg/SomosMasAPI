@@ -3,6 +3,7 @@ const handler = require('./../handlers/testimonials');
 const logger = require('../utils/pinoLogger');
 const {testimonialValidationPutRules, testimonialValidationPostRules, validate} = require('./middlewares/testimonials');
 const isAdmin = require('./middlewares/auth');
+const pagination = require('../utils/pagination');
 
 const wasUpdated = result => {
   var bool;
@@ -12,8 +13,11 @@ const wasUpdated = result => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const result = await handler.getAllTestimonials();
-    res.json(result);
+    const paginationInfo = pagination.getPaginationInfo(req.query);
+    const results = await handler.getAllTestimonials(paginationInfo);
+    const route = '/testimonials';
+    const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
+    res.json(paginationResult);
   } catch (e) {
     logger.error(e.message);
     res.send({

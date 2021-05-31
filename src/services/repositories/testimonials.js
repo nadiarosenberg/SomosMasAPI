@@ -1,9 +1,18 @@
 const {Testimonial} = require('../../models');
+const pagination = require('../../utils/pagination');
 
-const getAll = async () => {
-  const result = await Testimonial.findAll();
-  return result;
-};
+const getAll = async (paginationInfo) => {
+  try {
+    const paginationData = pagination.getPaginationParams(paginationInfo, 'id');
+    const result = await Testimonial.findAndCountAll({...paginationData, 
+      attributes: {exclude: ['updatedAt', 'deletedAt', 'createdAt']}});
+      return result;
+  } catch (e) {
+    console.log(e);
+  }
+  
+}
+
 
 const getOne = async id => {
   const result = await Testimonial.findByPk(id);
