@@ -5,7 +5,7 @@ const allowAdmins = require('./middlewares/auth');
 const isAdminOrOwnsership = require('./middlewares/ownership');
 const {commentValidationPost, validate} = require('./middlewares/comments');
 
-commentsRouter.delete('/:id', allowAdmins, isAdminOrOwnsership, async (req, res) => {
+commentsRouter.delete('/:id', allowAdmins, async (req, res) => {
   try {
     const id = req.params.id;
     const comment = await handler.getCommentById(id);

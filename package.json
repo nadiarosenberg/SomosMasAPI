@@ -7,7 +7,8 @@
     "dev": "nodemon ./bin/www | pino-pretty",
     "test": "jest --passWithNoTests",
     "style-check": "yarn run prettier --check .",
-    "style-formatter": "yarn run prettier --write . && git add ."
+    "style-formatter": "yarn run prettier --write . && git add .",
+    "setup-database": "sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
   "dependencies": {
     "aws-sdk": "^2.899.0",
