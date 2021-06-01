@@ -4,6 +4,12 @@ const app = require('../../src/server.js');
 const repositoryOrganization = require('./../../src/services/repositories/organization.js');
 const repositorySlides = require('./../../src/services/repositories/slides.js');
 const repositorySocialMedia = require('./../../src/services/repositories/socialmedia.js');
+const mockUploadImage = require('./../../src/handlers/middlewares/uploadImage');
+
+jest.mock('./../../src/handlers/middlewares/uploadImage', () => ({
+    uploadImage: jest.fn().mockResolvedValue('http://link.png'),
+    uploadBase64Image: jest.fn().mockResolvedValue('http://link.png'),
+}));
 
 jest.mock('./../../src/services/repositories/organization.js');
 jest.mock('./../../src/services/repositories/slides.js');
@@ -14,7 +20,7 @@ jest.mock('./../../src/controllers/middlewares/auth', () =>
 
 const base64 = require('./imageBase64');
 
-describe.skip('test organizations controller', () => {
+describe('test organizations controller', () => {
     beforeEach(()=>{
         jest.clearAllMocks();
     })
