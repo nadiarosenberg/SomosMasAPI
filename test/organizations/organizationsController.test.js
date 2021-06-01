@@ -14,7 +14,7 @@ jest.mock('./../../src/controllers/middlewares/auth', () =>
 
 const base64 = require('./imageBase64');
 
-describe('test organizations controller', () => {
+describe.skip('test organizations controller', () => {
     beforeEach(()=>{
         jest.clearAllMocks();
     })
