@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
-        SallowNull: false,
+        allowNull: false,
         validate: {
           notEmpty: {
             args: true,
@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
+        allowNull: true
       },
       email: {
         type: DataTypes.STRING,

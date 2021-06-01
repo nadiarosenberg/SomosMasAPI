@@ -2,8 +2,8 @@ const {body, validationResult} = require('express-validator');
 
 const contactValidationRules = () => {
   return [
-    body('name').not().isEmpty().withMessage("name can't be empty"),
-    body('email').not().isEmpty().withMessage("email can't be empty").isEmail().withMessage('invalid email'),
+    body('name').notEmpty().withMessage("name can't be empty"),
+    body('email').notEmpty().withMessage("email can't be empty").isEmail().withMessage('invalid email'),
   ];
 };
 
@@ -15,4 +15,7 @@ const validate = (req, res, next) => {
   return res.status(400).json({errors: errors.array()});
 };
 
-module.exports = {contactValidationRules, validate};
+module.exports = {
+  contactValidationRules, 
+  validate
+};

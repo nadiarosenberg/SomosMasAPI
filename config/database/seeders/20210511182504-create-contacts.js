@@ -5,9 +5,9 @@ module.exports = {
     return queryInterface.bulkInsert('Contacts', [
       {
         name: 'John',
-        phone: 115499,
+        phone: '1198761234',
         email: 'John@hotmail.com',
-        message: 'hello ',
+        message: 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit ',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
