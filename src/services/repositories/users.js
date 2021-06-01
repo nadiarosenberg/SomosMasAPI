@@ -7,14 +7,13 @@ app.set('key', key.key);
 
 const persist = async user => {
   try {
-    var aux = user;
-    aux.password = bcrypt.hashSync(aux.password, 8);
-    const result = await User.create(aux);
+    const result = await User.create(user);
     return result;
   } catch (error) {
     console.log(error.message);
   }
 };
+
 const update = async (userId, user) => {
   var aux = user;
   if (aux.password) {
@@ -75,6 +74,19 @@ const getById = async id => {
   }
 };
 
+const getByEmail = async (email) => {
+  try {
+    const user = await User.findOne({
+      where:{
+        email
+      }
+    })
+    return user;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   persist,
   update,
@@ -82,4 +94,5 @@ module.exports = {
   getOne,
   destroy,
   getById,
+  getByEmail
 };

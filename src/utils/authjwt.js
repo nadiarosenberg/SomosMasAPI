@@ -5,28 +5,24 @@ const key = require('../utils/key');
 app.set('key', key.key);
 
 const authenticateToken = (req, res, next) => {
-  const bearerHeader = req.headers['authorization'];
+  const bearerHeader = req.headers['Authorization'];
   if (bearerHeader) {
     const bearer = bearerHeader.split(' ');
     const token = bearer[1];
     if (token) {
       jwt.verify(token, app.get('key'), (err, decoded) => {
         if (err) {
-          return res.json({
-            mensaje: 'Invalid token',
-          });
+          return res.status(400).json({ msg: 'Invalid token'});
         } else {
           req.decoded = decoded;
           next();
         }
       });
     } else {
-      res.send({
-        mensaje: 'Token not provided.',
-      });
+      res.status(403).json({ msg: 'Token not provided' });
     }
   } else {
-    return res.status(403);
+    res.status(403).json({msg: 'Token not provided'});
   }
 };
 

@@ -11,14 +11,15 @@ const wasUpdated = result => {
   return bool;
 };
 
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const paginationInfo = pagination.getPaginationInfo(req.query);
     const results = await handler.getAllTestimonials(paginationInfo);
     const route = '/testimonials';
     const paginationResult = await pagination.getPaginationResult(paginationInfo, route, results);
-    res.json(paginationResult);
+    res.status(200).json(result);
   } catch (e) {
+    console.log('\n\n H');
     logger.error(e.message);
     res.send({
       message: 'Error posting testimonial',
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res, next) => {
     }
   } catch (error) {
     logger.error(error.message);
-    res.send('Error getting testimonial');
+    res.status(500).send('Error getting testimonial');
   }
 });
 
