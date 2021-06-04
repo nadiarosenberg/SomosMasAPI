@@ -182,6 +182,22 @@ describe('test organizations controller', () => {
                 instagram: 'instagram.com',
                 linkedin: 'linkedin.com'
             })
+            expect(repositoryOrganization.update).toHaveBeenCalledTimes(1);
+            expect(repositorySocialMedia.update).toHaveBeenCalledTimes(1);
+            expect(res.statusCode).toEqual(200);
+            expect(res.body.message).toEqual('Organization updated successfully');
+        });
+        it('should update socialMedia if exists, organization is not updated', async () => {
+            const repositoryResultOrgExists = {test: 'test' };
+            repositoryOrganization.getOne.mockResolvedValue(repositoryResultOrgExists);
+            const repositoryResult = [1];
+            repositorySocialMedia.update.mockResolvedValue(repositoryResult);
+            const res = await request(app).put('/organizations/1').send({
+                facebook: 'facebook.com',
+                instagram: 'instagram.com',
+                linkedin: 'linkedin.com'
+            })
+            expect(repositorySocialMedia.update).toHaveBeenCalledTimes(1);
             expect(res.statusCode).toEqual(200);
             expect(res.body.message).toEqual('Organization updated successfully');
         });
@@ -197,6 +213,19 @@ describe('test organizations controller', () => {
                 image: base64,
                 email: 'test@gmail.com',
                 welcomeText: 'test test',
+                facebook: 'facebook.com',
+                instagram: 'instagram.com',
+                linkedin: 'linkedin.com'
+            })
+            expect(res.statusCode).toEqual(200);
+            expect(res.body.message).toEqual('Organization updated successfully');
+        });
+        it('should create socialMedia if it doesnt exist, organization is not updated', async () => {
+            const repositoryResultOrgExists = {test: 'test' };
+            repositoryOrganization.getOne.mockResolvedValue(repositoryResultOrgExists);
+            const repositorySocialMediaResult = {test: 'test' };
+            repositorySocialMedia.persist.mockResolvedValue(repositorySocialMediaResult);
+            const res = await request(app).put('/organizations/1').send({
                 facebook: 'facebook.com',
                 instagram: 'instagram.com',
                 linkedin: 'linkedin.com'
