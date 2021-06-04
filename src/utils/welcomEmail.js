@@ -10,9 +10,13 @@ const welcomEmail = (userEmail, userName, surName) => {
     subject: 'Registro existoso',
     template: 'templateEmail',
     context: infoEmail(userName, surName),
+    attachments: [{
+      filename: 'LOGO-SOMOS-MAS.png',
+      path: './src/views/layouts/images/LOGO-SOMOS-MAS.png',
+      cid: 'LOGO-SOMOS-MAS'
+    }],
   };
   sendEmail(emailSource, message);
-  console.log(message);
 };
 
 module.exports = welcomEmail;

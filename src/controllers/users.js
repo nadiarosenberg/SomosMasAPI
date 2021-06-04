@@ -27,9 +27,7 @@ router.post('/auth/register', allowAdmins, userValidationRules(), validate, asyn
   try {
     const user = req.body;
     const result = await handler.createUser(user);
-    console.log('cree el usuario');
     sendWelcomEmail(result.email, result.firstName, result.lastName);
-    console.log('envie el mail');
     if (result) {
       const token = await createToken(result);
       res.json(token);

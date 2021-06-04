@@ -32,7 +32,7 @@ const emailSender = (emailAccount, data) => {
         partialsDir: './src/views/',
       },
       viewPath: './src/views/layouts/',
-      extName: '.hbs',
+      extName: '.hbs'
     })
   );
 
@@ -43,8 +43,8 @@ const emailSender = (emailAccount, data) => {
     text: data.text,
     template: data.template,
     context: data.context,
+    attachments: data.attachments
   };
-
   sendEmailTo(message);
 };
 
